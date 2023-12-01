@@ -1,28 +1,46 @@
 package com.ejemplos.spring.model;
 
-public class Recinto {
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 
+@Entity
+public class Recinto {
+	@Id
+	private long id;
 	private String nombre;
 	private String ciudad;
 	private String direccion;
-	private enum recinto{
+
+	public enum TipoRecinto {
 		ESTADIO, SALA_CONCIERTO, AIRE_LIBRE, TEATRO, ARENA_DEPORTIVA, CLUB_NOCTURNO;
 	};
-	private recinto recinto;
+
+	@Enumerated(EnumType.STRING) // Guarda el enum como String en la base de datos
+	private TipoRecinto tipoRecinto;
 	private int aforo;
-	
-	public Recinto(String nombre, String ciudad, String direccion, com.ejemplos.spring.model.Recinto.recinto recinto,
-			int aforo) {
+
+	public Recinto(long id, String nombre, String ciudad, String direccion, TipoRecinto tipoRecinto, int aforo) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.ciudad = ciudad;
 		this.direccion = direccion;
-		this.recinto = recinto;
+		this.tipoRecinto = tipoRecinto;
 		this.aforo = aforo;
 	}
 
 	public Recinto() {
 		super();
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getNombre() {
@@ -49,12 +67,12 @@ public class Recinto {
 		this.direccion = direccion;
 	}
 
-	public recinto getRecinto() {
-		return recinto;
+	public TipoRecinto getTipoRecinto() {
+		return tipoRecinto;
 	}
 
-	public void setRecinto(recinto recinto) {
-		this.recinto = recinto;
+	public void setTipoRecinto(TipoRecinto tipoRecinto) {
+		this.tipoRecinto = tipoRecinto;
 	}
 
 	public int getAforo() {
@@ -67,8 +85,10 @@ public class Recinto {
 
 	@Override
 	public String toString() {
-		return "Recinto [nombre=" + nombre + ", ciudad=" + ciudad + ", direccion=" + direccion + ", recinto=" + recinto
-				+ ", aforo=" + aforo + "]";
+		return "Recinto [id=" + id + ", nombre=" + nombre + ", ciudad=" + ciudad + ", direccion=" + direccion
+				+ ", tipoRecinto=" + tipoRecinto + ", aforo=" + aforo + "]";
 	}
+
 	
+
 }
