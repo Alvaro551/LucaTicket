@@ -1,15 +1,16 @@
-package com.ejemplos.spring.model;
+package com.ejemplos.spring.response;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.sql.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.ejemplos.spring.model.Eventos;
 
-@Entity
-public class Eventos {
-	@Id
+// DTO para la respuesta de Evento
+public class EventoResponse implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private long id;
 	private String nombre;
 	private String descripcionCorta;
@@ -20,30 +21,27 @@ public class Eventos {
 	private double precioMinimo;
 	private double precioMaximo;
 	private String normas;
+	private RecintoResponse recinto; // Asumiendo que tienes una clase RecintoResponse
 
-	@ManyToOne
-	@JoinColumn(name = "recinto_id") 
-	private Recinto recinto;
+	public static EventoResponse of(Eventos evento) {
+		EventoResponse response = new EventoResponse();
+		response.setId(evento.getId());
+		response.setNombre(evento.getNombre());
+		response.setDescripcionCorta(evento.getDescripcionCorta());
+		response.setDescripcionExtendida(evento.getDescripcionExtendida());
+		response.setFoto(evento.getFoto());
+		response.setFechaEvento((Date) evento.getFechaEvento());
+		response.setHoraEvento((Date) evento.getHoraEvento());
+		response.setPrecioMinimo(evento.getPrecioMinimo());
+		response.setPrecioMaximo(evento.getPrecioMaximo());
+		response.setNormas(evento.getNormas());
+		response.setRecinto(RecintoResponse.of(evento.getRecinto()));
 
-	public Eventos(long id, String nombre, String descripcionCorta, String descripcionExtendida, String foto,
-			Date fechaEvento, Date horaEvento, double precioMinimo, double precioMaximo, String normas,
-			Recinto recinto) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.descripcionCorta = descripcionCorta;
-		this.descripcionExtendida = descripcionExtendida;
-		this.foto = foto;
-		this.fechaEvento = fechaEvento;
-		this.horaEvento = horaEvento;
-		this.precioMinimo = precioMinimo;
-		this.precioMaximo = precioMaximo;
-		this.normas = normas;
-		this.recinto = recinto;
+		return response;
 	}
 
-	public Eventos() {
-		super();
+	public static List<EventoResponse> of(List<Eventos> eventos) {
+		return eventos.stream().map(c -> of(c)).collect(Collectors.toList());
 	}
 
 	public long getId() {
@@ -126,20 +124,12 @@ public class Eventos {
 		this.normas = normas;
 	}
 
-	public Recinto getRecinto() {
+	public RecintoResponse getRecinto() {
 		return recinto;
 	}
 
-	public void setRecinto(Recinto recinto) {
+	public void setRecinto(RecintoResponse recinto) {
 		this.recinto = recinto;
-	}
-
-	@Override
-	public String toString() {
-		return "Eventos [nombre=" + nombre + ", descripcionCorta=" + descripcionCorta + ", descripcionExtendida="
-				+ descripcionExtendida + ", foto=" + foto + ", fechaEvento=" + fechaEvento + ", horaEvento="
-				+ horaEvento + ", precioMinimo=" + precioMinimo + ", precioMaximo=" + precioMaximo + ", normas="
-				+ normas + ", recinto=" + recinto + "]";
 	}
 
 }
