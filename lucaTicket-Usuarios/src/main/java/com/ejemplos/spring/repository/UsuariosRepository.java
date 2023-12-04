@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.ejemplos.spring.model.Usuario;
 
 @Repository
-public interface UsuariosRepository extends JpaRepository<Usuario, Long>{
+public interface UsuariosRepository extends JpaRepository<Usuario, Integer>{
 	
 }
