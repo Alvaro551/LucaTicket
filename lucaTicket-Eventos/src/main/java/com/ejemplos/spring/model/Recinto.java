@@ -17,12 +17,6 @@ public class Recinto {
 		ESTADIO, SALA_CONCIERTO, AIRE_LIBRE, TEATRO, ARENA_DEPORTIVA, CLUB_NOCTURNO;
 	};
 
-	public Recinto(long recintoID) {
-		super();
-		this.recintoID = recintoID;
-	}
-	
-
 	@Enumerated(EnumType.STRING) // Guarda el enum como String en la base de datos
 	private tipoRecinto tiporecinto;
 	private int aforo;
@@ -40,6 +34,7 @@ public class Recinto {
 	public Recinto() {
 		super();
 	}
+	
 
 	public long getId() {
 		return recintoID;

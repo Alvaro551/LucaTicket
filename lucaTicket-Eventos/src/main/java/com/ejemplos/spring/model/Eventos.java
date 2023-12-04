@@ -139,7 +139,5 @@ public class Eventos {
 	public void setHoraevento(LocalDateTime horaevento) {
 		this.horaevento = horaevento;
 	}
-	
-	
 
 }
