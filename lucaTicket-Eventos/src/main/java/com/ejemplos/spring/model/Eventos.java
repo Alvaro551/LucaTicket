@@ -31,8 +31,6 @@ public class Eventos {
 	@JoinColumn(name = "recintoID")
 	private Recinto recinto;
 
-
-
 	public Eventos(int id, String nombre, String descripcioncorta, String descripcionextendida, String foto,
 			LocalDate fechaevento, LocalDateTime horaevento, double preciomin, double preciomax, String normas,
 			Recinto recinto) {
@@ -94,24 +92,6 @@ public class Eventos {
 		this.foto = foto;
 	}
 
-	
-
-	public LocalDate getFechaevento() {
-		return fechaevento;
-	}
-
-	public void setFechaevento(LocalDate fechaevento) {
-		this.fechaevento = fechaevento;
-	}
-
-	public LocalDateTime getHoraevento() {
-		return horaevento;
-	}
-
-	public void setHoraevento(LocalDateTime horaevento) {
-		this.horaevento = horaevento;
-	}
-
 	public double getPreciomin() {
 		return preciomin;
 	}
@@ -143,5 +123,23 @@ public class Eventos {
 	public void setRecinto(Recinto recinto) {
 		this.recinto = recinto;
 	}
+
+	public LocalDate getFechaevento() {
+		return fechaevento;
+	}
+
+	public void setFechaevento(LocalDate fechaevento) {
+		this.fechaevento = fechaevento;
+	}
+
+	public LocalDateTime getHoraevento() {
+		return horaevento;
+	}
+
+	public void setHoraevento(LocalDateTime horaevento) {
+		this.horaevento = horaevento;
+	}
+	
+	
 
 }
