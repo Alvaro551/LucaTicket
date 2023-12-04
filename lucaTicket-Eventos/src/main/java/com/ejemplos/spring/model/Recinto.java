@@ -8,26 +8,32 @@ import jakarta.persistence.Id;
 @Entity
 public class Recinto {
 	@Id
-	private long id;
+	private long recintoID;
 	private String nombre;
 	private String ciudad;
 	private String direccion;
 
-	public enum TipoRecinto {
+	public enum tipoRecinto {
 		ESTADIO, SALA_CONCIERTO, AIRE_LIBRE, TEATRO, ARENA_DEPORTIVA, CLUB_NOCTURNO;
 	};
 
+	public Recinto(long recintoID) {
+		super();
+		this.recintoID = recintoID;
+	}
+	
+
 	@Enumerated(EnumType.STRING) // Guarda el enum como String en la base de datos
-	private TipoRecinto tipoRecinto;
+	private tipoRecinto tiporecinto;
 	private int aforo;
 
-	public Recinto(long id, String nombre, String ciudad, String direccion, TipoRecinto tipoRecinto, int aforo) {
+	public Recinto(long recintoID, String nombre, String ciudad, String direccion, tipoRecinto tiporecinto, int aforo) {
 		super();
-		this.id = id;
+		this.recintoID = recintoID;
 		this.nombre = nombre;
 		this.ciudad = ciudad;
 		this.direccion = direccion;
-		this.tipoRecinto = tipoRecinto;
+		this.tiporecinto = tiporecinto;
 		this.aforo = aforo;
 	}
 
@@ -36,11 +42,11 @@ public class Recinto {
 	}
 
 	public long getId() {
-		return id;
+		return recintoID;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(long recintoID) {
+		this.recintoID = recintoID;
 	}
 
 	public String getNombre() {
@@ -67,12 +73,12 @@ public class Recinto {
 		this.direccion = direccion;
 	}
 
-	public TipoRecinto getTipoRecinto() {
-		return tipoRecinto;
+	public tipoRecinto getTipoRecinto() {
+		return tiporecinto;
 	}
 
-	public void setTipoRecinto(TipoRecinto tipoRecinto) {
-		this.tipoRecinto = tipoRecinto;
+	public void setTipoRecinto(tipoRecinto tiporecinto) {
+		this.tiporecinto = tiporecinto;
 	}
 
 	public int getAforo() {
@@ -85,8 +91,8 @@ public class Recinto {
 
 	@Override
 	public String toString() {
-		return "Recinto [id=" + id + ", nombre=" + nombre + ", ciudad=" + ciudad + ", direccion=" + direccion
-				+ ", tipoRecinto=" + tipoRecinto + ", aforo=" + aforo + "]";
+		return "Recinto [id=" + recintoID + ", nombre=" + nombre + ", ciudad=" + ciudad + ", direccion=" + direccion
+				+ ", tipoRecinto=" + tiporecinto + ", aforo=" + aforo + "]";
 	}
 
 	

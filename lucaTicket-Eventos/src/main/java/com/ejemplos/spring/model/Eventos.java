@@ -1,43 +1,49 @@
 package com.ejemplos.spring.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+//@Table(name = "Eventos")
 public class Eventos {
 	@Id
-	private long id;
+	@Column(name = "eventoID")
+	private int id;
 	private String nombre;
-	private String descripcionCorta;
-	private String descripcionExtendida;
+	private String descripcioncorta;
+	private String descripcionextendida;
 	private String foto;
-	private Date fechaEvento;
-	private Date horaEvento;
-	private double precioMinimo;
-	private double precioMaximo;
+	private LocalDate fechaevento;
+	private LocalDateTime horaevento;
+	private double preciomin;
+	private double preciomax;
 	private String normas;
 
 	@ManyToOne
-	@JoinColumn(name = "recinto_id") 
+	@JoinColumn(name = "recintoID")
 	private Recinto recinto;
 
-	public Eventos(long id, String nombre, String descripcionCorta, String descripcionExtendida, String foto,
-			Date fechaEvento, Date horaEvento, double precioMinimo, double precioMaximo, String normas,
+	public Eventos(int id, String nombre, String descripcioncorta, String descripcionextendida, String foto,
+			LocalDate fechaevento, LocalDateTime horaevento, double preciomin, double preciomax, String normas,
 			Recinto recinto) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.descripcionCorta = descripcionCorta;
-		this.descripcionExtendida = descripcionExtendida;
+		this.descripcioncorta = descripcioncorta;
+		this.descripcionextendida = descripcionextendida;
 		this.foto = foto;
-		this.fechaEvento = fechaEvento;
-		this.horaEvento = horaEvento;
-		this.precioMinimo = precioMinimo;
-		this.precioMaximo = precioMaximo;
+		this.fechaevento = fechaevento;
+		this.horaevento = horaevento;
+		this.preciomin = preciomin;
+		this.preciomax = preciomax;
 		this.normas = normas;
 		this.recinto = recinto;
 	}
@@ -46,11 +52,11 @@ public class Eventos {
 		super();
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -62,20 +68,20 @@ public class Eventos {
 		this.nombre = nombre;
 	}
 
-	public String getDescripcionCorta() {
-		return descripcionCorta;
+	public String getDescripcioncorta() {
+		return descripcioncorta;
 	}
 
-	public void setDescripcionCorta(String descripcionCorta) {
-		this.descripcionCorta = descripcionCorta;
+	public void setDescripcioncorta(String descripcioncorta) {
+		this.descripcioncorta = descripcioncorta;
 	}
 
-	public String getDescripcionExtendida() {
-		return descripcionExtendida;
+	public String getDescripcionextendida() {
+		return descripcionextendida;
 	}
 
-	public void setDescripcionExtendida(String descripcionExtendida) {
-		this.descripcionExtendida = descripcionExtendida;
+	public void setDescripcionextendida(String descripcionextendida) {
+		this.descripcionextendida = descripcionextendida;
 	}
 
 	public String getFoto() {
@@ -86,36 +92,20 @@ public class Eventos {
 		this.foto = foto;
 	}
 
-	public Date getFechaEvento() {
-		return fechaEvento;
+	public double getPreciomin() {
+		return preciomin;
 	}
 
-	public void setFechaEvento(Date fechaEvento) {
-		this.fechaEvento = fechaEvento;
+	public void setPreciomin(double preciomin) {
+		this.preciomin = preciomin;
 	}
 
-	public Date getHoraEvento() {
-		return horaEvento;
+	public double getPreciomax() {
+		return preciomax;
 	}
 
-	public void setHoraEvento(Date horaEvento) {
-		this.horaEvento = horaEvento;
-	}
-
-	public double getPrecioMinimo() {
-		return precioMinimo;
-	}
-
-	public void setPrecioMinimo(double precioMinimo) {
-		this.precioMinimo = precioMinimo;
-	}
-
-	public double getPrecioMaximo() {
-		return precioMaximo;
-	}
-
-	public void setPrecioMaximo(double precioMaximo) {
-		this.precioMaximo = precioMaximo;
+	public void setPreciomax(double preciomax) {
+		this.preciomax = preciomax;
 	}
 
 	public String getNormas() {
@@ -134,12 +124,22 @@ public class Eventos {
 		this.recinto = recinto;
 	}
 
-	@Override
-	public String toString() {
-		return "Eventos [nombre=" + nombre + ", descripcionCorta=" + descripcionCorta + ", descripcionExtendida="
-				+ descripcionExtendida + ", foto=" + foto + ", fechaEvento=" + fechaEvento + ", horaEvento="
-				+ horaEvento + ", precioMinimo=" + precioMinimo + ", precioMaximo=" + precioMaximo + ", normas="
-				+ normas + ", recinto=" + recinto + "]";
+	public LocalDate getFechaevento() {
+		return fechaevento;
 	}
+
+	public void setFechaevento(LocalDate fechaevento) {
+		this.fechaevento = fechaevento;
+	}
+
+	public LocalDateTime getHoraevento() {
+		return horaevento;
+	}
+
+	public void setHoraevento(LocalDateTime horaevento) {
+		this.horaevento = horaevento;
+	}
+	
+	
 
 }
