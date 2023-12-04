@@ -1,5 +1,7 @@
 package com.ejemplos.spring.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,30 +11,70 @@ import org.springframework.stereotype.Service;
 import com.ejemplos.spring.model.Eventos;
 import com.ejemplos.spring.repository.EventoRepository;
 
-
 @Service
-public class EventoServiceImpl implements EventoService{
+public class EventoServiceImpl implements EventoService {
 
-	 @Autowired
-	    private EventoRepository eventoRepository;
+	@Autowired
+	private EventoRepository eventoRepository;
 
-	    @Override
-	    public List<Eventos> findAll() {
-	        return eventoRepository.findAll();
-	    }
-	    
-	    @Override
-	    public Eventos addEvento(Eventos evento) {
-	        // Aquí podrías agregar validaciones antes de guardar el evento si es necesario
-	        return eventoRepository.save(evento);
-	    }
-		@Override
-		public Optional<Eventos> buscarEventoPorId(Integer id) {
-			
-			return eventoRepository.findById(id);
+	@Override
+	public List<Eventos> findAll() {
+		return eventoRepository.findAll();
+	}
+
+	@Override
+	public Eventos addEvento(Eventos evento) {
+		if (esNombreValido(evento.getNombre()) && esDescripcionCortaValida(evento.getDescripcioncorta())
+				&& esDescripcionExtendidaValida(evento.getDescripcionextendida()) && esFotoValida(evento.getFoto())
+				&& esFechaEventoValida(evento.getFechaevento()) && esHoraEventoValida(evento.getHoraevento())
+				&& esPrecioMinValido(evento.getPreciomin()) && esPrecioMaxValido(evento.getPreciomax())
+				&& esNormasValida(evento.getNormas())) {
+			return eventoRepository.save(evento);
+		} else {
+			throw new IllegalArgumentException("Faltan datos obligatorios o son inválidos en el evento");
 		}
+	}
 
-		
+	private boolean esNombreValido(String nombre) {
+		return nombre != null && !nombre.trim().isEmpty();
+	}
 
+	private boolean esDescripcionCortaValida(String descripcion) {
+		return descripcion != null && !descripcion.trim().isEmpty();
+	}
+
+	private boolean esDescripcionExtendidaValida(String descripcion) {
+		return descripcion != null && !descripcion.trim().isEmpty();
+	}
+
+	private boolean esPrecioMinValido(double precio) {
+		return precio >= 0;
+	}
+
+	private boolean esPrecioMaxValido(double precio) {
+		return precio >= 0;
+	}
+
+	private boolean esFechaEventoValida(LocalDate fecha) {
+		return fecha != null;
+	}
+
+	private boolean esHoraEventoValida(LocalDateTime hora) {
+		return hora != null;
+	}
+
+	private boolean esNormasValida(String normas) {
+		return normas != null && !normas.trim().isEmpty();
+	}
+
+	private boolean esFotoValida(String foto) {
+		return foto.toLowerCase().endsWith(".jpg") && foto != null;
+	}
+
+	@Override
+	public Optional<Eventos> buscarEventoPorId(Integer id) {
+
+		return eventoRepository.findById(id);
+	}
 
 }
