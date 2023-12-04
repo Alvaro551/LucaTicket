@@ -26,8 +26,11 @@ public class EventoController {
 	@Autowired
 	private EventoRepository eventoRepository;
 
-	@GetMapping("")
+	@GetMapping
 	public List<EventoResponse> obtenerEventos() {
-		return EventoResponse.of(eventoRepository.findAll());
+	    List<Eventos> eventos = eventoRepository.findAll();
+	    return eventos.stream()
+	                  .map(EventoResponse::of)
+	                  .collect(Collectors.toList());
 	}
 }

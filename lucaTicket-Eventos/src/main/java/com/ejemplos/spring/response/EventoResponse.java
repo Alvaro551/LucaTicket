@@ -2,39 +2,53 @@ package com.ejemplos.spring.response;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ejemplos.spring.model.Eventos;
+import com.ejemplos.spring.model.Recinto;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 // DTO para la respuesta de Evento
 public class EventoResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private long id;
+	private int eventoID;
 	private String nombre;
-	private String descripcionCorta;
-	private String descripcionExtendida;
+	private String descripcioncorta;
+	private String descripcionextendida;
 	private String foto;
-	private Date fechaEvento;
-	private Date horaEvento;
-	private double precioMinimo;
-	private double precioMaximo;
+	private LocalDate fechaevento;
+	private LocalDateTime horaevento;
+	private double preciomin;
+	private double preciomax;
 	private String normas;
 	private RecintoResponse recinto; // Asumiendo que tienes una clase RecintoResponse
 
 	public static EventoResponse of(Eventos evento) {
 		EventoResponse response = new EventoResponse();
-		response.setId(evento.getId());
+
+		response.setEventoID(evento.getId()); // Asumiendo que getId() devuelve un int
 		response.setNombre(evento.getNombre());
-		response.setDescripcionCorta(evento.getDescripcionCorta());
-		response.setDescripcionExtendida(evento.getDescripcionExtendida());
+		response.setDescripcioncorta(evento.getDescripcioncorta());
+		response.setDescripcionextendida(evento.getDescripcionextendida());
 		response.setFoto(evento.getFoto());
-		response.setFechaEvento((Date) evento.getFechaEvento());
-		response.setHoraEvento((Date) evento.getHoraEvento());
-		response.setPrecioMinimo(evento.getPrecioMinimo());
-		response.setPrecioMaximo(evento.getPrecioMaximo());
+		response.setFechaevento(evento.getFechaevento()); // Asumiendo que getFechaEvento() devuelve un LocalDate
+		response.setHoraevento(evento.getHoraevento()); // Asumiendo que getHoraEvento() devuelve un LocalDateTime
+		response.setPreciomin(evento.getPreciomin());
+		response.setPreciomax(evento.getPreciomax());
 		response.setNormas(evento.getNormas());
+
+		if (evento.getRecinto() != null) {
+			response.setRecinto(RecintoResponse.of(evento.getRecinto())); // Asegúrate de tener un método of en
+																			// RecintoResponse
+		}
+		// añadir que no se null recinto
 		response.setRecinto(RecintoResponse.of(evento.getRecinto()));
 
 		return response;
@@ -44,12 +58,12 @@ public class EventoResponse implements Serializable {
 		return eventos.stream().map(c -> of(c)).collect(Collectors.toList());
 	}
 
-	public long getId() {
-		return id;
+	public int getEventoID() {
+		return eventoID;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setEventoID(int eventoID) {
+		this.eventoID = eventoID;
 	}
 
 	public String getNombre() {
@@ -60,20 +74,20 @@ public class EventoResponse implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getDescripcionCorta() {
-		return descripcionCorta;
+	public String getDescripcioncorta() {
+		return descripcioncorta;
 	}
 
-	public void setDescripcionCorta(String descripcionCorta) {
-		this.descripcionCorta = descripcionCorta;
+	public void setDescripcioncorta(String descripcioncorta) {
+		this.descripcioncorta = descripcioncorta;
 	}
 
-	public String getDescripcionExtendida() {
-		return descripcionExtendida;
+	public String getDescripcionextendida() {
+		return descripcionextendida;
 	}
 
-	public void setDescripcionExtendida(String descripcionExtendida) {
-		this.descripcionExtendida = descripcionExtendida;
+	public void setDescripcionextendida(String descripcionextendida) {
+		this.descripcionextendida = descripcionextendida;
 	}
 
 	public String getFoto() {
@@ -84,36 +98,36 @@ public class EventoResponse implements Serializable {
 		this.foto = foto;
 	}
 
-	public Date getFechaEvento() {
-		return fechaEvento;
+	public LocalDate getFechaevento() {
+		return fechaevento;
 	}
 
-	public void setFechaEvento(Date fechaEvento) {
-		this.fechaEvento = fechaEvento;
+	public void setFechaevento(LocalDate fechaevento) {
+		this.fechaevento = fechaevento;
 	}
 
-	public Date getHoraEvento() {
-		return horaEvento;
+	public LocalDateTime getHoraevento() {
+		return horaevento;
 	}
 
-	public void setHoraEvento(Date horaEvento) {
-		this.horaEvento = horaEvento;
+	public void setHoraevento(LocalDateTime horaevento) {
+		this.horaevento = horaevento;
 	}
 
-	public double getPrecioMinimo() {
-		return precioMinimo;
+	public double getPreciomin() {
+		return preciomin;
 	}
 
-	public void setPrecioMinimo(double precioMinimo) {
-		this.precioMinimo = precioMinimo;
+	public void setPreciomin(double preciomin) {
+		this.preciomin = preciomin;
 	}
 
-	public double getPrecioMaximo() {
-		return precioMaximo;
+	public double getPreciomax() {
+		return preciomax;
 	}
 
-	public void setPrecioMaximo(double precioMaximo) {
-		this.precioMaximo = precioMaximo;
+	public void setPreciomax(double preciomax) {
+		this.preciomax = preciomax;
 	}
 
 	public String getNormas() {
