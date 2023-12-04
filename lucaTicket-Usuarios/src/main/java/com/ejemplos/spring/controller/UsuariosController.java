@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ejemplos.spring.model.CustomResponse;
 import com.ejemplos.spring.model.Usuario;
 import com.ejemplos.spring.repository.UsuariosRepository;
 import com.ejemplos.spring.response.UsuarioResponse;
@@ -28,17 +29,24 @@ public class UsuariosController {
 	private UsuariosRepository usuarioRepository;
 	
 	@GetMapping
-	public List<UsuarioResponse> obtenerUsuarios(){
-		List<Usuario> usuario = usuarioRepository.findAll();
-		return usuario.stream()
-				.map(UsuarioResponse::of)
-				.collect(Collectors.toList());
-	}
-	
-	@PostMapping
-	public ResponseEntity<UsuarioResponse> addUsuario(@RequestBody Usuario nuevoUsuario){
-		Usuario usuarioGuardado = usuarioService.addUsuario(nuevoUsuario);
-		return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioResponse.of(usuarioGuardado));
-	}
+    public ResponseEntity<CustomResponse<List<UsuarioResponse>>> obtenerUsuarios() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        List<UsuarioResponse> usuarioResponses = usuarios.stream()
+                                                         .map(UsuarioResponse::of)
+                                                         .collect(Collectors.toList());
+        return ResponseEntity.ok(CustomResponse.createSuccessResponse(usuarioResponses));
+    }
+
+    @PostMapping
+    public ResponseEntity<CustomResponse<UsuarioResponse>> addUsuario(@RequestBody Usuario nuevoUsuario) {
+        try {
+            Usuario usuarioGuardado = usuarioService.addUsuario(nuevoUsuario);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                                 .body(CustomResponse.createSuccessResponse(UsuarioResponse.of(usuarioGuardado)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body(CustomResponse.createInternalServerErrorResponse("Error al crear el usuario"));
+        }
+    }
 	
 }
