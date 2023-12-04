@@ -19,4 +19,10 @@ public class EventoServiceImpl implements EventoService{
 	        return eventoRepository.findAll();
 	    }
 
+
+	    @Override
+	    public Eventos addEvento(Eventos evento) {
+	        // Aquí podrías agregar validaciones antes de guardar el evento si es necesario
+	        return eventoRepository.save(evento);
+	    }
 }
