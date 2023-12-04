@@ -18,6 +18,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public List<Usuario> findAll() {
 		return usuarioRepository.findAll();
 	}
+	
+	public Usuario findById(Integer id) {
+		return usuarioRepository.findById(id).orElse(null);
+	}
 
 	public Usuario addUsuario(Usuario usuario) {
 		if (esNombreValido(usuario.getNombre()) && esApellidoValido(usuario.getApellido())
@@ -49,9 +53,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return fecha != null;
 	}
 
-	@Override
-	public Usuario findById(int id) {
-		return usuarioRepository.findById(id).orElse(null);
-	}
+
+
+
 
 }
