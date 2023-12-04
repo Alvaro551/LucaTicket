@@ -20,7 +20,12 @@ public class EventoServiceImpl implements EventoService{
 	    public List<Eventos> findAll() {
 	        return eventoRepository.findAll();
 	    }
-
+  
+	    @Override
+	    public Eventos addEvento(Eventos evento) {
+	        // Aquí podrías agregar validaciones antes de guardar el evento si es necesario
+	        return eventoRepository.save(evento);
+	    }
 		@Override
 		public Optional<Eventos> buscarEventoPorId(Integer id) {
 			
@@ -28,5 +33,6 @@ public class EventoServiceImpl implements EventoService{
 		}
 
 		
+
 
 }
