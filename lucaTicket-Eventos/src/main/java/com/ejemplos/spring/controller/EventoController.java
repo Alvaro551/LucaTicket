@@ -1,6 +1,7 @@
 package com.ejemplos.spring.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +37,13 @@ public class EventoController {
         Eventos eventoGuardado = eventoService.addEvento(nuevoEvento);
         return ResponseEntity.status(HttpStatus.CREATED).body(EventoResponse.of(eventoGuardado));
     }
+	
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<EventoResponse> obtenerEventoPorId(@PathVariable Integer id) {
+	    Optional<Eventos> evento = eventoRepository.findById(id);
+
+	    return evento.map(e -> ResponseEntity.ok(EventoResponse.of(e)))
+	                 .orElseGet(() -> ResponseEntity.notFound().build());
+	}
 }
