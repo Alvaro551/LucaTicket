@@ -31,7 +31,6 @@ public class EventoController {
                       .collect(Collectors.toList());
     }
 
-
     @PostMapping
     public ResponseEntity<EventoResponse> addEvento(@RequestBody Eventos nuevoEvento) {
         Eventos eventoGuardado = eventoService.addEvento(nuevoEvento);
