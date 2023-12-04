@@ -10,6 +10,6 @@ import com.ejemplos.spring.model.Usuario;
 public interface UsuarioService {
 	List<Usuario> findAll();
 	
-	Usuario findById(int id);
+	Usuario findById(Integer id);
 	Usuario addUsuario(Usuario usuario);
 }

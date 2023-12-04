@@ -25,9 +25,4 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario addUsuario(Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}
-
-	@Override
-	public Usuario findById(int id) {
-		return null;
-	}
 }
