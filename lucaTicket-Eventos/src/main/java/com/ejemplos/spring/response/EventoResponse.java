@@ -33,13 +33,13 @@ public class EventoResponse implements Serializable {
 	public static EventoResponse of(Eventos evento) {
 		EventoResponse response = new EventoResponse();
 
-		response.setEventoID(evento.getId()); // Asumiendo que getId() devuelve un int
+		response.setEventoID(evento.getId()); 
 		response.setNombre(evento.getNombre());
 		response.setDescripcioncorta(evento.getDescripcioncorta());
 		response.setDescripcionextendida(evento.getDescripcionextendida());
 		response.setFoto(evento.getFoto());
-		response.setFechaevento(evento.getFechaevento()); // Asumiendo que getFechaEvento() devuelve un LocalDate
-		response.setHoraevento(evento.getHoraevento()); // Asumiendo que getHoraEvento() devuelve un LocalDateTime
+		response.setFechaevento(evento.getFechaevento());
+		response.setHoraevento(evento.getHoraevento()); 
 		response.setPreciomin(evento.getPreciomin());
 		response.setPreciomax(evento.getPreciomax());
 		response.setNormas(evento.getNormas());
