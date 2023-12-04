@@ -36,7 +36,7 @@ public class UsuariosController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UsuarioResponse> addEvento(@RequestBody Usuario nuevoUsuario){
+	public ResponseEntity<UsuarioResponse> addUsuarios(@RequestBody Usuario nuevoUsuario){
 		Usuario usuarioGuardado = usuarioService.addUsuario(nuevoUsuario);
 		return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioResponse.of(usuarioGuardado));
 	}
