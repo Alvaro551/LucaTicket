@@ -18,7 +18,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return usuarioRepository.findAll();
 	}
 	
-	public Usuario findById(Long id) {
+	public Usuario findById(Integer id) {
 		return usuarioRepository.findById(id).orElse(null);
 	}
 	
