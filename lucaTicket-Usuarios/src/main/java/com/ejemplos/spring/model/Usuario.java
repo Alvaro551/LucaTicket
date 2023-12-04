@@ -1,26 +1,45 @@
 package com.ejemplos.spring.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table (name="usuarios")
 public class Usuario {
 
+	@Id
+	@Column(name="usuarioID")
+	private int usuarioID;
 	private String nombre;
 	private String apellido;
 	private String mail;
 	private String contrasena;
-	private Date fechaAlta;
+	private LocalDate fechaalta;
 	
-	public Usuario(String nombre, String apellido, String mail, String contrasena, Date fechaAlta) {
+	public Usuario(int usuarioID, String nombre, String apellido, String mail, String contrasena, LocalDate fechaalta) {
 		super();
+		this.usuarioID = usuarioID;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.mail = mail;
 		this.contrasena = contrasena;
-		this.fechaAlta = fechaAlta;
+		this.fechaalta = fechaalta;
 	}
 
 	public Usuario() {
 		super();
+	}
+	
+	public int getUsuarioID(){
+		return usuarioID;
+	}
+	
+	public void setUsuarioID(int usuarioID) {
+		this.usuarioID = usuarioID;
 	}
 
 	public String getNombre() {
@@ -55,18 +74,19 @@ public class Usuario {
 		this.contrasena = contrasena;
 	}
 
-	public Date getFechaAlta() {
-		return fechaAlta;
+	public LocalDate getFechaAlta() {
+		return fechaalta;
 	}
 
-	public void setFechaAlta(Date fechaAlta) {
-		this.fechaAlta = fechaAlta;
+	public void setFechaAlta(LocalDate fechaAlta) {
+		this.fechaalta = fechaAlta;
 	}
 
 	@Override
 	public String toString() {
-		return "Usuario [nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail + ", contrasena=" + contrasena
-				+ ", fechaAlta=" + fechaAlta + "]";
+		return "Usuario [usuarioID=" + usuarioID + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail
+				+ ", contrasena=" + contrasena + ", fechaAlta=" + fechaalta + "]";
 	}
+
 	
 }
