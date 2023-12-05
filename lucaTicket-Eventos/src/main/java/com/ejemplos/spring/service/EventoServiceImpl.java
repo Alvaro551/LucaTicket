@@ -1,26 +1,26 @@
 package com.ejemplos.spring.service;
- 
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
- 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
+
 import com.ejemplos.spring.model.Eventos;
 import com.ejemplos.spring.repository.EventoRepository;
- 
+
 /**
-* Implementación de la interfaz EventoService que proporciona servicios
-* relacionados con eventos.
-*/
+ * Implementación de la interfaz EventoService que proporciona servicios
+ * relacionados con eventos.
+ */
 @Service
 public class EventoServiceImpl implements EventoService {
- 
+
 	@Autowired
 	private EventoRepository eventoRepository;
- 
+
 	/**
 	 * Recupera todos los eventos.
 	 *
@@ -30,7 +30,7 @@ public class EventoServiceImpl implements EventoService {
 	public List<Eventos> findAll() {
 		return eventoRepository.findAll();
 	}
- 
+
 	/**
 	 * Agrega un nuevo evento después de validar sus datos.
 	 *
@@ -43,9 +43,8 @@ public class EventoServiceImpl implements EventoService {
 	public Eventos addEvento(Eventos evento) {
 		validarEvento(evento);
 		return eventoRepository.save(evento);
- 
+
 	}
- 
 	/**
 	 * Busca un evento por su identificador.
 	 *
@@ -54,7 +53,7 @@ public class EventoServiceImpl implements EventoService {
 	 */
 	@Override
 	public Optional<Eventos> buscarEventoPorId(Integer id) {
- 
+
 		return eventoRepository.findById(id);
 	}
 
@@ -66,7 +65,6 @@ public class EventoServiceImpl implements EventoService {
 		return true;
 	}
 
- 
 	private void validarEvento(Eventos evento) {
 		if (!esNombreValido(evento.getNombre())) {
 			throw new IllegalArgumentException("El nombre del evento es inválido o nulo");
@@ -77,7 +75,7 @@ public class EventoServiceImpl implements EventoService {
 		if (!esDescripcionExtendidaValida(evento.getDescripcionextendida())) {
 			throw new IllegalArgumentException("La descripción extendida del evento es inválida o nula");
 		}
- 
+
 		if (!esFotoValida(evento.getFoto())) {
 			throw new IllegalArgumentException("La foto del evento es inválida o nula");
 		}
@@ -96,47 +94,61 @@ public class EventoServiceImpl implements EventoService {
 		if (!esNormasValida(evento.getNormas())) {
 			throw new IllegalArgumentException("Las normas del evento son inválidas o nulas");
 		}
- 
+		if (!esGeneroValido(evento.getGenero())) {
+			throw new IllegalArgumentException("Las normas del evento son inválidas o nulas");
+		}
+
 	}
- 
+
 	private boolean esNombreValido(String nombre) {
 		return nombre != null && !nombre.trim().isEmpty();
 	}
- 
+
 	private boolean esDescripcionCortaValida(String descripcion) {
 		return descripcion != null && !descripcion.trim().isEmpty();
 	}
- 
+
 	private boolean esDescripcionExtendidaValida(String descripcion) {
 		return descripcion != null && !descripcion.trim().isEmpty();
 	}
- 
+
 	private boolean esPrecioMinValido(double precio) {
 		return precio >= 0;
 	}
- 
+
 	private boolean esPrecioMaxValido(double precio) {
 		return precio >= 1;
 	}
- 
+
 	private boolean esFechaEventoValida(LocalDate fecha) {
 		return fecha != null;
 	}
- 
+
 	private boolean esHoraEventoValida(LocalDateTime hora) {
 		return hora != null;
 	}
- 
+
 	private boolean esNormasValida(String normas) {
 		return normas != null && !normas.trim().isEmpty();
 	}
- 
+
 	private boolean esFotoValida(String foto) {
 		return foto.toLowerCase().endsWith(".jpg") && foto != null;
 	}
+	
+	private boolean esGeneroValido(String genero) {
+		return genero != null && !genero.trim().isEmpty();
+	}
+
 	@Override
 	public List<Eventos> buscarEventosPorNombre(String nombre) {
 		return eventoRepository.findByNombre(nombre);
 	}
- 
+
+	@Override
+	public List<Eventos> filtrarGenero(String genero) {
+
+		return eventoRepository.findByGenero(genero);
+		
+	}
 }
