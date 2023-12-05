@@ -27,10 +27,10 @@ public class EventoResponse implements Serializable {
 	private String foto;
 	private LocalDate fechaevento;
 	private LocalDateTime horaevento;
-	private double preciomin;
-	private double preciomax;
+	private String preciomin;
+	private String preciomax;
 	private String normas;
-	private RecintoResponse recinto; // Asumiendo que tienes una clase RecintoResponse
+	private RecintoResponse recinto; 
 
 	/**
 	 * Método estático para convertir un objeto Eventos a un objeto EventoResponse.
@@ -41,24 +41,22 @@ public class EventoResponse implements Serializable {
 	public static EventoResponse of(Eventos evento) {
 		EventoResponse response = new EventoResponse();
 
-		response.setEventoID(evento.getId()); 
+		response.setEventoID(evento.getId());
 		response.setNombre(evento.getNombre());
 		response.setDescripcioncorta(evento.getDescripcioncorta());
 		response.setDescripcionextendida(evento.getDescripcionextendida());
 		response.setFoto(evento.getFoto());
 		response.setFechaevento(evento.getFechaevento());
-		response.setHoraevento(evento.getHoraevento()); 
-		response.setPreciomin(evento.getPreciomin());
-		response.setPreciomax(evento.getPreciomax());
+		response.setHoraevento(evento.getHoraevento());
+		response.setPreciomin(String.format("%.2f €", evento.getPreciomin()));
+		response.setPreciomax(String.format("%.2f €", evento.getPreciomax()));
 		response.setNormas(evento.getNormas());
 
 		if (evento.getRecinto() != null) {
-			response.setRecinto(RecintoResponse.of(evento.getRecinto())); 
-			// Asegúrate de tener un método of en
-			// RecintoResponse
+			response.setRecinto(RecintoResponse.of(evento.getRecinto()));
 		}
-		// añadir que no se null recinto
-		response.setRecinto(RecintoResponse.of(evento.getRecinto()));
+
+		
 
 		return response;
 	}
@@ -130,19 +128,19 @@ public class EventoResponse implements Serializable {
 		this.horaevento = horaevento;
 	}
 
-	public double getPreciomin() {
+	public String getPreciomin() {
 		return preciomin;
 	}
 
-	public void setPreciomin(double preciomin) {
+	public void setPreciomin(String preciomin) {
 		this.preciomin = preciomin;
 	}
 
-	public double getPreciomax() {
+	public String getPreciomax() {
 		return preciomax;
 	}
 
-	public void setPreciomax(double preciomax) {
+	public void setPreciomax(String preciomax) {
 		this.preciomax = preciomax;
 	}
 

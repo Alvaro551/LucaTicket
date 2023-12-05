@@ -15,7 +15,7 @@ public class RecintoResponse implements Serializable {
 	private String ciudad;
 	private String direccion;
 	private String tipoRecinto; // Cambiado de 'recinto' a 'tipoRecinto' para evitar confusión
-	private int aforo;
+	private String aforo;
 
 	/**
 	 * Método estático para convertir un objeto Recinto a un objeto RecintoResponse.
@@ -29,12 +29,13 @@ public class RecintoResponse implements Serializable {
 		response.setNombre(recinto.getNombre());
 		response.setCiudad(recinto.getCiudad());
 		response.setDireccion(recinto.getDireccion());
-		response.setTipoRecinto(recinto.getTipoRecinto().name()); 
-		response.setAforo(recinto.getAforo());
+		response.setTipoRecinto(recinto.getTipoRecinto().name());
+		response.setAforo(recinto.getAforo() + " personas");
 
 		return response;
 	}
 
+	
 	public long getId() {
 		return id;
 	}
@@ -75,11 +76,11 @@ public class RecintoResponse implements Serializable {
 		this.tipoRecinto = tipoRecinto;
 	}
 
-	public int getAforo() {
+	public String getAforo() {
 		return aforo;
 	}
 
-	public void setAforo(int aforo) {
+	public void setAforo(String aforo) {
 		this.aforo = aforo;
 	}
 
