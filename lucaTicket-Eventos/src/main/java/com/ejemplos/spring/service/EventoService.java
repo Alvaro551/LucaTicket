@@ -34,8 +34,7 @@ public interface EventoService {
 	Optional<Eventos> buscarEventoPorId(Integer id);
 
 	boolean borrarEventoPorId(Integer id);
-  
-    
+ 
     List<Eventos> buscarEventosPorNombre(String nombre);
     List<Eventos> filtrarGenero(String genero);
 }
