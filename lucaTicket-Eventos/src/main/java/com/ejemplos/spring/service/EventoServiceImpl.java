@@ -58,16 +58,13 @@ public class EventoServiceImpl implements EventoService {
 		return eventoRepository.findById(id);
 	}
 
-	
 	public boolean borrarEventoPorId(Integer id) {
-	    if (!eventoRepository.existsById(id)) {  
-	        return false;
-	    }
-	    eventoRepository.deleteById(id);
-	    return true;
+		if (!eventoRepository.existsById(id)) {
+			return false;
+		}
+		eventoRepository.deleteById(id);
+		return true;
 	}
-	
-	
 
 	private void validarEvento(Eventos evento) {
 		if (!esNombreValido(evento.getNombre())) {
@@ -137,10 +134,6 @@ public class EventoServiceImpl implements EventoService {
 		return foto.toLowerCase().endsWith(".jpg") && foto != null;
 	}
 
-	
-		return eventoRepository.findById(id);
-	}
-	
 	@Override
 	public List<Eventos> buscarEventosPorNombre(String nombre) {
 		return eventoRepository.findByNombre(nombre);
