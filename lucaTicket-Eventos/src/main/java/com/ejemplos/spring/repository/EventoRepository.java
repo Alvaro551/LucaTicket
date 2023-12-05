@@ -14,5 +14,7 @@ import com.ejemplos.spring.model.Eventos;
 @Repository
 public interface EventoRepository extends JpaRepository<Eventos, Integer> {
 
+	List<Eventos> findByGenero(String genero);
+	
 	List<Eventos> findByNombre(String nombre);
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    

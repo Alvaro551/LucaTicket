@@ -113,5 +113,14 @@ public class EventoController {
 	    List<EventoResponse> eventoResponses = eventosFiltrados.stream().map(EventoResponse::of).collect(Collectors.toList());
 	    return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoResponses));
 	}
+  
+  @GetMapping("/genero/{genero}")
+    public ResponseEntity<CustomResponse<List<EventoResponse>>> filtrarGenero(@PathVariable String genero){
+    	List<Eventos> eventosGenero = eventoService.filtrarGenero(genero);
+    	List<EventoResponse> eventosGeneroResponse = eventosGenero.stream()
+    													.map(EventoResponse::of)
+    													.collect(Collectors.toList());
+    	return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse));
+    }
 
 }
