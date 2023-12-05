@@ -6,6 +6,9 @@ import java.util.List;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+/**
+ * La clase CustomErrorJson representa un objeto JSON personalizado para las respuestas de error.
+ */
 public class CustomErrorJson {
 
 	// Modificado. Originalmente era una fecha
@@ -20,6 +23,10 @@ public class CustomErrorJson {
 	private String jdk;
 	// private String infoadicional;
 
+	  /**
+     * Constructor por defecto de CustomErrorJson.
+     * Inicializa los atributos con valores predeterminados.
+     */
 	public CustomErrorJson() {
 		super();
 		this.timestamp = "";
@@ -31,6 +38,17 @@ public class CustomErrorJson {
 		this.jdk = "ND";
 	}
 
+	/**
+     * Constructor de CustomErrorJson con parámetros.
+     *
+     * @param timestamp La marca de tiempo del error.
+     * @param status    El código de estado del error.
+     * @param error     La descripción del error.
+     * @param trace     La traza del error.
+     * @param message   La lista de mensajes de error.
+     * @param path      La ruta del recurso que generó el error.
+     * @param jdk       La versión de JDK utilizada.
+     */
 	public CustomErrorJson(Date timestamp, int status, String error, String trace, List<String> message, String path,
 			String jdk) {
 		super();

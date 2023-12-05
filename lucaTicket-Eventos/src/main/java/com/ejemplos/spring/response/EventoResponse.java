@@ -14,7 +14,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-// DTO para la respuesta de Evento
+/**
+ * Clase DTO (Data Transfer Object) para representar la respuesta de un evento.
+ */
 public class EventoResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,6 +32,12 @@ public class EventoResponse implements Serializable {
 	private String normas;
 	private RecintoResponse recinto; 
 
+	/**
+	 * Método estático para convertir un objeto Eventos a un objeto EventoResponse.
+	 *
+	 * @param evento El objeto Eventos a convertir.
+	 * @return Un objeto EventoResponse que representa la respuesta del evento.
+	 */
 	public static EventoResponse of(Eventos evento) {
 		EventoResponse response = new EventoResponse();
 
@@ -46,7 +54,6 @@ public class EventoResponse implements Serializable {
 
 		if (evento.getRecinto() != null) {
 			response.setRecinto(RecintoResponse.of(evento.getRecinto()));
-
 		}
 
 		
@@ -54,6 +61,13 @@ public class EventoResponse implements Serializable {
 		return response;
 	}
 
+	/**
+	 * Método estático para convertir una lista de objetos Eventos a una lista de
+	 * objetos EventoResponse.
+	 *
+	 * @param eventos La lista de objetos Eventos a convertir.
+	 * @return Una lista de objetos EventoResponse que representan las respuestas de los eventos.
+	 */
 	public static List<EventoResponse> of(List<Eventos> eventos) {
 		return eventos.stream().map(c -> of(c)).collect(Collectors.toList());
 	}

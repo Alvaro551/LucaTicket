@@ -9,16 +9,44 @@ import org.springframework.stereotype.Service;
 import com.ejemplos.spring.model.Usuario;
 import com.ejemplos.spring.repository.UsuariosRepository;
 
+/**
+ * Implementación de la interfaz {@link UsuarioService}.
+ * Proporciona servicios relacionados con la gestión de usuarios.
+ *
+ * @see UsuarioService
+ */
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
 	private UsuariosRepository usuarioRepository;
 
+	/**
+	 * Recupera todos los usuarios disponibles.
+	 *
+	 * @return Una lista de usuarios.
+	 */
 	public List<Usuario> findAll() {
 		return usuarioRepository.findAll();
 	}
+	
+	/**
+	 * Busca un usuario por su identificador.
+	 *
+	 * @param id El identificador del usuario a buscar.
+	 * @return El usuario encontrado o null si no existe.
+	 */
+	public Usuario findById(Integer id) {
+		return usuarioRepository.findById(id).orElse(null);
+	}
 
+	/**
+	 * Agrega un nuevo usuario.
+	 *
+	 * @param usuario El usuario a agregar.
+	 * @return El usuario recién agregado.
+	 * @throws IllegalArgumentException Si faltan datos obligatorios o son inválidos en el usuario.
+	 */
 	public Usuario addUsuario(Usuario usuario) {
 		if (esNombreValido(usuario.getNombre()) && esApellidoValido(usuario.getApellido())
 				&& esEmailValido(usuario.getMail()) && esContrasenaValida(usuario.getContrasena())
@@ -48,10 +76,4 @@ public class UsuarioServiceImpl implements UsuarioService {
 	private boolean esFechaAltaValida(LocalDate fecha) {
 		return fecha != null;
 	}
-
-	@Override
-	public Usuario findById(int id) {
-		return usuarioRepository.findById(id).orElse(null);
-	}
-
 }

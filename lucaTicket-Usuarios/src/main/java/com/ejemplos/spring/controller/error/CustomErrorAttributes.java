@@ -14,7 +14,9 @@ import org.springframework.web.context.request.WebRequest;
 import com.ejemplos.spring.controller.UsuariosController;
 
 
-
+/**
+ * Clase que extiende DefaultErrorAttributes para personalizar los atributos de error.
+ */
 public class CustomErrorAttributes extends DefaultErrorAttributes {
 
 	private static final Logger logger = LoggerFactory.getLogger(UsuariosController.class);
@@ -22,7 +24,11 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	// Formato fecha
 	private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-	// Para Spring Boot > 2.3
+
+    /**
+     * {@inheritDoc}
+     * Sobrescribe el método para personalizar los atributos de error.
+     */
 	@Override
 	public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
 		logger.info("------ getErrorAttributes(): " + options);
