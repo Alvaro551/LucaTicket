@@ -11,17 +11,32 @@ import org.springframework.stereotype.Service;
 import com.ejemplos.spring.model.Eventos;
 import com.ejemplos.spring.repository.EventoRepository;
 
+/**
+ * Implementación de la interfaz EventoService que proporciona servicios relacionados con eventos.
+ */
 @Service
 public class EventoServiceImpl implements EventoService {
 
 	@Autowired
 	private EventoRepository eventoRepository;
 
+	 /**
+     * Recupera todos los eventos.
+     *
+     * @return Lista de todos los eventos.
+     */
 	@Override
 	public List<Eventos> findAll() {
 		return eventoRepository.findAll();
 	}
 
+	 /**
+     * Agrega un nuevo evento después de validar sus datos.
+     *
+     * @param evento El evento a agregar.
+     * @return El evento agregado.
+     * @throws IllegalArgumentException Si faltan datos obligatorios o son inválidos en el evento.
+     */
 	@Override
 	public Eventos addEvento(Eventos evento) {
 		if (esNombreValido(evento.getNombre()) && esDescripcionCortaValida(evento.getDescripcioncorta())
@@ -71,10 +86,15 @@ public class EventoServiceImpl implements EventoService {
 		return foto.toLowerCase().endsWith(".jpg") && foto != null;
 	}
 
+	/**
+     * Busca un evento por su identificador.
+     *
+     * @param id El identificador del evento a buscar.
+     * @return Un Optional que contiene el evento si se encuentra.
+     */
 	@Override
 	public Optional<Eventos> buscarEventoPorId(Integer id) {
 
 		return eventoRepository.findById(id);
 	}
-
 }

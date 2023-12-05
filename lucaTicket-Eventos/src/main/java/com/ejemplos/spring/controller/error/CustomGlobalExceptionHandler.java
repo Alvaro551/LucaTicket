@@ -22,71 +22,73 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import jakarta.servlet.http.HttpServletResponse;
 
-
+/**
+ * La clase CustomGlobalExceptionHandler es un manejador de excepciones global para personalizar las respuestas de error.
+ */
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
-	
-	
-	// @ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler(EventoNotFoundException.class)
-	public void springHandleNotFound(HttpServletResponse response) throws IOException {
-		logger.info("------ JuegoNotFoundException() ");
-		// Saltará a la clase CustomErrorAttibuttes para crear un error personalizado
-		response.sendError(HttpStatus.NOT_FOUND.value());
-	}
 
-	// @Validate For Validating Path Variables and Request Parameters
-	@ExceptionHandler(ConstraintViolationException.class)
-	public void constraintViolationException(HttpServletResponse response) throws IOException {
-		logger.info("------ ConstraintViolationException() ");
-		response.sendError(HttpStatus.BAD_REQUEST.value());
-	}
+    // @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(EventoNotFoundException.class)
+    public void springHandleNotFound(HttpServletResponse response) throws IOException {
+        logger.info("------ JuegoNotFoundException() ");
+        // Saltará a la clase CustomErrorAttributes para crear un error personalizado
+        response.sendError(HttpStatus.NOT_FOUND.value());
+    }
 
-	// error handle for @Valid
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
+    // @Validate For Validating Path Variables and Request Parameters
+    @ExceptionHandler(ConstraintViolationException.class)
+    public void constraintViolationException(HttpServletResponse response) throws IOException {
+        logger.info("------ ConstraintViolationException() ");
+        response.sendError(HttpStatus.BAD_REQUEST.value());
+    }
 
-		logger.info("------ handleMethodArgumentNotValid()");
+    // Manejo de errores para @Valid
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+            HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-		CustomErrorJson customError = new CustomErrorJson();
+        logger.info("------ handleMethodArgumentNotValid()");
 
-		customError.setTimestamp(new Date());
-		customError.setStatus(status.value());
-		customError.setError(status.name());
+        CustomErrorJson customError = new CustomErrorJson();
 
-		List<String> messages = new ArrayList<String>();
-		for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-			messages.add(error.getField() + ": " + error.getDefaultMessage());
-		}
-		customError.setMessage(messages);
+        customError.setTimestamp(new Date());
+        customError.setStatus(status.value());
+        customError.setError(status.name());
 
-		// Para recoger el path y simular de forma completa los datos originales
-		// request.getDescription(false) ---> uri=/students
-		String uri = request.getDescription(false);
-		uri = uri.substring(uri.lastIndexOf("=") + 1);
-		customError.setPath(uri);
+        List<String> messages = new ArrayList<String>();
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+            messages.add(error.getField() + ": " + error.getDefaultMessage());
+        }
+        customError.setMessage(messages);
 
-		return new ResponseEntity<>(customError, headers, status);
+        // Para recoger el path y simular de forma completa los datos originales
+        // request.getDescription(false) ---> uri=/students
+        String uri = request.getDescription(false);
+        uri = uri.substring(uri.lastIndexOf("=") + 1);
+        customError.setPath(uri);
 
-	}
+        return new ResponseEntity<>(customError, headers, status);
 
-	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		logger.info("------ handleHttpRequestMethodNotSupported()");
-		StringBuilder builder = new StringBuilder();
-		builder.append(ex.getMethod());
-		builder.append(" method is not supported for this request. Supported methods are ");
-		ex.getSupportedHttpMethods().forEach(t -> builder.append(t + " "));
+    }
 
-		Map<String, Object> body = new LinkedHashMap<>();
-		// Paso fecha formateada a String
-		body.put("timestamp", new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
-		body.put("status", status.value());
-		body.put("error", ex.getLocalizedMessage());
-		body.put("message", builder.toString());
-		body.put("autor", "Alvaro");
+    // Manejo de errores para HttpRequestMethodNotSupported
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
+            HttpHeaders headers, HttpStatus status, WebRequest request) {
+        logger.info("------ handleHttpRequestMethodNotSupported()");
+        StringBuilder builder = new StringBuilder();
+        builder.append(ex.getMethod());
+        builder.append(" method is not supported for this request. Supported methods are ");
+        ex.getSupportedHttpMethods().forEach(t -> builder.append(t + " "));
 
-		return new ResponseEntity<Object>(body, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
+        Map<String, Object> body = new LinkedHashMap<>();
+        // Paso fecha formateada a String
+        body.put("timestamp", new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
+        body.put("status", status.value());
+        body.put("error", ex.getLocalizedMessage());
+        body.put("message", builder.toString());
+        body.put("autor", "Alvaro");
 
-	}
+        return new ResponseEntity<Object>(body, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
+
+    }
 }

@@ -6,6 +6,15 @@ import java.util.stream.Collectors;
 
 import com.ejemplos.spring.model.Usuario;
 
+/**
+ * Clase que representa la respuesta para la entidad Usuario.
+ * Proporciona métodos estáticos para convertir instancias de Usuario a UsuarioResponse.
+ *
+ * <p>Esta clase facilita la conversión entre la entidad Usuario y la representación de respuesta UsuarioResponse.
+ * Contiene un método de fábrica {@code of} para convertir un objeto Usuario a un objeto UsuarioResponse.</p>
+ *
+ * @see Usuario
+ */
 public class UsuarioResponse {
 
 	private static final long serialVersionUID = 1L;
@@ -14,6 +23,12 @@ public class UsuarioResponse {
 	private String apellidos;
 	private LocalDate fechaAlta;
 	
+	/**
+	 * Convierte un objeto Usuario a un objeto UsuarioResponse.
+	 *
+	 * @param usuario El objeto Usuario a convertir.
+	 * @return Un objeto UsuarioResponse que representa la respuesta del usuario.
+	 */
 	public static UsuarioResponse of(Usuario usuario) {
 		UsuarioResponse response = new UsuarioResponse();
 		
@@ -25,6 +40,12 @@ public class UsuarioResponse {
 		return response;
 	}
 	
+	/**
+	 * Convierte una lista de objetos Usuario a una lista de objetos UsuarioResponse.
+	 *
+	 * @param usuarios La lista de usuarios a convertir.
+	 * @return Una lista de UsuarioResponse que representa la respuesta de los usuarios.
+	 */
 	public static List<UsuarioResponse> of(List<Usuario> usuarios){
 		return usuarios.stream().map(c -> of(c)).collect(Collectors.toList());
 	}
