@@ -41,6 +41,14 @@ public class EventoServiceImpl implements EventoService {
 	 */
 	@Override
 	public Eventos addEvento(Eventos evento) {
+		if (esNombreValido(evento.getNombre()) && esDescripcionCortaValida(evento.getDescripcioncorta())
+				&& esDescripcionExtendidaValida(evento.getDescripcionextendida()) && esFotoValida(evento.getFoto())
+				&& esFechaEventoValida(evento.getFechaevento()) && esHoraEventoValida(evento.getHoraevento())
+				&& esPrecioMinValido(evento.getPreciomin()) && esPrecioMaxValido(evento.getPreciomax())
+				&& esNormasValida(evento.getNormas()) && esGeneroValido(evento.getGenero())) {
+			return eventoRepository.save(evento);
+		} else {
+			throw new IllegalArgumentException("Faltan datos obligatorios o son inválidos en el evento");
 		validarEvento(evento);
 		return eventoRepository.save(evento);
 
@@ -133,10 +141,20 @@ public class EventoServiceImpl implements EventoService {
 	private boolean esFotoValida(String foto) {
 		return foto.toLowerCase().endsWith(".jpg") && foto != null;
 	}
+	
+	private boolean esGeneroValido(String genero) {
+		return genero != null && !genero.trim().isEmpty();
+	}
 
 	@Override
 	public List<Eventos> buscarEventosPorNombre(String nombre) {
 		return eventoRepository.findByNombre(nombre);
 	}
 
+	@Override
+	public List<Eventos> filtrarGenero(String genero) {
+
+		return eventoRepository.findByGenero(genero);
+		
+	}
 }

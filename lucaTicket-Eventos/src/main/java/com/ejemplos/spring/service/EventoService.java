@@ -9,7 +9,6 @@ import com.ejemplos.spring.model.Eventos;
  * Interfaz que define los métodos para el servicio relacionado con eventos.
  */
 public interface EventoService {
-
 	/**
 	 * Recupera todos los eventos.
 	 *
@@ -38,4 +37,5 @@ public interface EventoService {
   
     
     List<Eventos> buscarEventosPorNombre(String nombre);
+    List<Eventos> filtrarGenero(String genero);
 }
