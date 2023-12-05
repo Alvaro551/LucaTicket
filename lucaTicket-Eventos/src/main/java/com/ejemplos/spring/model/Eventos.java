@@ -11,6 +11,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * La clase Eventos representa un evento en el sistema.
+ */
 @Entity
 //@Table(name = "Eventos")
 public class Eventos {
@@ -31,6 +34,21 @@ public class Eventos {
 	@JoinColumn(name = "recintoID")
 	private Recinto recinto;
 
+	/**
+     * Constructor de Eventos con parámetros.
+     *
+     * @param id                El identificador único del evento.
+     * @param nombre            El nombre del evento.
+     * @param descripcioncorta  La descripción corta del evento.
+     * @param descripcionextendida La descripción extendida del evento.
+     * @param foto              La URL de la foto asociada al evento.
+     * @param fechaevento       La fecha del evento.
+     * @param horaevento        La hora del evento.
+     * @param preciomin         El precio mínimo del evento.
+     * @param preciomax         El precio máximo del evento.
+     * @param normas            Las normas asociadas al evento.
+     * @param recinto           El recinto donde se llevará a cabo el evento.
+     */
 	public Eventos(int id, String nombre, String descripcioncorta, String descripcionextendida, String foto,
 			LocalDate fechaevento, LocalDateTime horaevento, double preciomin, double preciomax, String normas,
 			Recinto recinto) {
@@ -48,6 +66,9 @@ public class Eventos {
 		this.recinto = recinto;
 	}
 
+	/**
+     * Constructor por defecto de Eventos.
+     */
 	public Eventos() {
 		super();
 	}

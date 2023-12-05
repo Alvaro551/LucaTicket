@@ -7,6 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Clase que representa a un usuario en el sistema.
+ */
 @Entity
 @Table (name="usuarios")
 public class Usuario {
@@ -20,6 +23,16 @@ public class Usuario {
 	private String contrasena;
 	private LocalDate fechaalta;
 	
+	 /**
+     * Constructor de Usuario que toma todos los atributos como parámetros.
+     *
+     * @param usuarioID Identificador único del usuario.
+     * @param nombre    Nombre del usuario.
+     * @param apellido  Apellido del usuario.
+     * @param mail      Dirección de correo electrónico del usuario.
+     * @param contrasena Contraseña del usuario.
+     * @param fechaalta Fecha en que el usuario fue dado de alta en el sistema.
+     */
 	public Usuario(int usuarioID, String nombre, String apellido, String mail, String contrasena, LocalDate fechaalta) {
 		super();
 		this.usuarioID = usuarioID;
@@ -30,63 +43,132 @@ public class Usuario {
 		this.fechaalta = fechaalta;
 	}
 
+
+    /**
+     * Constructor predeterminado de Usuario.
+     */
 	public Usuario() {
 		super();
 	}
 	
+	/**
+     * Obtiene el identificador único del usuario.
+     *
+     * @return Identificador único del usuario.
+     */
 	public int getUsuarioID(){
 		return usuarioID;
 	}
 	
+
+    /**
+     * Establece el identificador único del usuario.
+     *
+     * @param usuarioID Identificador único del usuario.
+     */
 	public void setUsuarioID(int usuarioID) {
 		this.usuarioID = usuarioID;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
+	  /**
+     * Obtiene el nombre del usuario.
+     *
+     * @return Nombre del usuario.
+     */
+    public String getNombre() {
+        return nombre;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    /**
+     * Establece el nombre del usuario.
+     *
+     * @param nombre Nombre del usuario.
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public String getApellido() {
-		return apellido;
-	}
+    /**
+     * Obtiene el apellido del usuario.
+     *
+     * @return Apellido del usuario.
+     */
+    public String getApellido() {
+        return apellido;
+    }
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+    /**
+     * Establece el apellido del usuario.
+     *
+     * @param apellido Apellido del usuario.
+     */
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
-	public String getMail() {
-		return mail;
-	}
+    /**
+     * Obtiene la dirección de correo electrónico del usuario.
+     *
+     * @return Dirección de correo electrónico del usuario.
+     */
+    public String getMail() {
+        return mail;
+    }
 
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+    /**
+     * Establece la dirección de correo electrónico del usuario.
+     *
+     * @param mail Dirección de correo electrónico del usuario.
+     */
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
-	public String getContrasena() {
-		return contrasena;
-	}
+    /**
+     * Obtiene la contraseña del usuario.
+     *
+     * @return Contraseña del usuario.
+     */
+    public String getContrasena() {
+        return contrasena;
+    }
 
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
-	}
+    /**
+     * Establece la contraseña del usuario.
+     *
+     * @param contrasena Contraseña del usuario.
+     */
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
 
-	public LocalDate getFechaAlta() {
-		return fechaalta;
-	}
+    /**
+     * Obtiene la fecha en que el usuario fue dado de alta en el sistema.
+     *
+     * @return Fecha de alta del usuario.
+     */
+    public LocalDate getFechaAlta() {
+        return fechaalta;
+    }
 
-	public void setFechaAlta(LocalDate fechaAlta) {
-		this.fechaalta = fechaAlta;
-	}
+    /**
+     * Establece la fecha en que el usuario fue dado de alta en el sistema.
+     *
+     * @param fechaAlta Fecha de alta del usuario.
+     */
+    public void setFechaAlta(LocalDate fechaAlta) {
+        this.fechaalta = fechaAlta;
+    }
 
-	@Override
-	public String toString() {
-		return "Usuario [usuarioID=" + usuarioID + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail
-				+ ", contrasena=" + contrasena + ", fechaAlta=" + fechaalta + "]";
-	}
+    /**
+     * Representación en cadena del objeto Usuario.
+     *
+     * @return Cadena que representa el objeto Usuario.
+     */
+    @Override
+    public String toString() {
+        return "Usuario [usuarioID=" + usuarioID + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail
+                + ", contrasena=" + contrasena + ", fechaAlta=" + fechaalta + "]";
+    }
 
-	
 }
