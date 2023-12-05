@@ -41,15 +41,63 @@ public class EventoServiceImpl implements EventoService {
 	 */
 	@Override
 	public Eventos addEvento(Eventos evento) {
-		if (esNombreValido(evento.getNombre()) && esDescripcionCortaValida(evento.getDescripcioncorta())
-				&& esDescripcionExtendidaValida(evento.getDescripcionextendida()) && esFotoValida(evento.getFoto())
-				&& esFechaEventoValida(evento.getFechaevento()) && esHoraEventoValida(evento.getHoraevento())
-				&& esPrecioMinValido(evento.getPreciomin()) && esPrecioMaxValido(evento.getPreciomax())
-				&& esNormasValida(evento.getNormas())) {
-			return eventoRepository.save(evento);
-		} else {
-			throw new IllegalArgumentException("Faltan datos obligatorios o son inválidos en el evento");
+		validarEvento(evento);
+		return eventoRepository.save(evento);
+
+	}
+	/**
+	 * Busca un evento por su identificador.
+	 *
+	 * @param id El identificador del evento a buscar.
+	 * @return Un Optional que contiene el evento si se encuentra.
+	 */
+	@Override
+	public Optional<Eventos> buscarEventoPorId(Integer id) {
+
+		return eventoRepository.findById(id);
+	}
+
+	public boolean borrarEventoPorId(Integer id) {
+		if (!eventoRepository.existsById(id)) {
+			return false;
 		}
+		eventoRepository.deleteById(id);
+		return true;
+	}
+
+	private void validarEvento(Eventos evento) {
+		if (!esNombreValido(evento.getNombre())) {
+			throw new IllegalArgumentException("El nombre del evento es inválido o nulo");
+		}
+		if (!esDescripcionCortaValida(evento.getDescripcioncorta())) {
+			throw new IllegalArgumentException("La descripción corta del evento es inválida o nula");
+		}
+		if (!esDescripcionExtendidaValida(evento.getDescripcionextendida())) {
+			throw new IllegalArgumentException("La descripción extendida del evento es inválida o nula");
+		}
+
+		if (!esFotoValida(evento.getFoto())) {
+			throw new IllegalArgumentException("La foto del evento es inválida o nula");
+		}
+		if (!esFechaEventoValida(evento.getFechaevento())) {
+			throw new IllegalArgumentException("La fecha del evento es inválida o nula");
+		}
+		if (!esHoraEventoValida(evento.getHoraevento())) {
+			throw new IllegalArgumentException("La hora del evento es inválida o nula");
+		}
+		if (!esPrecioMinValido(evento.getPreciomin())) {
+			throw new IllegalArgumentException("El precio mínimo del evento es inválido");
+		}
+		if (!esPrecioMaxValido(evento.getPreciomax())) {
+			throw new IllegalArgumentException("El precio máximo del evento es inválido");
+		}
+		if (!esNormasValida(evento.getNormas())) {
+			throw new IllegalArgumentException("Las normas del evento son inválidas o nulas");
+		}
+		if (!esGeneroValido(evento.getGenero())) {
+			throw new IllegalArgumentException("Las normas del evento son inválidas o nulas");
+		}
+
 	}
 
 	private boolean esNombreValido(String nombre) {
@@ -69,7 +117,7 @@ public class EventoServiceImpl implements EventoService {
 	}
 
 	private boolean esPrecioMaxValido(double precio) {
-		return precio >= 0;
+		return precio >= 1;
 	}
 
 	private boolean esFechaEventoValida(LocalDate fecha) {
@@ -87,16 +135,20 @@ public class EventoServiceImpl implements EventoService {
 	private boolean esFotoValida(String foto) {
 		return foto.toLowerCase().endsWith(".jpg") && foto != null;
 	}
+	
+	private boolean esGeneroValido(String genero) {
+		return genero != null && !genero.trim().isEmpty();
+	}
 
-	/**
-	 * Busca un evento por su identificador.
-	 *
-	 * @param id El identificador del evento a buscar.
-	 * @return Un Optional que contiene el evento si se encuentra.
-	 */
 	@Override
-	public Optional<Eventos> buscarEventoPorId(Integer id) {
+	public List<Eventos> buscarEventosPorNombre(String nombre) {
+		return eventoRepository.findByNombre(nombre);
+	}
 
-		return eventoRepository.findById(id);
+	@Override
+	public List<Eventos> filtrarGenero(String genero) {
+
+		return eventoRepository.findByGenero(genero);
+		
 	}
 }
