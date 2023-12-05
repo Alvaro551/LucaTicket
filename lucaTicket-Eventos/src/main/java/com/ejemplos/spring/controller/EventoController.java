@@ -114,7 +114,7 @@ public class EventoController {
 	    return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoResponses));
 	}
   
-  @GetMapping("/genero/{genero}")
+	@GetMapping("/genero/{genero}")
     public ResponseEntity<CustomResponse<List<EventoResponse>>> filtrarGenero(@PathVariable String genero){
     	List<Eventos> eventosGenero = eventoService.filtrarGenero(genero);
     	List<EventoResponse> eventosGeneroResponse = eventosGenero.stream()
@@ -122,5 +122,15 @@ public class EventoController {
     													.collect(Collectors.toList());
     	return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse));
     }
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody Eventos evento, @PathVariable Integer id){
+		Eventos editado = eventoService.editarEvento(id, evento);
+		if(editado != null) {
+			return ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(editado)));
+		}else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(CustomResponse.createNotFoundResponse("Evento no existente"));
+		}
+	}
 
 }

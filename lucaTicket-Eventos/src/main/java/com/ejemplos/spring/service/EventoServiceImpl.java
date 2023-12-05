@@ -151,4 +151,29 @@ public class EventoServiceImpl implements EventoService {
 		return eventoRepository.findByGenero(genero);
 		
 	}
+
+	@Override
+	public Eventos editarEvento(Integer idEvento, Eventos eventoNuevo) {
+		Optional<Eventos> evento = eventoRepository.findById(idEvento);
+		if(evento.isPresent()) {
+			//Cambiando valores según los que le mandamos
+			Eventos eventoActualizado = evento.get();
+			eventoActualizado.setNombre(eventoNuevo.getNombre());
+			eventoActualizado.setDescripcioncorta(eventoNuevo.getDescripcioncorta());
+			eventoActualizado.setDescripcionextendida(eventoNuevo.getDescripcionextendida());
+			eventoActualizado.setGenero(eventoNuevo.getGenero());
+			eventoActualizado.setFoto(eventoNuevo.getFoto());
+			eventoActualizado.setFechaevento(eventoNuevo.getFechaevento());
+			eventoActualizado.setHoraevento(eventoNuevo.getHoraevento());
+			eventoActualizado.setPreciomin(eventoNuevo.getPreciomin());
+			eventoActualizado.setPreciomax(eventoNuevo.getPreciomax());
+			eventoActualizado.setNormas(eventoNuevo.getNormas());
+			
+			//Hacemos el update
+			return eventoRepository.save(eventoActualizado);
+		}else {
+			System.out.println("Ese evento no existe");
+			return null;
+		}
+	}
 }

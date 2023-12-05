@@ -38,4 +38,5 @@ public interface EventoService {
     
     List<Eventos> buscarEventosPorNombre(String nombre);
     List<Eventos> filtrarGenero(String genero);
+    Eventos editarEvento(Integer idEvento, Eventos eventoNuevo);
 }
