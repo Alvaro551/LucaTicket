@@ -36,13 +36,5 @@ public interface EventoService {
 
 	boolean borrarEventoPorId(Integer id);
   
-    /**
-     * Busca un evento por su identificador.
-     *
-     * @param id El identificador del evento a buscar.
-     * @return Un Optional que contiene el evento si se encuentra.
-     */
-    Optional<Eventos> buscarEventoPorId(Integer id);
-    
     List<Eventos> buscarEventosPorNombre(String nombre);
 }
