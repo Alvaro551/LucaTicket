@@ -123,4 +123,10 @@ public class EventoServiceImpl implements EventoService {
 
 		return eventoRepository.findById(id);
 	}
+
+	
+	@Override
+	public List<Eventos> buscarEventosPorNombre(String nombre) {
+		return eventoRepository.findByNombre(nombre);
+	}
 }

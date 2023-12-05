@@ -32,4 +32,7 @@ public interface EventoService {
      * @return Un Optional que contiene el evento si se encuentra.
      */
     Optional<Eventos> buscarEventoPorId(Integer id);
+    
+    List<Eventos> buscarEventosPorNombre(String nombre);
+    
 }
