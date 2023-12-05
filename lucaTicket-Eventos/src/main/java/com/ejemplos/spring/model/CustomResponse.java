@@ -1,5 +1,6 @@
 package com.ejemplos.spring.model;
 
+import java.util.Optional;
 
 /**
  * La clase CustomResponse representa una respuesta personalizada que puede contener información adicional.
@@ -58,11 +59,17 @@ public class CustomResponse<T> {
 
 	 /**
      * Crea una respuesta de éxito con el código de estado 200 y un mensaje predeterminado de éxito.
+	 * @param string 
      *
      * @param objeto La información a incluir en la respuesta.
+	 * @param eventoAntes 
      * @param <T>    El tipo de información.
      * @return Una instancia de CustomResponse con un código de estado 200, mensaje de éxito y la información proporcionada.
      */
+	public static <T> CustomResponse<T> createSuccessResponse(String string, T objeto, Optional<Eventos> eventoAntes) {
+		return new CustomResponse<>(200, "Éxito", objeto);
+	}
+	
 	public static <T> CustomResponse<T> createSuccessResponse(T objeto) {
 		return new CustomResponse<>(200, "Éxito", objeto);
 	}
