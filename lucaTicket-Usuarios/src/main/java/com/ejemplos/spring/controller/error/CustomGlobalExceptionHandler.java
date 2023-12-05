@@ -21,25 +21,46 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import jakarta.servlet.http.HttpServletResponse;
 
+
+/**
+ * Clase que maneja excepciones globales personalizadas en la aplicación.
+ */
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	
-	// @ResponseStatus(HttpStatus.NOT_FOUND)
+	  /**
+     * Maneja la excepción cuando no se encuentra un usuario.
+     *
+     * @param response La respuesta HTTP.
+     * @throws IOException Excepción de entrada/salida.
+     */
 	@ExceptionHandler(UsuarioNotFoundException.class)
 	public void springHandleNotFound(HttpServletResponse response) throws IOException {
-		logger.info("------ JuegoNotFoundException() ");
+		logger.info("------ UsuarioNotFoundException() ");
 		// Saltará a la clase CustomErrorAttibuttes para crear un error personalizado
 		response.sendError(HttpStatus.NOT_FOUND.value());
 	}
 
-	// @Validate For Validating Path Variables and Request Parameters
-	@ExceptionHandler(ConstraintViolationException.class)
+	  /**
+     * Maneja la excepción de violación de restricción.
+     *
+     * @param response La respuesta HTTP.
+     * @throws IOException Excepción de entrada/salida.
+     */	@ExceptionHandler(ConstraintViolationException.class)
 	public void constraintViolationException(HttpServletResponse response) throws IOException {
 		logger.info("------ ConstraintViolationException() ");
 		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
 
-	// error handle for @Valid
+     /**
+      * Maneja la excepción cuando los argumentos del método no son válidos.
+      *
+      * @param ex      La excepción de argumento de método no válido.
+      * @param headers Las cabeceras HTTP.
+      * @param status  El estado HTTP.
+      * @param request La solicitud web.
+      * @return La respuesta de entidad con detalles del error.
+      */
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -67,6 +88,15 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
 	}
 
+	 /**
+     * Maneja la excepción cuando se intenta realizar un método HTTP no admitido.
+     *
+     * @param ex      La excepción de método HTTP no admitido.
+     * @param headers Las cabeceras HTTP.
+     * @param status  El estado HTTP.
+     * @param request La solicitud web.
+     * @return La respuesta de entidad con detalles del error.
+     */
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		logger.info("------ handleHttpRequestMethodNotSupported()");

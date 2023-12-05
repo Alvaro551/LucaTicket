@@ -13,36 +13,44 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.ejemplos.spring.controller.EventoController;
 
+/**
+ * La clase CustomErrorAttributes extiende DefaultErrorAttributes y personaliza la
+ * generación de atributos de error para respuestas de errores personalizadas.
+ */
 public class CustomErrorAttributes extends DefaultErrorAttributes {
 
-	private static final Logger logger = LoggerFactory.getLogger(EventoController.class);
+    private static final Logger logger = LoggerFactory.getLogger(EventoController.class);
 
-	// Formato fecha
-	private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    // Formato de fecha
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-	// Para Spring Boot > 2.3
-	@Override
-	public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
-		logger.info("------ getErrorAttributes(): " + options);
-		Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, options);
-		logger.info("------ getErrorAttributes(): " + options);		
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Personaliza los atributos de error para incluir información adicional y formatear la fecha.
+     */
+    @Override
+    public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
+        logger.info("------ getErrorAttributes(): " + options);
+        Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, options);
+        logger.info("------ getErrorAttributes(): " + options);
 
-		// format & update timestamp
-		Object timestamp = errorAttributes.get("timestamp");
-		if (timestamp == null) {
-			errorAttributes.put("timestamp", dateFormat.format(new Date()));
-		} else {
-			errorAttributes.put("timestamp", dateFormat.format((Date) timestamp));
-		}
+        // Formatear y actualizar la marca de tiempo
+        Object timestamp = errorAttributes.get("timestamp");
+        if (timestamp == null) {
+            errorAttributes.put("timestamp", dateFormat.format(new Date()));
+        } else {
+            errorAttributes.put("timestamp", dateFormat.format((Date) timestamp));
+        }
 
-		// Eliminamos la traza para simplificar la salida
-		errorAttributes.remove("trace");
+        // Eliminar la traza para simplificar la salida
+        errorAttributes.remove("trace");
 
-		// Insertamos nueva clave
-		errorAttributes.put("jdk", System.getProperty("java.version"));
-		// ¿Y este mensaje aparece? ¿Si? ¿No?
-		errorAttributes.put("infoadicional", "eres muuuuuuuuuuuuuuuuuuuu tonto");		
+        // Insertar nueva clave
+        errorAttributes.put("jdk", System.getProperty("java.version"));
+        // ¿Este mensaje aparece? ¿Sí? ¿No?
+        errorAttributes.put("infoadicional", "eres muuuuuuuuuuuuuuuuuuuu tonto");
 
-		return errorAttributes;
-	}
+        return errorAttributes;
+    }
 }

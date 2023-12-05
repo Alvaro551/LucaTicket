@@ -5,6 +5,9 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 
+/**
+ * La clase Recinto representa un lugar donde se pueden llevar a cabo eventos.
+ */
 @Entity
 public class Recinto {
 	@Id
@@ -13,6 +16,9 @@ public class Recinto {
 	private String ciudad;
 	private String direccion;
 
+	 /**
+     * Enumeración que representa los diferentes tipos de recintos posibles.
+     */
 	public enum tipoRecinto {
 		ESTADIO, SALA_CONCIERTO, AIRE_LIBRE, TEATRO, ARENA_DEPORTIVA, CLUB_NOCTURNO;
 	};
@@ -21,6 +27,16 @@ public class Recinto {
 	private tipoRecinto tiporecinto;
 	private int aforo;
 
+	   /**
+     * Constructor de Recinto con parámetros.
+     *
+     * @param recintoID   El identificador único del recinto.
+     * @param nombre      El nombre del recinto.
+     * @param ciudad      La ciudad donde se encuentra el recinto.
+     * @param direccion   La dirección del recinto.
+     * @param tipoRecinto El tipo de recinto.
+     * @param aforo       El aforo del recinto.
+     */
 	public Recinto(long recintoID, String nombre, String ciudad, String direccion, tipoRecinto tiporecinto, int aforo) {
 		super();
 		this.recintoID = recintoID;
@@ -31,10 +47,12 @@ public class Recinto {
 		this.aforo = aforo;
 	}
 
+	/**
+     * Constructor por defecto de Recinto.
+     */
 	public Recinto() {
 		super();
 	}
-	
 
 	public long getId() {
 		return recintoID;
@@ -89,7 +107,5 @@ public class Recinto {
 		return "Recinto [id=" + recintoID + ", nombre=" + nombre + ", ciudad=" + ciudad + ", direccion=" + direccion
 				+ ", tipoRecinto=" + tiporecinto + ", aforo=" + aforo + "]";
 	}
-
-	
 
 }

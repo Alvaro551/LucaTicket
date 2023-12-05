@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import com.ejemplos.spring.model.Recinto;
 
+/**
+ * Clase DTO (Data Transfer Object) para representar la respuesta de un recinto.
+ */
 public class RecintoResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -12,20 +15,27 @@ public class RecintoResponse implements Serializable {
 	private String ciudad;
 	private String direccion;
 	private String tipoRecinto; // Cambiado de 'recinto' a 'tipoRecinto' para evitar confusión
-	private int aforo;
+	private String aforo;
 
+	/**
+	 * Método estático para convertir un objeto Recinto a un objeto RecintoResponse.
+	 *
+	 * @param recinto El objeto Recinto a convertir.
+	 * @return Un objeto RecintoResponse que representa la respuesta del recinto.
+	 */
 	public static RecintoResponse of(Recinto recinto) {
 		RecintoResponse response = new RecintoResponse();
 		response.setId(recinto.getId());
 		response.setNombre(recinto.getNombre());
 		response.setCiudad(recinto.getCiudad());
 		response.setDireccion(recinto.getDireccion());
-		response.setTipoRecinto(recinto.getTipoRecinto().name()); 
-		response.setAforo(recinto.getAforo());
+		response.setTipoRecinto(recinto.getTipoRecinto().name());
+		response.setAforo(recinto.getAforo() + " personas");
 
 		return response;
 	}
 
+	
 	public long getId() {
 		return id;
 	}
@@ -66,11 +76,11 @@ public class RecintoResponse implements Serializable {
 		this.tipoRecinto = tipoRecinto;
 	}
 
-	public int getAforo() {
+	public String getAforo() {
 		return aforo;
 	}
 
-	public void setAforo(int aforo) {
+	public void setAforo(String aforo) {
 		this.aforo = aforo;
 	}
 
