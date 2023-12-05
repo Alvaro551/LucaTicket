@@ -99,4 +99,19 @@ public class EventoController {
 					.body(CustomResponse.createInternalServerErrorResponse("Error interno al borrar el evento"));
 		}
 	}
+
+	
+	/**
+	 * Obtiene eventos filtrados por nombre.
+	 *
+	 * @param nombre El nombre del evento por el que filtrar.
+	 * @return ResponseEntity con CustomResponse que contiene una lista de EventoResponse.
+	 */
+	@GetMapping("/nombre/{nombre}")
+	public ResponseEntity<CustomResponse<List<EventoResponse>>> buscarEventosPorNombre(@PathVariable String nombre) {
+	    List<Eventos> eventosFiltrados = eventoService.buscarEventosPorNombre(nombre);
+	    List<EventoResponse> eventoResponses = eventosFiltrados.stream().map(EventoResponse::of).collect(Collectors.toList());
+	    return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoResponses));
+	}
+
 }
