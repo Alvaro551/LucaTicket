@@ -9,5 +9,4 @@ class LucaTicketUsuariosApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
