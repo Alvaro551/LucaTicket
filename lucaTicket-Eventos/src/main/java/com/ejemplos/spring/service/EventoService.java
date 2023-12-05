@@ -36,5 +36,9 @@ public interface EventoService {
 
 	boolean borrarEventoPorId(Integer id);
   
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 13baacc44a7d3ee82d2c44b5671645967c1134f4
     List<Eventos> buscarEventosPorNombre(String nombre);
 }

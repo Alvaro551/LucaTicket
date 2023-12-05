@@ -57,14 +57,18 @@ public class EventoServiceImpl implements EventoService {
  
 		return eventoRepository.findById(id);
 	}
+<<<<<<< HEAD
  
 	
+=======
+
+>>>>>>> 13baacc44a7d3ee82d2c44b5671645967c1134f4
 	public boolean borrarEventoPorId(Integer id) {
-	    if (!eventoRepository.existsById(id)) {  
-	        return false;
-	    }
-	    eventoRepository.deleteById(id);
-	    return true;
+		if (!eventoRepository.existsById(id)) {
+			return false;
+		}
+		eventoRepository.deleteById(id);
+		return true;
 	}
 
  
@@ -135,7 +139,11 @@ public class EventoServiceImpl implements EventoService {
 	private boolean esFotoValida(String foto) {
 		return foto.toLowerCase().endsWith(".jpg") && foto != null;
 	}
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 13baacc44a7d3ee82d2c44b5671645967c1134f4
 	@Override
 	public List<Eventos> buscarEventosPorNombre(String nombre) {
 		return eventoRepository.findByNombre(nombre);
