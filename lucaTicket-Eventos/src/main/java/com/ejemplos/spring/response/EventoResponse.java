@@ -30,7 +30,9 @@ public class EventoResponse implements Serializable {
 	private String preciomin;
 	private String preciomax;
 	private String normas;
+	private String genero;
 	private RecintoResponse recinto; 
+
 
 	/**
 	 * Método estático para convertir un objeto Eventos a un objeto EventoResponse.
@@ -51,6 +53,7 @@ public class EventoResponse implements Serializable {
 		response.setPreciomin(String.format("%.2f €", evento.getPreciomin()));
 		response.setPreciomax(String.format("%.2f €", evento.getPreciomax()));
 		response.setNormas(evento.getNormas());
+		response.setGenero(evento.getGenero());
 
 		if (evento.getRecinto() != null) {
 			response.setRecinto(RecintoResponse.of(evento.getRecinto()));
@@ -158,6 +161,14 @@ public class EventoResponse implements Serializable {
 
 	public void setRecinto(RecintoResponse recinto) {
 		this.recinto = recinto;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
 
 }

@@ -32,6 +32,7 @@ public class Eventos {
 	private double preciomin;
 	private double preciomax;
 	private String normas;
+	private String genero;
 
 	@ManyToOne
 	@JoinColumn(name = "recintoID")
@@ -50,11 +51,12 @@ public class Eventos {
      * @param preciomin         El precio mínimo del evento.
      * @param preciomax         El precio máximo del evento.
      * @param normas            Las normas asociadas al evento.
+     * @param genero
      * @param recinto           El recinto donde se llevará a cabo el evento.
      */
 	public Eventos(int id, String nombre, String descripcioncorta, String descripcionextendida, String foto,
 			LocalDate fechaevento, LocalDateTime horaevento, double preciomin, double preciomax, String normas,
-			Recinto recinto) {
+			String genero, Recinto recinto) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -66,6 +68,7 @@ public class Eventos {
 		this.preciomin = preciomin;
 		this.preciomax = preciomax;
 		this.normas = normas;
+		this.genero = genero;
 		this.recinto = recinto;
 	}
 
@@ -162,6 +165,14 @@ public class Eventos {
 
 	public void setHoraevento(LocalDateTime horaevento) {
 		this.horaevento = horaevento;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
 
 }
