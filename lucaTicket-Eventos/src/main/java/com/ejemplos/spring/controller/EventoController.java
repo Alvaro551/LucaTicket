@@ -19,39 +19,37 @@ import com.ejemplos.spring.service.EventoService;
 @RequestMapping("/eventos")
 public class EventoController {
 
-    @Autowired
-    private EventoService eventoService;
+	@Autowired
+	private EventoService eventoService;
 
-    @Autowired
-    private EventoRepository eventoRepository;
+	@Autowired
+	private EventoRepository eventoRepository;
 
-    @GetMapping
-    public ResponseEntity<CustomResponse<List<EventoResponse>>> obtenerEventos() {
-        List<Eventos> eventos = eventoRepository.findAll();
-        List<EventoResponse> eventoResponses = eventos.stream()
-                                                      .map(EventoResponse::of)
-                                                      .collect(Collectors.toList());
-        return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoResponses));
-    }
+	@GetMapping
+	public ResponseEntity<CustomResponse<List<EventoResponse>>> obtenerEventos() {
+		List<Eventos> eventos = eventoRepository.findAll();
+		List<EventoResponse> eventoResponses = eventos.stream().map(EventoResponse::of).collect(Collectors.toList());
+		return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoResponses));
+	}
 
-    @PostMapping
-    public ResponseEntity<CustomResponse<EventoResponse>> addEvento(@RequestBody Eventos nuevoEvento) {
-        try {
-            Eventos eventoGuardado = eventoService.addEvento(nuevoEvento);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                                 .body(CustomResponse.createSuccessResponse(EventoResponse.of(eventoGuardado)));
-        } catch (Exception e) {
-            // Aquí manejas cualquier excepción que pueda ocurrir durante la creación del evento
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body(CustomResponse.createInternalServerErrorResponse("Error al crear el evento"));
-        }
-    }
+	@PostMapping
+	public ResponseEntity<CustomResponse<EventoResponse>> addEvento(@RequestBody Eventos nuevoEvento) {
+		try {
+			Eventos eventoGuardado = eventoService.addEvento(nuevoEvento);
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(CustomResponse.createSuccessResponse(EventoResponse.of(eventoGuardado)));
+		} catch (IllegalArgumentException e) {
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse<EventoResponse>> obtenerEventoPorId(@PathVariable Integer id) {
-        return eventoRepository.findById(id)
-            .map(e -> ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(e))))
-            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                           .body(CustomResponse.createNotFoundResponse("Evento no encontrado")));
-    }
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(CustomResponse.createConflictResponse(e.getMessage(), null));
+		} 
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<CustomResponse<EventoResponse>> obtenerEventoPorId(@PathVariable Integer id) {
+		return eventoRepository.findById(id)
+				.map(e -> ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(e))))
+				.orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+						.body(CustomResponse.createNotFoundResponse("Evento no encontrado")));
+	}
 }

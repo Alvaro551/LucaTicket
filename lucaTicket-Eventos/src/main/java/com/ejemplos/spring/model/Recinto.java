@@ -34,7 +34,6 @@ public class Recinto {
 	public Recinto() {
 		super();
 	}
-	
 
 	public long getId() {
 		return recintoID;
@@ -89,7 +88,5 @@ public class Recinto {
 		return "Recinto [id=" + recintoID + ", nombre=" + nombre + ", ciudad=" + ciudad + ", direccion=" + direccion
 				+ ", tipoRecinto=" + tiporecinto + ", aforo=" + aforo + "]";
 	}
-
-	
 
 }
