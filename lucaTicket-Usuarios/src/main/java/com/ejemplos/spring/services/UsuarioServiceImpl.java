@@ -52,9 +52,4 @@ public class UsuarioServiceImpl implements UsuarioService {
 	private boolean esFechaAltaValida(LocalDate fecha) {
 		return fecha != null;
 	}
-
-
-
-
-
 }
