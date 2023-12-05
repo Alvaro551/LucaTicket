@@ -45,7 +45,6 @@ public class EventoServiceImpl implements EventoService {
 		return eventoRepository.save(evento);
 
 	}
-
 	/**
 	 * Busca un evento por su identificador.
 	 *
@@ -96,6 +95,9 @@ public class EventoServiceImpl implements EventoService {
 			throw new IllegalArgumentException("El precio máximo del evento es inválido");
 		}
 		if (!esNormasValida(evento.getNormas())) {
+			throw new IllegalArgumentException("Las normas del evento son inválidas o nulas");
+		}
+		if (!esGeneroValido(evento.getGenero())) {
 			throw new IllegalArgumentException("Las normas del evento son inválidas o nulas");
 		}
 
