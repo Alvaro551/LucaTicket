@@ -149,5 +149,15 @@ public class EventoController {
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse));
 	}
+  
+  @PutMapping("/{id}")
+	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody Eventos evento, @PathVariable Integer id){
+		Eventos editado = eventoService.editarEvento(id, evento);
+		if(editado != null) {
+			return ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(editado)));
+		}else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(CustomResponse.createNotFoundResponse("Evento no existente"));
+		}
+	}
 
 }
