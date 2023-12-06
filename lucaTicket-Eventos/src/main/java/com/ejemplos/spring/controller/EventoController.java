@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ejemplos.spring.model.CustomResponse;
 import com.ejemplos.spring.model.Eventos;
+import com.ejemplos.spring.model.EventosRequest;
 import com.ejemplos.spring.repository.EventoRepository;
 import com.ejemplos.spring.response.EventoResponse;
 import com.ejemplos.spring.service.EventoService;
@@ -124,7 +125,8 @@ public class EventoController {
     }
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody Eventos evento, @PathVariable Integer id){
+	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody EventosRequest eventoRequest, @PathVariable Integer id){
+		Eventos evento = eventoRequest.transformToEventos();
 		Eventos editado = eventoService.editarEvento(id, evento);
 		if(editado != null) {
 			return ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(editado)));
