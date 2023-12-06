@@ -45,6 +45,7 @@ public class EventoServiceImpl implements EventoService {
 		return eventoRepository.save(evento);
 
 	}
+
 	/**
 	 * Busca un evento por su identificador.
 	 *
@@ -135,7 +136,7 @@ public class EventoServiceImpl implements EventoService {
 	private boolean esFotoValida(String foto) {
 		return foto.toLowerCase().endsWith(".jpg") && foto != null;
 	}
-	
+
 	private boolean esGeneroValido(String genero) {
 		return genero != null && !genero.trim().isEmpty();
 	}
@@ -149,6 +150,6 @@ public class EventoServiceImpl implements EventoService {
 	public List<Eventos> filtrarGenero(String genero) {
 
 		return eventoRepository.findByGenero(genero);
-		
+
 	}
 }
