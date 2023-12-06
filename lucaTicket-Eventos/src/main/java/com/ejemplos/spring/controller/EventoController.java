@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ejemplos.spring.model.CustomResponse;
 import com.ejemplos.spring.model.Eventos;
-import com.ejemplos.spring.model.EventosRequest;
 import com.ejemplos.spring.repository.EventoRepository;
 import com.ejemplos.spring.response.EventoResponse;
 import com.ejemplos.spring.service.EventoService;
@@ -150,29 +148,6 @@ public class EventoController {
 		List<EventoResponse> eventosGeneroResponse = eventosGenero.stream().map(EventoResponse::of)
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse));
-	}
- /* 
-  @PutMapping("/{id}")
-	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody Eventos evento, @PathVariable Integer id){
-
-    public ResponseEntity<CustomResponse<List<EventoResponse>>> filtrarGenero(@PathVariable String genero){
-    	List<Eventos> eventosGenero = eventoService.filtrarGenero(genero);
-    	List<EventoResponse> eventosGeneroResponse = eventosGenero.stream()
-    													.map(EventoResponse::of)
-    													.collect(Collectors.toList());
-    	return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse));
-    }
-	*/
-	@PutMapping("/{id}")
-	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody EventosRequest eventoRequest, @PathVariable Integer id){
-		Eventos evento = eventoRequest.transformToEventos();
-
-		Eventos editado = eventoService.editarEvento(id, evento);
-		if(editado != null) {
-			return ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(editado)));
-		}else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(CustomResponse.createNotFoundResponse("Evento no existente"));
-		}
 	}
 
 }
