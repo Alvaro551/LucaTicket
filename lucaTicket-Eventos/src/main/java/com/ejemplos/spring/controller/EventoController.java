@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -104,13 +105,12 @@ public class EventoController {
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Borrar un evento por ID", description = "Elimina un evento de la base de datos basado en su ID")
 	@ApiResponse(responseCode = "200", description = "Evento eliminado con éxito")
-	public ResponseEntity<CustomResponse<EventoResponse>> borrarEventoPorId(@PathVariable Integer id) {
+	public ResponseEntity<CustomResponse<Eventos>> borrarEventoPorId(@PathVariable Integer id) {
 		try {
-			Optional<Eventos> eventoAntes = eventoService.buscarEventoPorId(id);
+			Eventos eventoAntes = eventoService.buscarEventoPorId(id).orElse(null);
 			boolean borradoExitoso = eventoService.borrarEventoPorId(id);
 			if (borradoExitoso) {
-				return ResponseEntity
-						.ok(CustomResponse.createSuccessResponse("Evento borrado exitosamente", null, eventoAntes));
+				return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoAntes));
 			} else {
 				// Si el evento no existe o no pudo ser borrado
 				return ResponseEntity.status(HttpStatus.NOT_FOUND)
