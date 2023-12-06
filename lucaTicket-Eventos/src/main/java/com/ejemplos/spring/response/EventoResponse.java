@@ -25,8 +25,8 @@ public class EventoResponse implements Serializable {
 	private String descripcioncorta;
 	private String descripcionextendida;
 	private String foto;
-	private LocalDate fechaevento;
-	private LocalDateTime horaevento;
+	private String fechaevento;
+	private String horaevento;
 	private String preciomin;
 	private String preciomax;
 	private String normas;
@@ -44,16 +44,16 @@ public class EventoResponse implements Serializable {
 		EventoResponse response = new EventoResponse();
 
 		response.setEventoID(evento.getId());
-		response.setNombre(evento.getNombre());
-		response.setDescripcioncorta(evento.getDescripcioncorta());
-		response.setDescripcionextendida(evento.getDescripcionextendida());
-		response.setFoto(evento.getFoto());
-		response.setFechaevento(evento.getFechaevento());
-		response.setHoraevento(evento.getHoraevento());
-		response.setPreciomin(String.format("%.2f €", evento.getPreciomin()));
-		response.setPreciomax(String.format("%.2f €", evento.getPreciomax()));
-		response.setNormas(evento.getNormas());
-		response.setGenero(evento.getGenero());
+        response.setNombre(evento.getNombre());
+        response.setDescripcioncorta(evento.getDescripcioncorta());
+        response.setDescripcionextendida(evento.getDescripcionextendida());
+        response.setFoto(evento.getFoto());
+        response.setFechaevento(evento.getFormattedFechaEvento()); // Cambio aquí
+        response.setHoraevento(evento.getFormattedHoraEvento()); // Cambio aquí
+        response.setPreciomin(String.format("%.2f €", evento.getPreciomin()));
+        response.setPreciomax(String.format("%.2f €", evento.getPreciomax()));
+        response.setNormas(evento.getNormas());
+        response.setGenero(evento.getGenero());
 
 		if (evento.getRecinto() != null) {
 			response.setRecinto(RecintoResponse.of(evento.getRecinto()));
@@ -115,19 +115,19 @@ public class EventoResponse implements Serializable {
 		this.foto = foto;
 	}
 
-	public LocalDate getFechaevento() {
-		return fechaevento;
-	}
+	   public String getFechaevento() {
+	        return fechaevento;
+	    }
 
-	public void setFechaevento(LocalDate fechaevento) {
-		this.fechaevento = fechaevento;
-	}
+	    public void setFechaevento(String fechaevento) {
+	        this.fechaevento = fechaevento;
+	    }
 
-	public LocalDateTime getHoraevento() {
+	public String getHoraevento() {
 		return horaevento;
 	}
 
-	public void setHoraevento(LocalDateTime horaevento) {
+	public void setHoraevento(String horaevento) {
 		this.horaevento = horaevento;
 	}
 
