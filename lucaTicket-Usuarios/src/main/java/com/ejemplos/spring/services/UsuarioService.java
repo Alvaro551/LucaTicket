@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ejemplos.spring.model.Usuario;
+import com.ejemplos.spring.model.UsuarioRequest;
 
 /**
  * Interfaz que define los servicios relacionados con la entidad Usuario.
@@ -35,8 +36,8 @@ public interface UsuarioService {
 	/**
 	 * Agrega un nuevo usuario.
 	 *
-	 * @param usuario El usuario a agregar.
+	 * @param nuevoUsuario El usuario a agregar.
 	 * @return El usuario recién agregado.
 	 */
-	Usuario addUsuario(Usuario usuario);
+	Usuario addUsuario(Usuario nuevoUsuario);
 }
