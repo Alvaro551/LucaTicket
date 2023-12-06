@@ -48,11 +48,11 @@ public class UsuariosController {
      * @return ResponseEntity con el UsuarioResponse del usuario agregado y el código de estado correspondiente.
      */
     @PostMapping
-    public ResponseEntity<CustomResponse<UsuarioResponse>> addUsuario(@RequestBody Usuario nuevoUsuario) {
+    public ResponseEntity<CustomResponse<Object>> addUsuario(@RequestBody Usuario nuevoUsuario) {
         try {
             Usuario usuarioGuardado = usuarioService.addUsuario(nuevoUsuario);
             return ResponseEntity.status(HttpStatus.CREATED)
-                                 .body(CustomResponse.createSuccessResponse(UsuarioResponse.of(usuarioGuardado)));
+                                 .body(CustomResponse.createSuccessResponse(UsuarioResponse.of(usuarioGuardado.getNombre(),usuarioGuardado.getApellido(),usuarioGuardado.getFechaAlta())));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                  .body(CustomResponse.createInternalServerErrorResponse("Error al crear el usuario"));

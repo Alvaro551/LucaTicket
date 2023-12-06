@@ -40,6 +40,8 @@ public class UsuarioResponse {
 		return response;
 	}
 	
+	
+	
 	/**
 	 * Convierte una lista de objetos Usuario a una lista de objetos UsuarioResponse.
 	 *
@@ -84,6 +86,24 @@ public class UsuarioResponse {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public UsuarioResponse(String nombre, String apellidos, LocalDate fechaAlta) {
+		super();
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.fechaAlta = fechaAlta;
+	}
+
+
+	public UsuarioResponse() {
+	}
+
+
+
+	public static Object of(String nombre, String apellidos, LocalDate fechaAlta) {
+		UsuarioResponse respuesta = new UsuarioResponse(nombre,apellidos,fechaAlta);
+		return respuesta;
 	}
 	
 	

@@ -48,14 +48,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 	 * @throws IllegalArgumentException Si faltan datos obligatorios o son inválidos en el usuario.
 	 */
 	public Usuario addUsuario(Usuario usuario) {
-		if (esNombreValido(usuario.getNombre()) && esApellidoValido(usuario.getApellido())
-				&& esEmailValido(usuario.getMail()) && esContrasenaValida(usuario.getContrasena())
-				&& esFechaAltaValida(usuario.getFechaAlta())) {
-			return usuarioRepository.save(usuario);
-		} else {
-			throw new IllegalArgumentException("Faltan datos obligatorios o son inválidos en el usuario");
-		}
+	    if (esNombreValido(usuario.getNombre()) && esApellidoValido(usuario.getApellido())
+	            && esEmailValido(usuario.getMail()) && esContrasenaValida(usuario.getContrasena())
+	            && esFechaAltaValida(usuario.getFechaAlta())) {
+	        
+	    	Usuario usuarioGuardado = usuarioRepository.save(usuario);
+	        
+	        return usuarioGuardado;
+	    } else {
+	        throw new IllegalArgumentException("Faltan datos obligatorios o son inválidos en el usuario");
+	    }
 	}
+
 
 	private boolean esNombreValido(String nombre) {
 		return nombre != null && !nombre.trim().isEmpty();
