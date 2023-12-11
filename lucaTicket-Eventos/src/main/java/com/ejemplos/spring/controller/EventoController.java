@@ -102,6 +102,12 @@ public class EventoController {
 						.body(CustomResponse.createNotFoundResponse("Evento no encontrado")));
 	}
 
+	/**
+	 * Borra un evento por su ID.
+	 *
+	 * @param id El identificador único del evento a borrar.
+	 * @return ResponseEntity con el CustomResponse que contiene el evento antes de ser borrado y el código de estado correspondiente.
+	 */
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Borrar un evento por ID", description = "Elimina un evento de la base de datos basado en su ID")
 	@ApiResponse(responseCode = "200", description = "Evento eliminado con éxito")
@@ -141,6 +147,13 @@ public class EventoController {
 		return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoResponses));
 	}
 
+	/**
+	 * Filtra eventos por género.
+	 *
+	 * @param genero El género por el cual filtrar eventos.
+	 * @return ResponseEntity con la lista de EventoResponse y el código de estado correspondiente.
+	 */
+	
 	@GetMapping("/genero/{genero}")
 	@Operation(summary = "Filtrar eventos por género", description = "Busca y devuelve eventos que coincidan con el género proporcionado")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Eventos encontrados con éxito"),
@@ -152,19 +165,13 @@ public class EventoController {
 		return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse));
 	}
 
-	/*
-	 * @PutMapping("/{id}") public ResponseEntity<CustomResponse<EventoResponse>>
-	 * editarEvento(@RequestBody Eventos evento, @PathVariable Integer id){
-	 * 
-	 * public ResponseEntity<CustomResponse<List<EventoResponse>>>
-	 * filtrarGenero(@PathVariable String genero){ List<Eventos> eventosGenero =
-	 * eventoService.filtrarGenero(genero); List<EventoResponse>
-	 * eventosGeneroResponse = eventosGenero.stream() .map(EventoResponse::of)
-	 * .collect(Collectors.toList()); return
-	 * ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse)
-	 * ); }
+	/**
+	 * Edita un evento existente.
+	 *
+	 * @param eventoRequest El objeto EventosRequest con los detalles actualizados del evento.
+	 * @param id El identificador único del evento a editar.
+	 * @return ResponseEntity con el EventoResponse del evento editado y el código de estado correspondiente.
 	 */
-
 	@PutMapping("/{id}")
 	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody EventosRequest eventoRequest,
 			@PathVariable Integer id) {
