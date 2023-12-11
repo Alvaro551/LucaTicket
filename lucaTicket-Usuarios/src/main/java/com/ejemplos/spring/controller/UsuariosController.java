@@ -13,6 +13,7 @@ import com.ejemplos.spring.model.Usuario;
 import com.ejemplos.spring.model.UsuarioRequest;
 import com.ejemplos.spring.repository.UsuariosRepository;
 import com.ejemplos.spring.response.UsuarioResponse;
+import com.ejemplos.spring.response.UsuarioResponseADD;
 import com.ejemplos.spring.services.UsuarioService;
 
 /**
@@ -49,12 +50,13 @@ public class UsuariosController {
      * @return ResponseEntity con el UsuarioResponse del usuario agregado y el código de estado correspondiente.
      */
     @PostMapping
-    public ResponseEntity<CustomResponse<UsuarioResponse>> addUsuario(@RequestBody UsuarioRequest nuevoUsuarioRequest) {
+    public ResponseEntity<CustomResponse<UsuarioResponseADD>> addUsuario(@RequestBody UsuarioRequest nuevoUsuarioRequest) {
         try {
             Usuario nuevoUsuario = nuevoUsuarioRequest.transformToUsuario();
             Usuario usuarioGuardado = usuarioService.addUsuario(nuevoUsuario);
             return ResponseEntity.status(HttpStatus.CREATED)
-                                 .body(CustomResponse.createSuccessResponse(UsuarioResponse.of(usuarioGuardado)));
+                                 .body(CustomResponse.createSuccessResponse(UsuarioResponseADD.of(usuarioGuardado)));
+            
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                  .body(CustomResponse.createInternalServerErrorResponse("Error al crear el usuario"));
