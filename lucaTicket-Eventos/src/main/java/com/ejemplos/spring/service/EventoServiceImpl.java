@@ -97,7 +97,7 @@ public class EventoServiceImpl implements EventoService {
 			throw new IllegalArgumentException("Las normas del evento son inválidas o nulas");
 		}
 		if (!esGeneroValido(evento.getGenero())) {
-			throw new IllegalArgumentException("Las normas del evento son inválidas o nulas");
+			throw new IllegalArgumentException("El género es inválido o nulo");
 		}
 
 	}
@@ -179,4 +179,3 @@ public class EventoServiceImpl implements EventoService {
 		}
 	}
 }
-

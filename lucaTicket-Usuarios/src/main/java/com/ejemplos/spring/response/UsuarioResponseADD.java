@@ -16,10 +16,10 @@ import com.ejemplos.spring.model.Usuario;
  *
  * @see Usuario
  */
-public class UsuarioResponse {
+public class UsuarioResponseADD {
 
 	private static final long serialVersionUID = 1L;
-	private int usuarioID;
+	
 	private String nombre;
 	private String apellidos;
 	private String fechaAlta;
@@ -30,10 +30,10 @@ public class UsuarioResponse {
 	 * @param usuario El objeto Usuario a convertir.
 	 * @return Un objeto UsuarioResponse que representa la respuesta del usuario.
 	 */
-	public static UsuarioResponse of(Usuario usuario) {
-	    UsuarioResponse response = new UsuarioResponse();
+	public static UsuarioResponseADD of(Usuario usuario) {
+	    UsuarioResponseADD response = new UsuarioResponseADD();
 
-	    response.setUsuarioID(usuario.getUsuarioID());
+	    
 	    response.setNombre(usuario.getNombre());
 	    response.setApellidos(usuario.getApellido());
 
@@ -54,17 +54,10 @@ public class UsuarioResponse {
 	 * @param usuarios La lista de usuarios a convertir.
 	 * @return Una lista de UsuarioResponse que representa la respuesta de los usuarios.
 	 */
-	public static List<UsuarioResponse> of(List<Usuario> usuarios){
+	public static List<UsuarioResponseADD> of(List<Usuario> usuarios){
 		return usuarios.stream().map(c -> of(c)).collect(Collectors.toList());
 	}
 
-	public int getUsuarioID() {
-		return usuarioID;
-	}
-
-	public void setUsuarioID(int usuarioID) {
-		this.usuarioID = usuarioID;
-	}
 
 	public String getNombre() {
 		return nombre;

@@ -2,6 +2,7 @@ package com.ejemplos.spring.controller.error;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.ejemplos.spring.model.CustomResponse;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -40,6 +43,14 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		// Saltará a la clase CustomErrorAttibuttes para crear un error personalizado
 		response.sendError(HttpStatus.NOT_FOUND.value());
 	}
+	
+	//Manejo de errores para tipo de fecha y hora incorrectas
+    @SuppressWarnings("unchecked")
+	@ExceptionHandler(DateTimeParseException.class)
+    public ResponseEntity<CustomResponse> handleDateTimeParseException(DateTimeParseException ex) {
+        CustomResponse response = new CustomResponse(500,"Error: La fecha tiene un formato incorrecto. Debe ser dd-MM-yyyy", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 
 	  /**
      * Maneja la excepción de violación de restricción.
