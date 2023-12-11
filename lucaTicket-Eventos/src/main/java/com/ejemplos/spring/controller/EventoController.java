@@ -72,17 +72,16 @@ public class EventoController {
 	@Operation(summary = "Crear un nuevo evento", description = "Añade un nuevo evento a la base de datos")
 	@ApiResponse(responseCode = "201", description = "Evento creado con éxito")
 	public ResponseEntity<CustomResponse<EventoResponse>> addEvento(@RequestBody EventosRequest nuevoEventoRequest) {
-	    try {
-	        Eventos nuevoEvento = nuevoEventoRequest.transformToEventos();
-	        Eventos eventoGuardado = eventoService.addEvento(nuevoEvento);
-	        return ResponseEntity.status(HttpStatus.CREATED)
-	                .body(CustomResponse.createSuccessResponse(EventoResponse.of(eventoGuardado)));
-	    } catch (IllegalArgumentException e) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-	                .body(CustomResponse.createConflictResponse(e.getMessage(), null));
-	    }
+		try {
+			Eventos nuevoEvento = nuevoEventoRequest.transformToEventos();
+			Eventos eventoGuardado = eventoService.addEvento(nuevoEvento);
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(CustomResponse.createSuccessResponse(EventoResponse.of(eventoGuardado)));
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(CustomResponse.createConflictResponse(e.getMessage(), null));
+		}
 	}
-
 
 	/**
 	 * Obtiene un evento por su ID.
@@ -152,28 +151,30 @@ public class EventoController {
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse));
 	}
-	
- /* 
-  @PutMapping("/{id}")
-	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody Eventos evento, @PathVariable Integer id){
 
-    public ResponseEntity<CustomResponse<List<EventoResponse>>> filtrarGenero(@PathVariable String genero){
-    	List<Eventos> eventosGenero = eventoService.filtrarGenero(genero);
-    	List<EventoResponse> eventosGeneroResponse = eventosGenero.stream()
-    													.map(EventoResponse::of)
-    													.collect(Collectors.toList());
-    	return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse));
-    }
-	*/
-	
+	/*
+	 * @PutMapping("/{id}") public ResponseEntity<CustomResponse<EventoResponse>>
+	 * editarEvento(@RequestBody Eventos evento, @PathVariable Integer id){
+	 * 
+	 * public ResponseEntity<CustomResponse<List<EventoResponse>>>
+	 * filtrarGenero(@PathVariable String genero){ List<Eventos> eventosGenero =
+	 * eventoService.filtrarGenero(genero); List<EventoResponse>
+	 * eventosGeneroResponse = eventosGenero.stream() .map(EventoResponse::of)
+	 * .collect(Collectors.toList()); return
+	 * ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse)
+	 * ); }
+	 */
+
 	@PutMapping("/{id}")
-	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody EventosRequest eventoRequest, @PathVariable Integer id){
+	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody EventosRequest eventoRequest,
+			@PathVariable Integer id) {
 		Eventos evento = eventoRequest.transformToEventos();
 		Eventos editado = eventoService.editarEvento(id, evento);
-		if(editado != null) {
+		if (editado != null) {
 			return ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(editado)));
-		}else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(CustomResponse.createNotFoundResponse("Evento no existente"));
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(CustomResponse.createNotFoundResponse("Evento no existente"));
 		}
 	}
 
