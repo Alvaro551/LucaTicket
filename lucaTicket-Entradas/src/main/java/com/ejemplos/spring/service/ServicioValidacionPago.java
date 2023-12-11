@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ejemplos.spring.model.DatosTarjeta;
 import com.ejemplos.spring.model.RespuestaPago;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,7 +30,14 @@ public class ServicioValidacionPago {
 	public ServicioValidacionPago(RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
 	}
-
+  
+ /**
+     * Realiza la validación de un pago utilizando una pasarela externa.
+     *
+     * @param datosTarjeta Datos de la tarjeta de crédito para la validación.
+     * @return Respuesta de la validación del pago.
+     * @throws RuntimeException Si hay un error al realizar la validación del pago.
+     */
 	public RespuestaPago realizarValidacionPago(DatosTarjeta datosTarjeta) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -88,15 +96,24 @@ public class ServicioValidacionPago {
 			return jsonError;
 		}
 	}
-
+/**
+     * Guarda los datos de una tarjeta de crédito en la lista de tarjetas almacenadas.
+     *
+     * @param datosTarjeta Datos de la tarjeta de crédito a almacenar.
+     */
 	public void guardarDatosTarjeta(DatosTarjeta datosTarjeta) {
 		// Aquí simplemente añadimos los datos de la tarjeta a la lista
 		tarjetasAlmacenadas.add(datosTarjeta);
 	}
 
-	// Método para obtener las tarjetas almacenadas, útil para pruebas
+/**
+     * Obtiene la lista de tarjetas de crédito almacenadas.
+     *
+     * @return Lista de tarjetas de crédito almacenadas.
+     */
 	public List<DatosTarjeta> obtenerTarjetasAlmacenadas() {
 		return tarjetasAlmacenadas;
 	}
 
 }
+
