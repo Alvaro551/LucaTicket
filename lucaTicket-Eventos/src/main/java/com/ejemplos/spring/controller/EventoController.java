@@ -1,5 +1,6 @@
 package com.ejemplos.spring.controller;
 
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -80,6 +81,7 @@ public class EventoController {
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(CustomResponse.createConflictResponse(e.getMessage(), null));
+			
 		}
 	}
 
