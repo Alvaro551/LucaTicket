@@ -160,7 +160,4 @@ public class EventosRequest {
         return new Eventos(id, nombre, descripcioncorta, descripcionextendida, foto, fechaEvento, horaEvento,
                 preciomin, preciomax, normas, genero, recinto);
     }
-
-
-
 }

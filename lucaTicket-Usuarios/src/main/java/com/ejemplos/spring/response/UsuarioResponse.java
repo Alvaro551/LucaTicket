@@ -1,6 +1,7 @@
 package com.ejemplos.spring.response;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class UsuarioResponse {
 	private int usuarioID;
 	private String nombre;
 	private String apellidos;
-	private LocalDate fechaAlta;
+	private String fechaAlta;
 	
 	/**
 	 * Convierte un objeto Usuario a un objeto UsuarioResponse.
@@ -30,14 +31,21 @@ public class UsuarioResponse {
 	 * @return Un objeto UsuarioResponse que representa la respuesta del usuario.
 	 */
 	public static UsuarioResponse of(Usuario usuario) {
-		UsuarioResponse response = new UsuarioResponse();
-		
-		response.setUsuarioID(usuario.getUsuarioID());
-		response.setNombre(usuario.getNombre());
-		response.setApellidos(usuario.getApellido());
-		response.setFechaAlta(usuario.getFechaAlta());
-		
-		return response;
+	    UsuarioResponse response = new UsuarioResponse();
+
+	    response.setUsuarioID(usuario.getUsuarioID());
+	    response.setNombre(usuario.getNombre());
+	    response.setApellidos(usuario.getApellido());
+
+	    // Verificar si la fecha de alta es nula antes de intentar formatearla
+	    if (usuario.getFechaAlta() != null) {
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+	        response.setFechaAlta(usuario.getFechaAlta().format(formatter));
+	    } else {
+	        response.setFechaAlta(null); // O puedes establecer un valor por defecto si lo prefieres
+	    }
+
+	    return response;
 	}
 	
 	/**
@@ -74,12 +82,12 @@ public class UsuarioResponse {
 		this.apellidos = apellidos;
 	}
 
-	public LocalDate getFechaAlta() {
+	public String getFechaAlta() {
 		return fechaAlta;
 	}
 
-	public void setFechaAlta(LocalDate fechaAlta) {
-		this.fechaAlta = fechaAlta;
+	public void setFechaAlta(String string) {
+		this.fechaAlta = string;
 	}
 
 	public static long getSerialversionuid() {
