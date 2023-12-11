@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.exception.ConstraintViolationException;
+//import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +32,14 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         // Saltará a la clase CustomErrorAttributes para crear un error personalizado
         response.sendError(HttpStatus.NOT_FOUND.value());
     }
-
+/*
     // @Validate For Validating Path Variables and Request Parameters
     @ExceptionHandler(ConstraintViolationException.class)
     public void constraintViolationException(HttpServletResponse response) throws IOException {
         logger.info("------ ConstraintViolationException() ");
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
+    */
 
     // Manejo de errores para @Valid
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
