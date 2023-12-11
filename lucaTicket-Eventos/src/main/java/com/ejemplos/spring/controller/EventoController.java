@@ -24,10 +24,8 @@ import com.ejemplos.spring.response.EventoResponse;
 import com.ejemplos.spring.service.EventoService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * El controlador EventoController maneja las solicitudes relacionadas con los

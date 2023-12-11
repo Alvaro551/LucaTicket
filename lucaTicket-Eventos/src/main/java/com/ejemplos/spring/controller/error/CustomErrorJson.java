@@ -1,10 +1,10 @@
 package com.ejemplos.spring.controller.error;
 
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * La clase CustomErrorJson representa un objeto JSON personalizado para las respuestas de error.
