@@ -62,4 +62,28 @@ public class UsuariosController {
                                  .body(CustomResponse.createInternalServerErrorResponse("Error al crear el usuario"));
         }
     }
+
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomResponse<Usuario>> buscarUsuarioPorId(@PathVariable Integer id) {
+        try {
+            Usuario usuario = usuarioService.findById(id);
+            if (usuario != null) {
+                return ResponseEntity.ok(CustomResponse.createSuccessResponse(usuario));
+            } else {
+                // Si el usuario no existe
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(CustomResponse.createNotFoundResponse("Usuario no encontrado"));
+            }
+        } catch (Exception e) {
+            // Manejar otras excepciones inesperadas
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(CustomResponse.createInternalServerErrorResponse("Error interno al buscar el usuario"));
+        }
+    }
+    
+    
 }
+
+}
+
