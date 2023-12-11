@@ -1,15 +1,11 @@
 package com.ejemplos.spring;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ejemplos.spring.model.Eventos;
 import com.ejemplos.spring.repository.EventoRepository;
-
 import com.ejemplos.spring.service.EventoServiceImpl;
 
 @SpringBootTest

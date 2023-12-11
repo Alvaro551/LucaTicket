@@ -1,5 +1,6 @@
 package com.ejemplos.spring.controller;
 
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,10 +25,8 @@ import com.ejemplos.spring.response.EventoResponse;
 import com.ejemplos.spring.service.EventoService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * El controlador EventoController maneja las solicitudes relacionadas con los
@@ -80,6 +79,7 @@ public class EventoController {
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(CustomResponse.createConflictResponse(e.getMessage(), null));
+			
 		}
 	}
 

@@ -1,18 +1,10 @@
 package com.ejemplos.spring.response;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ejemplos.spring.model.Eventos;
-import com.ejemplos.spring.model.Recinto;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 /**
  * Clase DTO (Data Transfer Object) para representar la respuesta de un evento.
