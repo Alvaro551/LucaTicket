@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ejemplos.spring.model.Eventos;
+import com.ejemplos.spring.model.EventosRequest;
 
 /**
  * Interfaz que define los métodos para el servicio relacionado con eventos.
@@ -19,10 +20,10 @@ public interface EventoService {
 	/**
 	 * Agrega un nuevo evento.
 	 *
-	 * @param evento El evento a agregar.
+	 * @param nuevoEvento El evento a agregar.
 	 * @return El evento agregado.
 	 */
-	Eventos addEvento(Eventos evento);
+	Eventos addEvento(Eventos nuevoEvento);
 
 
 	/**

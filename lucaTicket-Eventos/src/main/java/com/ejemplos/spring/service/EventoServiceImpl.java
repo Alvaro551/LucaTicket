@@ -70,6 +70,7 @@ public class EventoServiceImpl implements EventoService {
 		if (!esNombreValido(evento.getNombre())) {
 			throw new IllegalArgumentException("El nombre del evento es inválido o nulo");
 		}
+	
 		if (!esDescripcionCortaValida(evento.getDescripcioncorta())) {
 			throw new IllegalArgumentException("La descripción corta del evento es inválida o nula");
 		}
