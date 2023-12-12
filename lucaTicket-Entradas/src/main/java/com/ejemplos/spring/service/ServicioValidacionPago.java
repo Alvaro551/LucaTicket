@@ -32,23 +32,39 @@ public class ServicioValidacionPago implements ServicioValidacionPagoInterfaz {
 
 	private final List<DatosTarjeta> tarjetasAlmacenadas = new ArrayList<>();
 
+	private final EntradaRepository entradaRepository;
+
+	private final UsuarioClient usuarioClient;
+
+	private final EventoClient eventoClient;
+
 	@Autowired
-	public ServicioValidacionPago(RestTemplate restTemplate) {
+	public ServicioValidacionPago(EntradaRepository entradaRepository, UsuarioClient usuarioClient,
+			EventoClient eventoClient, RestTemplate restTemplate) {
+		this.entradaRepository = entradaRepository;
+		this.usuarioClient = usuarioClient;
+		this.eventoClient = eventoClient;
 		this.restTemplate = restTemplate;
 	}
 
-	@Autowired
-	private EntradaRepository entradaRepository;
-
 	@Override
 	public Entrada addEntrada(int usuarioId, int eventoId) {
-		Entrada nuevaEntrada = new Entrada();
+		// Verifica si el usuario existe
+		if (usuarioClient.obtenerUsuarioPorId(usuarioId) == null) {
+			throw new RuntimeException("Usuario no encontrado");
+		}
 
+		// Verifica si el evento existe
+		if (eventoClient.obtenerEventoPorId(eventoId) == null) {
+			throw new RuntimeException("Evento no encontrado");
+		}
+
+		// Si ambos existen, crea la entrada
+		Entrada nuevaEntrada = new Entrada();
 		nuevaEntrada.setIdUsuario(usuarioId);
 		nuevaEntrada.setIdEvento(eventoId);
 
 		return entradaRepository.save(nuevaEntrada);
-		
 	}
 
 	/**
@@ -61,9 +77,7 @@ public class ServicioValidacionPago implements ServicioValidacionPagoInterfaz {
 	public RespuestaPago realizarValidacionPago(DatosTarjeta datosTarjeta) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBearerAuth("Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI2M"
-				+ "mEyOGYxZWIwN2I0ZTBhODFjYzMyODRhMzgzNDhkZCIsInN1YiI6IkdydXBvMDQiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSw"
-				+ "iaWF0IjoxNzAyMzE1NDIxLCJleHAiOjE3MDIzMTYwMjF9.V0N1lB_0bSPtAl8o4x8v55Fo7IaJ_d7YQ9kf0zE7XZ_RlBkp0qNoZiIVsSWFQSgUjtObuOyJhCoRCDPB0etB9A");
+		headers.setBearerAuth("Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJiYzJhYzBiMTA2ZmY0NGUyOTk0ZjQxMDRkYjc2ZjQxYiIsInN1YiI6IkdydXBvMDQiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzAyMzczMTA2LCJleHAiOjE3MDIzNzM3MDZ9.74LvUQoIxJy_IVSInrlgcqqQ8NaHgFzfhkpGckW2j16RlMN23LkVDcU0gkJYistYRM4HXZBj0WBAbgNVF9lthA");
 
 		HttpEntity<DatosTarjeta> request = new HttpEntity<>(datosTarjeta, headers);
 

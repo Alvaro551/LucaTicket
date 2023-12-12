@@ -76,8 +76,7 @@ public class PagoController {
 			Entrada nuevaEntrada = servicioValidacionPago.addEntrada(usuarioId, eventoId);
 			return ResponseEntity.ok(CustomResponse.createSuccessResponse(nuevaEntrada));
 		} catch (Exception e) {
-
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) 
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(CustomResponse.createInternalServerErrorResponse("Error al crear la entrada"));
 		}
 	}
