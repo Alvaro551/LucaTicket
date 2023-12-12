@@ -184,5 +184,15 @@ public class EventoController {
 					.body(CustomResponse.createNotFoundResponse("Evento no existente"));
 		}
 	}
-
+	
+	 @GetMapping("/ciudad/{ciudad}")
+	    @Operation(summary = "Filtrar eventos por ciudad", description = "Busca y devuelve eventos que coincidan con la ciudad proporcionada")
+	    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Eventos encontrados con éxito"),
+	            @ApiResponse(responseCode = "204", description = "No se encontraron eventos para esa ciudad") })
+	    public ResponseEntity<CustomResponse<List<EventoResponse>>> filtrarCiudad(@PathVariable String ciudad) {
+	        List<Eventos> eventosCiudad = eventoService.filtrarCiudad(ciudad);
+	        List<EventoResponse> eventosCiudadResponse = eventosCiudad.stream().map(EventoResponse::of)
+	                .collect(Collectors.toList());
+	        return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosCiudadResponse));
+	    }
 }
