@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ejemplos.spring.errores.ResourceNotFoundException;
 import com.ejemplos.spring.model.CustomResponse;
 import com.ejemplos.spring.model.DatosTarjeta;
 import com.ejemplos.spring.model.Entrada;
+import com.ejemplos.spring.model.PagoYEntradaResponse;
 import com.ejemplos.spring.model.RespuestaPago;
 import com.ejemplos.spring.service.ServicioValidacionPago;
 
@@ -37,22 +39,30 @@ public class PagoController {
 	 * @param token        Token de autorización.
 	 * @return Respuesta de la validación del pago.
 	 */
-	@PostMapping("/validar-guardar")
-	public ResponseEntity<CustomResponse<RespuestaPago>> validarPago(@RequestBody DatosTarjeta datosTarjeta,
+	@PostMapping("/validar-guardar/{usuarioId}/{eventoId}")
+	public ResponseEntity<CustomResponse<PagoYEntradaResponse>> validarPago(@PathVariable int usuarioId,
+			@PathVariable int eventoId, @RequestBody DatosTarjeta datosTarjeta,
 			@RequestHeader("Authorization") String token) {
 		try {
-			RespuestaPago respuesta = servicioValidacionPago.realizarValidacionPago(datosTarjeta);
-			servicioValidacionPago.guardarDatosTarjeta(datosTarjeta);
-			return ResponseEntity.ok(CustomResponse.createSuccessResponse(respuesta));
+	        RespuestaPago respuesta = servicioValidacionPago.realizarValidacionPago(datosTarjeta);
+	        Entrada nuevaEntrada = servicioValidacionPago.addEntrada(usuarioId, eventoId);
+	        servicioValidacionPago.guardarDatosTarjeta(datosTarjeta);
 
-		} catch (RuntimeException ex) {
+	        PagoYEntradaResponse pagoYEntradaResponse = new PagoYEntradaResponse();
+	        pagoYEntradaResponse.setRespuestaPago(respuesta);
+	        pagoYEntradaResponse.setEntrada(nuevaEntrada);
 
-			return ResponseEntity.badRequest().body(CustomResponse.createCustomResponse(400, ex.getMessage(), null));
-		} catch (Exception ex) {
+	        return ResponseEntity.ok(CustomResponse.createSuccessResponse(pagoYEntradaResponse));
 
-			return ResponseEntity.status(500)
-					.body(CustomResponse.createInternalServerErrorResponse("Error interno del servidor."));
-		}
+	    } catch (ResourceNotFoundException ex) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                             .body(CustomResponse.createNotFoundResponse(ex.getMessage()));
+	    } catch (RuntimeException ex) {
+	        return ResponseEntity.badRequest().body(CustomResponse.createCustomResponse(400, ex.getMessage(), null));
+	    } catch (Exception ex) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                             .body(CustomResponse.createInternalServerErrorResponse("Error interno del servidor."));
+	    }
 	}
 
 	/**
@@ -71,6 +81,7 @@ public class PagoController {
 
 	@GetMapping("/crear/{usuarioId}/{eventoId}")
 	public ResponseEntity<CustomResponse<Entrada>> crearEntrada(@PathVariable int usuarioId,
+
 			@PathVariable int eventoId) {
 		try {
 			Entrada nuevaEntrada = servicioValidacionPago.addEntrada(usuarioId, eventoId);

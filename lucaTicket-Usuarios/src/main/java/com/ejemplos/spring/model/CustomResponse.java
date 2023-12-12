@@ -107,7 +107,7 @@ public class CustomResponse<T> {
      * @return Objeto CustomResponse que representa una respuesta de conflicto.
      */
     public static <T> CustomResponse<T> createConflictResponse(String mensaje, T objeto) {
-        return new CustomResponse<>(409, mensaje, objeto);
+        return new CustomResponse<>(409, mensaje, null);
     }
 
     /**
