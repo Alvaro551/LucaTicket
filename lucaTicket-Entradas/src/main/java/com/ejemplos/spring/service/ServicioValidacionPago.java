@@ -88,7 +88,7 @@ public class ServicioValidacionPago implements ServicioValidacionPagoInterfaz {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setBearerAuth(
-				"Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJkMGZlZWVkNTNiOGU0MzY2YTdkYWM0MWEyOWUwMDU4ZiIsInN1YiI6IkdydXBvMDQiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzAyMzgxNzk1LCJleHAiOjE3MDIzODIzOTV9.woGH3iiN8-fshaKExQWyIi0kHe1Gng8TcyGX-xmXNx9oL0g13PORi34Agzss2PbdrnYaetAWLt_fQRT-okihBg");
+				"Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJmMjcxYTZjZjhlMzk0YmEzYTliMThjYTI0MDFjNzgxMSIsInN1YiI6IkdydXBvMDQiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzAyNDA1OTM5LCJleHAiOjE3MDI0MDY1Mzl9.G6boHmRQJRZfBclnn0BkDJ0zPAK8aIXjB0d87es7v5QWm7XUjfBft5PpI4CMl6UhGVrTv5OLj7tORg1_mqCKKQ");
 
 		HttpEntity<DatosTarjeta> request = new HttpEntity<>(datosTarjeta, headers);
 
