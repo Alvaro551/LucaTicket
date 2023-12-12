@@ -68,20 +68,14 @@ public class EventoController {
 	 */
 
 	@PostMapping
-	@Operation(summary = "Crear un nuevo evento", description = "Añade un nuevo evento a la base de datos")
-	@ApiResponse(responseCode = "201", description = "Evento creado con éxito")
-	public ResponseEntity<CustomResponse<EventoResponse>> addEvento(@RequestBody EventosRequest nuevoEventoRequest) {
-		try {
-			Eventos nuevoEvento = nuevoEventoRequest.transformToEventos();
-			Eventos eventoGuardado = eventoService.addEvento(nuevoEvento);
-			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(CustomResponse.createSuccessResponse(EventoResponse.of(eventoGuardado)));
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(CustomResponse.createConflictResponse(e.getMessage(), null));
-			
-		}
-	}
+    @Operation(summary = "Crear un nuevo evento", description = "Añade un nuevo evento a la base de datos")
+    @ApiResponse(responseCode = "201", description = "Evento creado con éxito")
+    public ResponseEntity<CustomResponse<EventoResponse>> addEvento(@RequestBody EventosRequest nuevoEventoRequest) {
+        Eventos nuevoEvento = nuevoEventoRequest.transformToEventos();
+        Eventos eventoGuardado = eventoService.addEvento(nuevoEvento);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(CustomResponse.createSuccessResponse(EventoResponse.of(eventoGuardado)));
+    }
 
 	/**
 	 * Obtiene un evento por su ID.

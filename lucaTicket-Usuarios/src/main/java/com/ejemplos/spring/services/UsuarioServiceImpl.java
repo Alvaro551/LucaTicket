@@ -51,15 +51,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	 *                                  en el usuario.
 	 */
 
-	/*
-	 * public Usuario addUsuario(Usuario usuario) { if (validarUsuario(usuario)) {
-	 * return usuarioRepository.save(usuario); } else {
-	 * 
-	 * throw new
-	 * IllegalArgumentException("Faltan datos obligatorios o son inválidos en el usuario"
-	 * ); } }
-	 *
-	 */
 
 	public Usuario addUsuario(Usuario usuario) {
 		List<String> errores = new ArrayList<>();
@@ -96,26 +87,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuarioRepository.save(usuario);
 	}
 
-	/*
-	 * private boolean validarUsuario(Usuario usuario) { if
-	 * (!esNombreValido(usuario.getNombre())) { throw new
-	 * IllegalArgumentException("El nombre del usuario es inválido o nulo"); }
-	 * 
-	 * if (!esApellidoValido(usuario.getApellido())) { throw new
-	 * IllegalArgumentException("El apellido del usuario es inválido o nulo"); }
-	 * 
-	 * if (!esEmailValido(usuario.getMail())) { throw new
-	 * IllegalArgumentException("El email del usuario es inválido o nulo"); }
-	 * 
-	 * if (!esContrasenaValida(usuario.getContrasena())) { throw new
-	 * IllegalArgumentException("La contraseña del usuario es inválida o nula"); }
-	 * 
-	 * if (!esFechaAltaValida(usuario.getFechaAlta())) { throw new
-	 * IllegalArgumentException("La fecha de alta del usuario es inválida o nula");
-	 * } return true;
-	 * 
-	 * }
-	 */
 
 	private String validarNombre(String nombre) {
 		if (nombre == null || nombre.trim().isEmpty()) {
