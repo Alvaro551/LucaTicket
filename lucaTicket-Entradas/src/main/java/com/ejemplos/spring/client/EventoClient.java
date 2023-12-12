@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ejemplos.spring.model.EventoDTO;
 
-@FeignClient(name = "evento-service", url = "http://localhost:8081/eventos/{id}")
+@FeignClient(name = "evento-service", url = "http://localhost:8081")
 public interface EventoClient {
 
     @GetMapping("/eventos/{id}")
-    EventoDTO obtenerEventoPorId(@PathVariable("id") Long id);
+    EventoDTO obtenerEventoPorId(@PathVariable("id") int id);
 }

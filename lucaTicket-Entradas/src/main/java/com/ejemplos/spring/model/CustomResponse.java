@@ -2,6 +2,8 @@ package com.ejemplos.spring.model;
 
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * La clase CustomResponse representa una respuesta personalizada que puede
  * contener información adicional.
@@ -70,6 +72,10 @@ public class CustomResponse<T> {
 		String message = getMessageForStatusCode(statusCode, customMessage);
 		return new CustomResponse<>(statusCode, message, info);
 	}
+	
+	public static <T> CustomResponse<T> createNotFoundResponse(String message) {
+        return new CustomResponse<>(HttpStatus.NOT_FOUND.value(), message, null);
+    }
 
 	private static String getMessageForStatusCode(int statusCode, String customMessage) {
 		if (customMessage != null && !customMessage.isEmpty()) {

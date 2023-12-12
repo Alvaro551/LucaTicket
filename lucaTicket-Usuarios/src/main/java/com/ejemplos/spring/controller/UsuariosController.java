@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,6 +69,10 @@ public class UsuariosController {
             return ResponseEntity.status(HttpStatus.CREATED)
                                  .body(CustomResponse.createSuccessResponse(UsuarioResponseADD.of(usuarioGuardado)));
             
+        } catch (DataIntegrityViolationException e) {
+            // Aquí capturas la excepción específica y envías una respuesta personalizada
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                                 .body(CustomResponse.createConflictResponse("El correo electrónico ya está en uso",null));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                  .body(CustomResponse.createInternalServerErrorResponse("Error al crear el usuario"));

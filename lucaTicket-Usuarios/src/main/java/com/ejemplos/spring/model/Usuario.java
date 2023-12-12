@@ -21,7 +21,8 @@ public class Usuario {
 	private int usuarioID;
 	private String nombre;
 	private String apellido;
-	private String mail;
+	@Column(unique = true)
+    private String mail;
 	private String contrasena;
 	private LocalDate fechaalta;
 	

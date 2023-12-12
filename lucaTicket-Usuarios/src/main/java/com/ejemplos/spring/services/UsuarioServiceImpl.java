@@ -12,8 +12,8 @@ import com.ejemplos.spring.repository.UsuariosRepository;
 
 
 /**
- * Implementación de la interfaz {@link UsuarioService}.
- * Proporciona servicios relacionados con la gestión de usuarios.
+ * Implementación de la interfaz {@link UsuarioService}. Proporciona servicios
+ * relacionados con la gestión de usuarios.
  *
  * @see UsuarioService
  */
@@ -31,7 +31,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public List<Usuario> findAll() {
 		return usuarioRepository.findAll();
 	}
-	
+
 	/**
 	 * Busca un usuario por su identificador.
 	 *
@@ -47,9 +47,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 	 *
 	 * @param usuario El usuario a agregar.
 	 * @return El usuario recién agregado.
-	 * @throws IllegalArgumentException Si faltan datos obligatorios o son inválidos en el usuario.
+	 * @throws IllegalArgumentException Si faltan datos obligatorios o son inválidos
+	 *                                  en el usuario.
 	 */
 	public Usuario addUsuario(Usuario usuario) {
+		if (esNombreValido(usuario.getNombre()) && esApellidoValido(usuario.getApellido())
+				&& esEmailValido(usuario.getMail()) && esContrasenaValida(usuario.getContrasena())
+				&& esFechaAltaValida(usuario.getFechaAlta())) {
         validarUsuario(usuario);
         return usuarioRepository.save(usuario);
     }
@@ -76,6 +80,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
+			Usuario usuarioGuardado = usuarioRepository.save(usuario);
+
+			return usuarioGuardado;
+		} else {
+			throw new IllegalArgumentException("Faltan datos obligatorios o son inválidos en el usuario");
+		}
+	}
 
 	private boolean esNombreValido(String nombre) {
 		return nombre != null && !nombre.trim().isEmpty();
