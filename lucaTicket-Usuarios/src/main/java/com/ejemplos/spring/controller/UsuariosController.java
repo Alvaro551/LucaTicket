@@ -140,4 +140,24 @@ public class UsuariosController {
 					.body(CustomResponse.createInternalServerErrorResponse("Error interno al editar el usuario"));
 		}
 	}
+	
+	@GetMapping("/{id}")
+	@Operation(summary = "Obtener un usuario por ID", description = "Recupera un usuario de la base de datos basado en su ID")
+	@ApiResponse(responseCode = "200", description = "Usuario encontrado con éxito")
+	@ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+	public ResponseEntity<CustomResponse<UsuarioResponseADD>> obtenerUsuarioPorId(@PathVariable("id") Integer id) {
+	    try {
+	        Usuario usuario = usuarioService.findById(id);
+
+	        if (usuario != null) {
+	            return ResponseEntity.ok(CustomResponse.createSuccessResponse(UsuarioResponseADD.of(usuario)));
+	        } else {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                    .body(CustomResponse.createNotFoundResponse("Usuario no encontrado con ID: " + id));
+	        }
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(CustomResponse.createInternalServerErrorResponse("Error interno al obtener el usuario"));
+	    }
+	}
 }

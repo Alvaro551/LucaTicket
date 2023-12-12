@@ -41,28 +41,18 @@ public class PagoController {
 	 */
 	@PostMapping("/validar-guardar/{usuarioId}/{eventoId}")
 	public ResponseEntity<CustomResponse<PagoYEntradaResponse>> validarPago(@PathVariable int usuarioId,
-			@PathVariable int eventoId, @RequestBody DatosTarjeta datosTarjeta,
-			@RequestHeader("Authorization") String token) {
-		try {
-	        RespuestaPago respuesta = servicioValidacionPago.realizarValidacionPago(datosTarjeta);
-	        Entrada nuevaEntrada = servicioValidacionPago.addEntrada(usuarioId, eventoId);
-	        servicioValidacionPago.guardarDatosTarjeta(datosTarjeta);
+	        @PathVariable int eventoId, @RequestBody DatosTarjeta datosTarjeta,
+	        @RequestHeader("Authorization") String token) {
 
-	        PagoYEntradaResponse pagoYEntradaResponse = new PagoYEntradaResponse();
-	        pagoYEntradaResponse.setRespuestaPago(respuesta);
-	        pagoYEntradaResponse.setEntrada(nuevaEntrada);
+	    RespuestaPago respuesta = servicioValidacionPago.realizarValidacionPago(datosTarjeta);
+	    Entrada nuevaEntrada = servicioValidacionPago.addEntrada(usuarioId, eventoId);
+	    servicioValidacionPago.guardarDatosTarjeta(datosTarjeta);
 
-	        return ResponseEntity.ok(CustomResponse.createSuccessResponse(pagoYEntradaResponse));
+	    PagoYEntradaResponse pagoYEntradaResponse = new PagoYEntradaResponse();
+	    pagoYEntradaResponse.setRespuestaPago(respuesta);
+	    pagoYEntradaResponse.setEntrada(nuevaEntrada);
 
-	    } catch (ResourceNotFoundException ex) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-	                             .body(CustomResponse.createNotFoundResponse(ex.getMessage()));
-	    } catch (RuntimeException ex) {
-	        return ResponseEntity.badRequest().body(CustomResponse.createCustomResponse(400, ex.getMessage(), null));
-	    } catch (Exception ex) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                             .body(CustomResponse.createInternalServerErrorResponse("Error interno del servidor."));
-	    }
+	    return ResponseEntity.ok(CustomResponse.createSuccessResponse(pagoYEntradaResponse));
 	}
 
 	/**
