@@ -17,4 +17,6 @@ public interface EventoRepository extends JpaRepository<Eventos, Integer> {
 	List<Eventos> findByGenero(String genero);
 	
 	List<Eventos> findByNombre(String nombre);
+	
+	List<Eventos> findByRecintoCiudad(String ciudad);
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    

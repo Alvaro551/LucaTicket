@@ -40,4 +40,7 @@ public interface UsuarioService {
 	 * @return El usuario recién agregado.
 	 */
 	Usuario addUsuario(Usuario nuevoUsuario);
+	
+	boolean borrarUsuarioPorId(Integer id);
+	Usuario editarUsuario(Integer idUsuario, Usuario usuarioNuevo);
 }

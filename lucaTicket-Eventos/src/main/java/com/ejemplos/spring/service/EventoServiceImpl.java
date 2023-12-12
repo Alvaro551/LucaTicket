@@ -156,6 +156,7 @@ public class EventoServiceImpl implements EventoService {
 
 	@Override
 	public Eventos editarEvento(Integer idEvento, Eventos eventoNuevo) {
+		
 		Optional<Eventos> evento = eventoRepository.findById(idEvento);
 		if(evento.isPresent()) {
 			//Cambiando valores según los que le mandamos
@@ -177,5 +178,10 @@ public class EventoServiceImpl implements EventoService {
 			System.out.println("Ese evento no existe");
 			return null;
 		}
+	}
+
+	@Override
+	public List<Eventos> filtrarCiudad(String ciudad) {
+		return eventoRepository.findByRecintoCiudad(ciudad);
 	}
 }
