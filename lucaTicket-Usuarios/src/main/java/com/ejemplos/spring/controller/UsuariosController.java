@@ -73,6 +73,7 @@ public class UsuariosController {
                                  .body(CustomResponse.createInternalServerErrorResponse("Error al crear el usuario"));
         }
     }
+
     
     
     /**
@@ -141,5 +142,5 @@ public class UsuariosController {
                     .body(CustomResponse.createInternalServerErrorResponse("Error interno al editar el usuario"));
         }
     }
-	
 }
+

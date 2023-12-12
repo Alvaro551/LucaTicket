@@ -67,56 +67,55 @@ public class CustomResponse<T> {
 	}
 
 	public static <T> CustomResponse<T> createCustomResponse(int statusCode, String customMessage, T info) {
-        String message = getMessageForStatusCode(statusCode, customMessage);
-        return new CustomResponse<>(statusCode, message, info);
-    }
+		String message = getMessageForStatusCode(statusCode, customMessage);
+		return new CustomResponse<>(statusCode, message, info);
+	}
 
-    private static String getMessageForStatusCode(int statusCode, String customMessage) {
-        if (customMessage != null && !customMessage.isEmpty()) {
-            return customMessage;
-        }
+	private static String getMessageForStatusCode(int statusCode, String customMessage) {
+		if (customMessage != null && !customMessage.isEmpty()) {
+			return customMessage;
+		}
 
-        switch (statusCode) {
-            case 200:
-                return "Transacción correcta.";
-            case 400:
-                return determineBadRequestMessage(customMessage); 
-            case 404:
-                return "Recurso no encontrado.";
-            case 409:
-                return "Conflicto detectado.";
-            case 410:
-                return "Recurso eliminado.";
-            case 500:
-                return "Error interno del servidor.";
-            default:
-                return "Error no identificado.";
-        }
-    }
+		switch (statusCode) {
+		case 200:
+			return "Transacción correcta.";
+		case 400:
+			return determineBadRequestMessage(customMessage);
+		case 404:
+			return "Recurso no encontrado.";
+		case 409:
+			return "Conflicto detectado.";
+		case 410:
+			return "Recurso eliminado.";
+		case 500:
+			return "Error interno del servidor.";
+		default:
+			return "Error no identificado.";
+		}
+	}
 
-    private static String determineBadRequestMessage(String errorCode) {
-        switch (errorCode) {
-            case "400.0001":
-                return "No hay fondos suficientes en la cuenta.";
-            case "400.0002":
-                return "No se encuentran los datos del cliente.";
-            case "400.0003":
-                return "El número de la tarjeta no es válido.";
-            case "400.0004":
-                return "El formato del cvv no es válido";
-            case "400.0005":
-                return "El mes (caducidad) no es correcto";
-            case "400.0006":
-                return "El año (caducidad) no es correcto";
-            case "400.0007":
-                return "La fecha de caducidad debe ser posterior al día actual\r\n"
-                		+ "";
-            case "400.0008":
-                return "El formato del nombre no es correcto";
-           
-            default:
-                return "Error en la solicitud: " + errorCode;
-        }
-    }
+	private static String determineBadRequestMessage(String errorCode) {
+		switch (errorCode) {
+		case "400.0001":
+			return "No hay fondos suficientes en la cuenta.";
+		case "400.0002":
+			return "No se encuentran los datos del cliente.";
+		case "400.0003":
+			return "El número de la tarjeta no es válido.";
+		case "400.0004":
+			return "El formato del cvv no es válido";
+		case "400.0005":
+			return "El mes (caducidad) no es correcto";
+		case "400.0006":
+			return "El año (caducidad) no es correcto";
+		case "400.0007":
+			return "La fecha de caducidad debe ser posterior al día actual\r\n" + "";
+		case "400.0008":
+			return "El formato del nombre no es correcto";
+
+		default:
+			return "Error en la solicitud: " + errorCode;
+		}
+	}
 
 }
