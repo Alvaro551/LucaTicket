@@ -123,6 +123,10 @@ public class CustomResponse<T> {
     public static <T> CustomResponse<T> createGoneResponse(String mensaje, T objeto) {
         return new CustomResponse<>(410, mensaje, objeto);
     }
+    
+    public static <T> CustomResponse<T> createCustomResponse(int value, String message2,T objeto) {
+		return new CustomResponse<>(400,message2,null);
+	}
 
     /**
      * Crea una respuesta de recurso no encontrado con el mensaje proporcionado.
@@ -149,6 +153,8 @@ public class CustomResponse<T> {
     public static <T> CustomResponse<T> createBadRequestResponse(String message) {
         return new CustomResponse<>(400, message, null);
     }
+
+	
 
 }
 
