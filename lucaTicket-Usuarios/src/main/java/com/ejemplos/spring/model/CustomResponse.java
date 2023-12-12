@@ -1,5 +1,7 @@
 package com.ejemplos.spring.model;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * Clase que representa una respuesta personalizada con información adicional.
  *
@@ -143,5 +145,10 @@ public class CustomResponse<T> {
     public static <T> CustomResponse<T> createInternalServerErrorResponse(String message) {
         return new CustomResponse<>(500, message, null);
     }
+
+    public static <T> CustomResponse<T> createBadRequestResponse(String message) {
+        return new CustomResponse<>(400, message, null);
+    }
+
 }
 

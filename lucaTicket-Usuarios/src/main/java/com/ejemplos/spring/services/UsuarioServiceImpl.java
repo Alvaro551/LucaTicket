@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.ejemplos.spring.model.Usuario;
 import com.ejemplos.spring.repository.UsuariosRepository;
+
 
 /**
  * Implementación de la interfaz {@link UsuarioService}. Proporciona servicios
@@ -52,6 +54,31 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if (esNombreValido(usuario.getNombre()) && esApellidoValido(usuario.getApellido())
 				&& esEmailValido(usuario.getMail()) && esContrasenaValida(usuario.getContrasena())
 				&& esFechaAltaValida(usuario.getFechaAlta())) {
+        validarUsuario(usuario);
+        return usuarioRepository.save(usuario);
+    }
+
+    private void validarUsuario(Usuario usuario) {
+        if (!esNombreValido(usuario.getNombre())) {
+            throw new IllegalArgumentException("El nombre del usuario es inválido o nulo");
+        }
+
+        if (!esApellidoValido(usuario.getApellido())) {
+            throw new IllegalArgumentException("El apellido del usuario es inválido o nulo");
+        }
+
+        if (!esEmailValido(usuario.getMail())) {
+            throw new IllegalArgumentException("El email del usuario es inválido o nulo");
+        }
+
+        if (!esContrasenaValida(usuario.getContrasena())) {
+            throw new IllegalArgumentException("La contraseña del usuario es inválida o nula");
+        }
+
+        if (!esFechaAltaValida(usuario.getFechaAlta())) {
+            throw new IllegalArgumentException("La fecha de alta del usuario es inválida o nula");
+        }
+    }
 
 			Usuario usuarioGuardado = usuarioRepository.save(usuario);
 
@@ -79,5 +106,39 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	private boolean esFechaAltaValida(LocalDate fecha) {
 		return fecha != null;
+	}
+
+	@Override
+	public boolean borrarUsuarioPorId(Integer id) {
+		if (!usuarioRepository.existsById(id)) {
+			return false;
+		}
+		usuarioRepository.deleteById(id);
+		return true;
+	}
+
+	@Override
+	public Usuario editarUsuario(Integer idUsuario, Usuario usuarioNuevo) {
+	    // Buscar el usuario existente por ID
+	    Optional<Usuario> usuarioOptional = usuarioRepository.findById(idUsuario);
+
+	    if (usuarioOptional.isPresent()) {
+	        // Obtener el usuario existente
+	        Usuario usuarioExistente = usuarioOptional.get();
+
+	        // Actualizar los valores del usuario existente con los proporcionados en usuarioNuevo
+	        usuarioExistente.setNombre(usuarioNuevo.getNombre());
+	        usuarioExistente.setApellido(usuarioNuevo.getApellido());
+	        usuarioExistente.setMail(usuarioNuevo.getMail());
+	        usuarioExistente.setContrasena(usuarioNuevo.getContrasena());
+	        usuarioExistente.setFechaAlta(usuarioNuevo.getFechaAlta());
+
+	        // Guardar el usuario actualizado en la base de datos
+	        return usuarioRepository.save(usuarioExistente);
+	    } else {
+	        // El usuario no existe
+	        System.out.println("Ese usuario no existe");
+	        return null;
+	    }
 	}
 }
