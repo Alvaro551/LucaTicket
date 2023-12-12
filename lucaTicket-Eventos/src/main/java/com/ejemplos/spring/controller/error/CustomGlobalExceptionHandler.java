@@ -46,13 +46,14 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
     
-  //Manejo de errores para tipo de fecha y hora incorrectas
-    @SuppressWarnings("unchecked")
+	// Manejo de errores para tipo de fecha y hora incorrectas
+	@SuppressWarnings("unchecked")
 	@ExceptionHandler(DateTimeParseException.class)
-    public ResponseEntity<CustomResponse> handleDateTimeParseException(DateTimeParseException ex) {
-        CustomResponse response = new CustomResponse(500,"Error: La fecha tiene un formato incorrecto. Debe ser dd-MM-yyyy", HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
+	public ResponseEntity<CustomResponse> handleDateTimeParseException(DateTimeParseException ex) {
+		CustomResponse response = new CustomResponse(500,
+				"Error: La fecha tiene un formato incorrecto. Debe ser dd-MM-yyyy", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
 
     // Manejo de errores para @Valid
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
