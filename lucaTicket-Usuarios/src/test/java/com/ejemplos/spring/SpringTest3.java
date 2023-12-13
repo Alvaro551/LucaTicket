@@ -10,7 +10,7 @@ import com.ejemplos.spring.repository.UsuariosRepository;
 import com.ejemplos.spring.services.UsuarioService;
 
 @SpringBootTest
-public class SpringTest04 {
+public class SpringTest3 {
 	
 
     @Autowired
@@ -33,9 +33,7 @@ public class SpringTest04 {
 		}else {
 			cierto = true;
 		}
-		
-		assertThat(cierto).isTrue();
-		
+		assertThat(cierto).isTrue();	
 	}
 	
 }
