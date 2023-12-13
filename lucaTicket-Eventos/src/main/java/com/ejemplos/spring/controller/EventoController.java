@@ -1,8 +1,6 @@
 package com.ejemplos.spring.controller;
 
-import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,16 +165,21 @@ public class EventoController {
 	 * @return ResponseEntity con el EventoResponse del evento editado y el código de estado correspondiente.
 	 */
 	@PutMapping("/{id}")
+	@Operation(summary = "Editar un evento por ID", description = "Actualiza un evento existente en la base de datos basado en su ID")
+	@ApiResponses(value = { 
+	    @ApiResponse(responseCode = "200", description = "Evento editado con éxito"),
+	    @ApiResponse(responseCode = "404", description = "Evento no encontrado con el ID proporcionado")
+	})
 	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody EventosRequest eventoRequest,
-			@PathVariable Integer id) {
-		Eventos evento = eventoRequest.transformToEventos();
-		Eventos editado = eventoService.editarEvento(id, evento);
-		if (editado != null) {
-			return ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(editado)));
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(CustomResponse.createNotFoundResponse("Evento no existente"));
-		}
+	        @PathVariable Integer id) {
+	    Eventos evento = eventoRequest.transformToEventos();
+	    Eventos editado = eventoService.editarEvento(id, evento);
+	    if (editado != null) {
+	        return ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(editado)));
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                .body(CustomResponse.createNotFoundResponse("Evento no existente"));
+	    }
 	}
 	
 	 @GetMapping("/ciudad/{ciudad}")
