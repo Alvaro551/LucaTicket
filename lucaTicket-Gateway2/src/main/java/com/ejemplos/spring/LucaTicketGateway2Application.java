@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class LucaTicketEventosApplication {
+public class LucaTicketGateway2Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LucaTicketEventosApplication.class, args);
+		SpringApplication.run(LucaTicketGateway2Application.class, args);
 	}
 
 }
