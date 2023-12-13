@@ -26,6 +26,7 @@ import com.ejemplos.spring.services.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 /**
  * Controlador para gestionar las operaciones relacionadas con usuarios.
@@ -62,6 +63,12 @@ public class UsuariosController {
 	 *         código de estado correspondiente.
 	 */
 	@PostMapping
+	@Operation(summary = "Añadir un nuevo usuario", description = "Crea y guarda un nuevo usuario en la base de datos")
+	@ApiResponses(value = { 
+	    @ApiResponse(responseCode = "201", description = "Usuario creado con éxito"),
+	    @ApiResponse(responseCode = "400", description = "Solicitud inválida si los datos del usuario no son correctos"),
+	    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+	})
 	public ResponseEntity<CustomResponse<UsuarioResponseADD>> addUsuario(@RequestBody UsuarioRequest nuevoUsuarioRequest) {
 	    Usuario nuevoUsuario = nuevoUsuarioRequest.transformToUsuario();
 	    Usuario usuarioGuardado = usuarioService.addUsuario(nuevoUsuario);

@@ -11,16 +11,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ejemplos.spring.errores.ResourceNotFoundException;
+
 import com.ejemplos.spring.model.CustomResponse;
 import com.ejemplos.spring.model.DatosTarjeta;
 import com.ejemplos.spring.model.Entrada;
 import com.ejemplos.spring.model.PagoYEntradaResponse;
 import com.ejemplos.spring.model.RespuestaPago;
 import com.ejemplos.spring.service.ServicioValidacionPago;
+
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 /**
  * Controlador que gestiona las operaciones relacionadas con los pagos.
@@ -40,9 +48,20 @@ public class PagoController {
 	 * @return Respuesta de la validación del pago.
 	 */
 	@PostMapping("/validar-guardar/{usuarioId}/{eventoId}")
-	public ResponseEntity<CustomResponse<PagoYEntradaResponse>> validarPago(@PathVariable int usuarioId,
-	        @PathVariable int eventoId, @RequestBody DatosTarjeta datosTarjeta,
-	        @RequestHeader("Authorization") String token) {
+	@Operation(summary = "Validar y guardar pago para un evento", 
+	           description = "Valida los datos de pago y guarda una nueva entrada para un usuario y evento específicos.")
+	@ApiResponses(value = { 
+	    @ApiResponse(responseCode = "200", description = "Pago validado y entrada guardada con éxito",
+	                 content = @Content(schema = @Schema(implementation = PagoYEntradaResponse.class))),
+	    @ApiResponse(responseCode = "400", description = "Datos de pago inválidos"),
+	    @ApiResponse(responseCode = "404", description = "Usuario o evento no encontrado"),
+	    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+	})
+	public ResponseEntity<CustomResponse<PagoYEntradaResponse>> validarPago(
+	    @Parameter(description = "ID del usuario") @PathVariable int usuarioId,
+	    @Parameter(description = "ID del evento") @PathVariable int eventoId, 
+	    @RequestBody DatosTarjeta datosTarjeta,
+	    @Parameter(description = "Token de autorización") @RequestHeader("Authorization") String token) {
 
 	    RespuestaPago respuesta = servicioValidacionPago.realizarValidacionPago(datosTarjeta);
 	    Entrada nuevaEntrada = servicioValidacionPago.addEntrada(usuarioId, eventoId);
@@ -55,11 +74,13 @@ public class PagoController {
 	    return ResponseEntity.ok(CustomResponse.createSuccessResponse(pagoYEntradaResponse));
 	}
 
+	
 	/**
 	 * Endpoint para obtener la lista de tarjetas de crédito almacenadas.
 	 *
 	 * @return Lista de tarjetas de crédito almacenadas.
 	 */
+	/*
 	@GetMapping("/tarjetas-almacenadas")
 	public ResponseEntity<CustomResponse<List<DatosTarjeta>>> obtenerTarjetasAlmacenadas() {
 		List<DatosTarjeta> tarjetas = servicioValidacionPago.obtenerTarjetasAlmacenadas();
@@ -68,6 +89,7 @@ public class PagoController {
 		}
 		return ResponseEntity.ok(CustomResponse.createSuccessResponse(tarjetas));
 	}
+	*/
 
 	@GetMapping("/crear/{usuarioId}/{eventoId}")
 	public ResponseEntity<CustomResponse<Entrada>> crearEntrada(@PathVariable int usuarioId,

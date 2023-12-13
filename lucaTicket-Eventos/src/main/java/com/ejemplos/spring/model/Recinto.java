@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 
 /**
  * La clase Recinto representa un lugar donde se pueden llevar a cabo eventos.
+ * Incluye información como el nombre, la ciudad, la dirección, el tipo de recinto y el aforo máximo.
  */
 @Entity
 public class Recinto {
