@@ -131,6 +131,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuarioRepository.deleteById(id);
 		return true;
 	}
+	
+	
 
 	@Override
 	public Usuario editarUsuario(Integer idUsuario, Usuario usuarioNuevo) {
