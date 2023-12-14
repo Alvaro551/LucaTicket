@@ -1,55 +1,78 @@
 package com.ejemplos.spring.response;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ejemplos.spring.model.Eventos;
 
-// DTO para la respuesta de Evento
+/**
+ * Clase DTO (Data Transfer Object) para representar la respuesta de un evento.
+ */
 public class EventoResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private long id;
+	private int eventoID;
 	private String nombre;
-	private String descripcionCorta;
-	private String descripcionExtendida;
+	private String descripcioncorta;
+	private String descripcionextendida;
 	private String foto;
-	private Date fechaEvento;
-	private Date horaEvento;
-	private double precioMinimo;
-	private double precioMaximo;
+	private String fechaevento;
+	private String horaevento;
+	private String preciomin;
+	private String preciomax;
 	private String normas;
-	private RecintoResponse recinto; // Asumiendo que tienes una clase RecintoResponse
+	private String genero;
+	private RecintoResponse recinto; 
 
+
+	/**
+	 * Método estático para convertir un objeto Eventos a un objeto EventoResponse.
+	 *
+	 * @param evento El objeto Eventos a convertir.
+	 * @return Un objeto EventoResponse que representa la respuesta del evento.
+	 */
 	public static EventoResponse of(Eventos evento) {
 		EventoResponse response = new EventoResponse();
-		response.setId(evento.getId());
-		response.setNombre(evento.getNombre());
-		response.setDescripcionCorta(evento.getDescripcionCorta());
-		response.setDescripcionExtendida(evento.getDescripcionExtendida());
-		response.setFoto(evento.getFoto());
-		response.setFechaEvento((Date) evento.getFechaEvento());
-		response.setHoraEvento((Date) evento.getHoraEvento());
-		response.setPrecioMinimo(evento.getPrecioMinimo());
-		response.setPrecioMaximo(evento.getPrecioMaximo());
-		response.setNormas(evento.getNormas());
-		response.setRecinto(RecintoResponse.of(evento.getRecinto()));
+
+		response.setEventoID(evento.getId());
+        response.setNombre(evento.getNombre());
+        response.setDescripcioncorta(evento.getDescripcioncorta());
+        response.setDescripcionextendida(evento.getDescripcionextendida());
+        response.setFoto(evento.getFoto());
+        response.setFechaevento(evento.getFormattedFechaEvento()); // Cambio aquí
+        response.setHoraevento(evento.getFormattedHoraEvento()); // Cambio aquí
+        response.setPreciomin(String.format("%.2f €", evento.getPreciomin()));
+        response.setPreciomax(String.format("%.2f €", evento.getPreciomax()));
+        response.setNormas(evento.getNormas());
+        response.setGenero(evento.getGenero());
+
+		if (evento.getRecinto() != null) {
+			response.setRecinto(RecintoResponse.of(evento.getRecinto()));
+		}
+
+		
 
 		return response;
 	}
 
+	/**
+	 * Método estático para convertir una lista de objetos Eventos a una lista de
+	 * objetos EventoResponse.
+	 *
+	 * @param eventos La lista de objetos Eventos a convertir.
+	 * @return Una lista de objetos EventoResponse que representan las respuestas de los eventos.
+	 */
 	public static List<EventoResponse> of(List<Eventos> eventos) {
 		return eventos.stream().map(c -> of(c)).collect(Collectors.toList());
 	}
 
-	public long getId() {
-		return id;
+	public int getEventoID() {
+		return eventoID;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setEventoID(int eventoID) {
+		this.eventoID = eventoID;
 	}
 
 	public String getNombre() {
@@ -60,20 +83,20 @@ public class EventoResponse implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getDescripcionCorta() {
-		return descripcionCorta;
+	public String getDescripcioncorta() {
+		return descripcioncorta;
 	}
 
-	public void setDescripcionCorta(String descripcionCorta) {
-		this.descripcionCorta = descripcionCorta;
+	public void setDescripcioncorta(String descripcioncorta) {
+		this.descripcioncorta = descripcioncorta;
 	}
 
-	public String getDescripcionExtendida() {
-		return descripcionExtendida;
+	public String getDescripcionextendida() {
+		return descripcionextendida;
 	}
 
-	public void setDescripcionExtendida(String descripcionExtendida) {
-		this.descripcionExtendida = descripcionExtendida;
+	public void setDescripcionextendida(String descripcionextendida) {
+		this.descripcionextendida = descripcionextendida;
 	}
 
 	public String getFoto() {
@@ -84,36 +107,36 @@ public class EventoResponse implements Serializable {
 		this.foto = foto;
 	}
 
-	public Date getFechaEvento() {
-		return fechaEvento;
+	   public String getFechaevento() {
+	        return fechaevento;
+	    }
+
+	    public void setFechaevento(String fechaevento) {
+	        this.fechaevento = fechaevento;
+	    }
+
+	public String getHoraevento() {
+		return horaevento;
 	}
 
-	public void setFechaEvento(Date fechaEvento) {
-		this.fechaEvento = fechaEvento;
+	public void setHoraevento(String horaevento) {
+		this.horaevento = horaevento;
 	}
 
-	public Date getHoraEvento() {
-		return horaEvento;
+	public String getPreciomin() {
+		return preciomin;
 	}
 
-	public void setHoraEvento(Date horaEvento) {
-		this.horaEvento = horaEvento;
+	public void setPreciomin(String preciomin) {
+		this.preciomin = preciomin;
 	}
 
-	public double getPrecioMinimo() {
-		return precioMinimo;
+	public String getPreciomax() {
+		return preciomax;
 	}
 
-	public void setPrecioMinimo(double precioMinimo) {
-		this.precioMinimo = precioMinimo;
-	}
-
-	public double getPrecioMaximo() {
-		return precioMaximo;
-	}
-
-	public void setPrecioMaximo(double precioMaximo) {
-		this.precioMaximo = precioMaximo;
+	public void setPreciomax(String preciomax) {
+		this.preciomax = preciomax;
 	}
 
 	public String getNormas() {
@@ -130,6 +153,14 @@ public class EventoResponse implements Serializable {
 
 	public void setRecinto(RecintoResponse recinto) {
 		this.recinto = recinto;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
 
 }

@@ -1,145 +1,367 @@
 package com.ejemplos.spring.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+import lombok.Builder;
+
+/**
+ * Clase que representa un evento en el sistema. Incluye detalles como el
+ * nombre, descripción, fecha, hora y lugar del evento.
+ */
 @Entity
+@Builder
+@Table(name = "Eventos")
 public class Eventos {
+	/**
+	 * Identificador único del evento.
+	 */
 	@Id
-	private long id;
+	@Column(name = "eventoID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+	/**
+	 * Nombre del evento.
+	 */
 	private String nombre;
-	private String descripcionCorta;
-	private String descripcionExtendida;
+
+	/**
+	 * Descripción corta del evento.
+	 */
+	private String descripcioncorta;
+
+	/**
+	 * Descripción extendida del evento.
+	 */
+	private String descripcionextendida;
+
+	/**
+	 * Ruta de la foto asociada al evento.
+	 */
 	private String foto;
-	private Date fechaEvento;
-	private Date horaEvento;
-	private double precioMinimo;
-	private double precioMaximo;
+
+	/**
+	 * Fecha del evento.
+	 */
+	private LocalDate fechaevento;
+
+	/**
+	 * Hora del evento.
+	 */
+	private LocalDateTime horaevento;
+
+	/**
+	 * Precio mínimo para el evento.
+	 */
+	private double preciomin;
+
+	/**
+	 * Precio máximo para el evento.
+	 */
+	private double preciomax;
+
+	/**
+	 * Normas asociadas al evento.
+	 */
 	private String normas;
 
+	/**
+	 * Género del evento.
+	 */
+	private String genero;
+
+	/**
+	 * Recinto donde se realiza el evento.
+	 */
 	@ManyToOne
-	@JoinColumn(name = "recinto_id") 
+	@JoinColumn(name = "recintoID")
 	private Recinto recinto;
 
-	public Eventos(long id, String nombre, String descripcionCorta, String descripcionExtendida, String foto,
-			Date fechaEvento, Date horaEvento, double precioMinimo, double precioMaximo, String normas,
-			Recinto recinto) {
-		super();
+	/**
+	 * Constructor que permite crear un evento con todos los atributos.
+	 *
+	 * @param id                   Identificador único del evento.
+	 * @param nombre               Nombre del evento.
+	 * @param descripcioncorta     Descripción corta del evento.
+	 * @param descripcionextendida Descripción extendida del evento.
+	 * @param foto                 Ruta de la foto asociada al evento.
+	 * @param fechaevento          Fecha del evento.
+	 * @param horaevento           Hora del evento.
+	 * @param preciomin            Precio mínimo para el evento.
+	 * @param preciomax            Precio máximo para el evento.
+	 * @param normas               Normas asociadas al evento.
+	 * @param genero               Género del evento.
+	 * @param recinto              Recinto donde se realiza el evento.
+	 */
+	public Eventos(int id, String nombre, String descripcioncorta, String descripcionextendida, String foto,
+			LocalDate fechaevento, LocalDateTime horaevento, double preciomin, double preciomax, String normas,
+			String genero, Recinto recinto) {
 		this.id = id;
 		this.nombre = nombre;
-		this.descripcionCorta = descripcionCorta;
-		this.descripcionExtendida = descripcionExtendida;
+		this.descripcioncorta = descripcioncorta;
+		this.descripcionextendida = descripcionextendida;
 		this.foto = foto;
-		this.fechaEvento = fechaEvento;
-		this.horaEvento = horaEvento;
-		this.precioMinimo = precioMinimo;
-		this.precioMaximo = precioMaximo;
+		this.fechaevento = fechaevento;
+		this.horaevento = horaevento;
+		this.preciomin = preciomin;
+		this.preciomax = preciomax;
 		this.normas = normas;
+		this.genero = genero;
 		this.recinto = recinto;
 	}
 
+	/**
+	 * Constructor por defecto.
+	 */
 	public Eventos() {
-		super();
 	}
 
-	public long getId() {
+	/**
+	 * Obtiene el identificador único del evento.
+	 *
+	 * @return Identificador único del evento.
+	 */
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	/**
+	 * Establece el identificador único del evento.
+	 *
+	 * @param id Identificador único del evento.
+	 */
+	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * Obtiene el nombre del evento.
+	 *
+	 * @return Nombre del evento.
+	 */
 	public String getNombre() {
 		return nombre;
 	}
 
+	/**
+	 * Establece el nombre del evento.
+	 *
+	 * @param nombre Nombre del evento.
+	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-	public String getDescripcionCorta() {
-		return descripcionCorta;
+	/**
+	 * Obtiene la descripción corta del evento.
+	 *
+	 * @return Descripción corta del evento.
+	 */
+	public String getDescripcioncorta() {
+		return descripcioncorta;
 	}
 
-	public void setDescripcionCorta(String descripcionCorta) {
-		this.descripcionCorta = descripcionCorta;
+	/**
+	 * Establece la descripción corta del evento.
+	 *
+	 * @param descripcioncorta Descripción corta del evento.
+	 */
+	public void setDescripcioncorta(String descripcioncorta) {
+		this.descripcioncorta = descripcioncorta;
 	}
 
-	public String getDescripcionExtendida() {
-		return descripcionExtendida;
+	/**
+	 * Obtiene la descripción extendida del evento.
+	 *
+	 * @return Descripción extendida del evento.
+	 */
+	public String getDescripcionextendida() {
+		return descripcionextendida;
 	}
 
-	public void setDescripcionExtendida(String descripcionExtendida) {
-		this.descripcionExtendida = descripcionExtendida;
+	/**
+	 * Establece la descripción extendida del evento.
+	 *
+	 * @param descripcionextendida Descripción extendida del evento.
+	 */
+	public void setDescripcionextendida(String descripcionextendida) {
+		this.descripcionextendida = descripcionextendida;
 	}
 
+	/**
+	 * Obtiene la ruta de la foto asociada al evento.
+	 *
+	 * @return Ruta de la foto.
+	 */
 	public String getFoto() {
 		return foto;
 	}
 
+	/**
+	 * Establece la ruta de la foto asociada al evento.
+	 *
+	 * @param foto Ruta de la foto.
+	 */
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
 
-	public Date getFechaEvento() {
-		return fechaEvento;
+	/**
+	 * Obtiene la fecha del evento.
+	 *
+	 * @return Fecha del evento.
+	 */
+	public LocalDate getFechaevento() {
+		return fechaevento;
 	}
 
-	public void setFechaEvento(Date fechaEvento) {
-		this.fechaEvento = fechaEvento;
+	/**
+	 * Establece la fecha del evento.
+	 *
+	 * @param fechaevento Fecha del evento.
+	 */
+	public void setFechaevento(LocalDate fechaevento) {
+		this.fechaevento = fechaevento;
 	}
 
-	public Date getHoraEvento() {
-		return horaEvento;
+	/**
+	 * Obtiene la hora del evento.
+	 *
+	 * @return Hora del evento.
+	 */
+	public LocalDateTime getHoraevento() {
+		return horaevento;
 	}
 
-	public void setHoraEvento(Date horaEvento) {
-		this.horaEvento = horaEvento;
+	/**
+	 * Establece la hora del evento.
+	 *
+	 * @param horaevento Hora del evento.
+	 */
+	public void setHoraevento(LocalDateTime horaevento) {
+		this.horaevento = horaevento;
 	}
 
-	public double getPrecioMinimo() {
-		return precioMinimo;
+	/**
+	 * Obtiene el precio mínimo para el evento.
+	 *
+	 * @return Precio mínimo para el evento.
+	 */
+	public double getPreciomin() {
+		return preciomin;
 	}
 
-	public void setPrecioMinimo(double precioMinimo) {
-		this.precioMinimo = precioMinimo;
+	/**
+	 * Establece el precio mínimo para el evento.
+	 *
+	 * @param preciomin Precio mínimo para el evento.
+	 */
+	public void setPreciomin(double preciomin) {
+		this.preciomin = preciomin;
 	}
 
-	public double getPrecioMaximo() {
-		return precioMaximo;
+	/**
+	 * Obtiene el precio máximo para el evento.
+	 *
+	 * @return Precio máximo para el evento.
+	 */
+	public double getPreciomax() {
+		return preciomax;
 	}
 
-	public void setPrecioMaximo(double precioMaximo) {
-		this.precioMaximo = precioMaximo;
+	/**
+	 * Establece el precio máximo para el evento.
+	 *
+	 * @param preciomax Precio máximo para el evento.
+	 */
+	public void setPreciomax(double preciomax) {
+		this.preciomax = preciomax;
 	}
 
+	/**
+	 * Obtiene las normas asociadas al evento.
+	 *
+	 * @return Normas asociadas al evento.
+	 */
 	public String getNormas() {
 		return normas;
 	}
 
+	/**
+	 * Establece las normas asociadas al evento.
+	 *
+	 * @param normas Normas asociadas al evento.
+	 */
 	public void setNormas(String normas) {
 		this.normas = normas;
 	}
 
+	/**
+	 * Obtiene el género del evento.
+	 *
+	 * @return Género del evento.
+	 */
+	public String getGenero() {
+		return genero;
+	}
+
+	/**
+	 * Establece el género del evento.
+	 *
+	 * @param genero Género del evento.
+	 */
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	/**
+	 * Obtiene el recinto donde se realiza el evento.
+	 *
+	 * @return Recinto donde se realiza el evento.
+	 */
 	public Recinto getRecinto() {
 		return recinto;
 	}
 
+	/**
+	 * Establece el recinto donde se realiza el evento.
+	 *
+	 * @param recinto Recinto donde se realiza el evento.
+	 */
 	public void setRecinto(Recinto recinto) {
 		this.recinto = recinto;
 	}
 
-	@Override
-	public String toString() {
-		return "Eventos [nombre=" + nombre + ", descripcionCorta=" + descripcionCorta + ", descripcionExtendida="
-				+ descripcionExtendida + ", foto=" + foto + ", fechaEvento=" + fechaEvento + ", horaEvento="
-				+ horaEvento + ", precioMinimo=" + precioMinimo + ", precioMaximo=" + precioMaximo + ", normas="
-				+ normas + ", recinto=" + recinto + "]";
+	/**
+	 * Obtiene la fecha del evento formateada como "dd/MM/yyyy".
+	 *
+	 * @return Fecha formateada.
+	 */
+	public String getFormattedFechaEvento() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return fechaevento.format(formatter);
 	}
 
+	/**
+	 * Obtiene la hora del evento formateada como "HH:mm".
+	 *
+	 * @return Hora formateada.
+	 */
+	public String getFormattedHoraEvento() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		return horaevento.format(formatter);
+	}
+
+	
 }

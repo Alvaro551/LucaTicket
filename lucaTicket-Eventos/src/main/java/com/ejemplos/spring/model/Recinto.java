@@ -5,42 +5,68 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 
+/**
+ * La clase Recinto representa un lugar donde se pueden llevar a cabo eventos.
+ * Incluye información como el nombre, la ciudad, la dirección, el tipo de
+ * recinto y el aforo máximo.
+ */
 @Entity
 public class Recinto {
 	@Id
-	private long id;
+	private long recintoID;
 	private String nombre;
 	private String ciudad;
 	private String direccion;
 
-	public enum TipoRecinto {
+	/**
+	 * Enumeración que representa los diferentes tipos de recintos posibles.
+	 */
+	public enum tipoRecinto {
 		ESTADIO, SALA_CONCIERTO, AIRE_LIBRE, TEATRO, ARENA_DEPORTIVA, CLUB_NOCTURNO;
 	};
 
 	@Enumerated(EnumType.STRING) // Guarda el enum como String en la base de datos
-	private TipoRecinto tipoRecinto;
+	private tipoRecinto tiporecinto;
 	private int aforo;
 
-	public Recinto(long id, String nombre, String ciudad, String direccion, TipoRecinto tipoRecinto, int aforo) {
+	/**
+	 * Constructor de Recinto con parámetros.
+	 *
+	 * @param recintoID   El identificador único del recinto.
+	 * @param nombre      El nombre del recinto.
+	 * @param ciudad      La ciudad donde se encuentra el recinto.
+	 * @param direccion   La dirección del recinto.
+	 * @param tipoRecinto El tipo de recinto.
+	 * @param aforo       El aforo del recinto.
+	 */
+	public Recinto(long recintoID, String nombre, String ciudad, String direccion, tipoRecinto tiporecinto, int aforo) {
 		super();
-		this.id = id;
+		this.recintoID = recintoID;
 		this.nombre = nombre;
 		this.ciudad = ciudad;
 		this.direccion = direccion;
-		this.tipoRecinto = tipoRecinto;
+		this.tiporecinto = tiporecinto;
 		this.aforo = aforo;
 	}
 
+	/**
+	 * Constructor por defecto de Recinto.
+	 */
 	public Recinto() {
 		super();
 	}
 
-	public long getId() {
-		return id;
+	public Recinto(long recintoID) {
+		super();
+		this.recintoID = recintoID;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public long getId() {
+		return recintoID;
+	}
+
+	public void setId(long recintoID) {
+		this.recintoID = recintoID;
 	}
 
 	public String getNombre() {
@@ -67,12 +93,12 @@ public class Recinto {
 		this.direccion = direccion;
 	}
 
-	public TipoRecinto getTipoRecinto() {
-		return tipoRecinto;
+	public tipoRecinto getTipoRecinto() {
+		return tiporecinto;
 	}
 
-	public void setTipoRecinto(TipoRecinto tipoRecinto) {
-		this.tipoRecinto = tipoRecinto;
+	public void setTipoRecinto(tipoRecinto tiporecinto) {
+		this.tiporecinto = tiporecinto;
 	}
 
 	public int getAforo() {
@@ -85,10 +111,8 @@ public class Recinto {
 
 	@Override
 	public String toString() {
-		return "Recinto [id=" + id + ", nombre=" + nombre + ", ciudad=" + ciudad + ", direccion=" + direccion
-				+ ", tipoRecinto=" + tipoRecinto + ", aforo=" + aforo + "]";
+		return "Recinto [id=" + recintoID + ", nombre=" + nombre + ", ciudad=" + ciudad + ", direccion=" + direccion
+				+ ", tipoRecinto=" + tiporecinto + ", aforo=" + aforo + "]";
 	}
-
-	
 
 }
