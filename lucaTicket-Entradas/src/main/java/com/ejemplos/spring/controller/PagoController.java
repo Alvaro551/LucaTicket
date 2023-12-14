@@ -1,6 +1,6 @@
 package com.ejemplos.spring.controller;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * Controlador que gestiona las operaciones relacionadas con los pagos.
  */
 @RestController
-@RequestMapping("/api/pagos")
+@RequestMapping("entradas/api/pagos")
 public class PagoController {
 
 	@Autowired

@@ -103,12 +103,13 @@ public class EventoController {
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Borrar un evento por ID", description = "Elimina un evento de la base de datos basado en su ID")
 	@ApiResponse(responseCode = "200", description = "Evento eliminado con éxito")
-	public ResponseEntity<CustomResponse<Eventos>> borrarEventoPorId(@PathVariable Integer id) {
+	public ResponseEntity<CustomResponse<EventoResponse>> borrarEventoPorId(@PathVariable Integer id) {
 		try {
 			Eventos eventoAntes = eventoService.buscarEventoPorId(id).orElse(null);
 			boolean borradoExitoso = eventoService.borrarEventoPorId(id);
 			if (borradoExitoso) {
-				return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoAntes));
+				return ResponseEntity.status(HttpStatus.CREATED)
+		                .body(CustomResponse.createSuccessResponse(EventoResponse.of(eventoAntes)));
 			} else {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND)
 						.body(CustomResponse.createNotFoundResponse("Evento no encontrado"));
