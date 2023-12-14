@@ -1,6 +1,5 @@
 package com.ejemplos.spring.model;
 
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 

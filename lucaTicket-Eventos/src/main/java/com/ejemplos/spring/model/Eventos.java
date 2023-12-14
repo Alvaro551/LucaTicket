@@ -13,11 +13,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import lombok.Builder;
+
 /**
  * Clase que representa un evento en el sistema. Incluye detalles como el
  * nombre, descripción, fecha, hora y lugar del evento.
  */
 @Entity
+@Builder
 @Table(name = "Eventos")
 public class Eventos {
 	/**
@@ -359,4 +362,6 @@ public class Eventos {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 		return horaevento.format(formatter);
 	}
+
+	
 }
