@@ -64,19 +64,16 @@ public class UsuariosController {
 	 */
 	@PostMapping
 	@Operation(summary = "Añadir un nuevo usuario", description = "Crea y guarda un nuevo usuario en la base de datos")
-	@ApiResponses(value = { 
-	    @ApiResponse(responseCode = "201", description = "Usuario creado con éxito"),
-	    @ApiResponse(responseCode = "400", description = "Solicitud inválida si los datos del usuario no son correctos"),
-	    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
-	})
-	public ResponseEntity<CustomResponse<UsuarioResponseADD>> addUsuario(@RequestBody UsuarioRequest nuevoUsuarioRequest) {
-	    Usuario nuevoUsuario = nuevoUsuarioRequest.transformToUsuario();
-	    Usuario usuarioGuardado = usuarioService.addUsuario(nuevoUsuario);
-	    return ResponseEntity.status(HttpStatus.CREATED)
-	                         .body(CustomResponse.createSuccessResponse(UsuarioResponseADD.of(usuarioGuardado)));
+	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Usuario creado con éxito"),
+			@ApiResponse(responseCode = "400", description = "Solicitud inválida si los datos del usuario no son correctos"),
+			@ApiResponse(responseCode = "500", description = "Error interno del servidor") })
+	public ResponseEntity<CustomResponse<UsuarioResponseADD>> addUsuario(
+			@RequestBody UsuarioRequest nuevoUsuarioRequest) {
+		Usuario nuevoUsuario = nuevoUsuarioRequest.transformToUsuario();
+		Usuario usuarioGuardado = usuarioService.addUsuario(nuevoUsuario);
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(CustomResponse.createSuccessResponse(UsuarioResponseADD.of(usuarioGuardado)));
 	}
-
-	
 
 	/**
 	 * Borra un usuario por su ID.
@@ -114,6 +111,17 @@ public class UsuariosController {
 		}
 	}
 
+	@GetMapping("/{id}")
+	public ResponseEntity<CustomResponse<UsuarioResponseADD>> obtenerUsuarioPorId(@PathVariable Integer id) {
+		Usuario usuario = usuarioService.findById(id);
+		if (usuario != null) {
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(CustomResponse.createSuccessResponse(UsuarioResponseADD.of(usuario)));
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+
 	/**
 	 * Edita un usuario por su ID.
 	 *
@@ -145,4 +153,5 @@ public class UsuariosController {
 					.body(CustomResponse.createInternalServerErrorResponse("Error interno al editar el usuario"));
 		}
 	}
+
 }

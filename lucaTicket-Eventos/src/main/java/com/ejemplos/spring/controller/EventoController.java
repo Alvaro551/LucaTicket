@@ -110,7 +110,6 @@ public class EventoController {
 			if (borradoExitoso) {
 				return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoAntes));
 			} else {
-				// Si el evento no existe o no pudo ser borrado
 				return ResponseEntity.status(HttpStatus.NOT_FOUND)
 						.body(CustomResponse.createNotFoundResponse("Evento no encontrado"));
 			}
