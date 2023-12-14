@@ -2,79 +2,161 @@ package com.ejemplos.spring.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Clase que representa la información de un pago.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InformacionPago {
-	private String nombreTitular;
-	private String numeroTarjeta;
-	private int mesCaducidad;
-	private int yearCaducidad;
-	private int cvv;
-	private String emisor;
-	private String concepto;
-	private double cantidad;
+    private String nombreTitular;
+    private String numeroTarjeta;
+    private int mesCaducidad;
+    private int yearCaducidad;
+    private int cvv;
+    private String emisor;
+    private String concepto;
+    private double cantidad;
 
-	public String getNombreTitular() {
-		return nombreTitular;
-	}
+    /**
+     * Obtiene el nombre del titular de la tarjeta.
+     *
+     * @return Nombre del titular de la tarjeta.
+     */
+    public String getNombreTitular() {
+        return nombreTitular;
+    }
 
-	public void setNombreTitular(String nombreTitular) {
-		this.nombreTitular = nombreTitular;
-	}
+    /**
+     * Establece el nombre del titular de la tarjeta.
+     *
+     * @param nombreTitular Nombre del titular de la tarjeta.
+     */
+    public void setNombreTitular(String nombreTitular) {
+        this.nombreTitular = nombreTitular;
+    }
 
-	public String getNumeroTarjeta() {
-		return numeroTarjeta;
-	}
+    /**
+     * Obtiene el número de la tarjeta.
+     *
+     * @return Número de la tarjeta.
+     */
+    public String getNumeroTarjeta() {
+        return numeroTarjeta;
+    }
 
-	public void setNumeroTarjeta(String numeroTarjeta) {
-		this.numeroTarjeta = numeroTarjeta;
-	}
+    /**
+     * Establece el número de la tarjeta.
+     *
+     * @param numeroTarjeta Número de la tarjeta.
+     */
+    public void setNumeroTarjeta(String numeroTarjeta) {
+        this.numeroTarjeta = numeroTarjeta;
+    }
 
-	public int getMesCaducidad() {
-		return mesCaducidad;
-	}
+    /**
+     * Obtiene el mes de caducidad de la tarjeta.
+     *
+     * @return Mes de caducidad de la tarjeta.
+     */
+    public int getMesCaducidad() {
+        return mesCaducidad;
+    }
 
-	public void setMesCaducidad(int mesCaducidad) {
-		this.mesCaducidad = mesCaducidad;
-	}
+    /**
+     * Establece el mes de caducidad de la tarjeta.
+     *
+     * @param mesCaducidad Mes de caducidad de la tarjeta.
+     */
+    public void setMesCaducidad(int mesCaducidad) {
+        this.mesCaducidad = mesCaducidad;
+    }
 
-	public int getYearCaducidad() {
-		return yearCaducidad;
-	}
+    /**
+     * Obtiene el año de caducidad de la tarjeta.
+     *
+     * @return Año de caducidad de la tarjeta.
+     */
+    public int getYearCaducidad() {
+        return yearCaducidad;
+    }
 
-	public void setYearCaducidad(int yearCaducidad) {
-		this.yearCaducidad = yearCaducidad;
-	}
+    /**
+     * Establece el año de caducidad de la tarjeta.
+     *
+     * @param yearCaducidad Año de caducidad de la tarjeta.
+     */
+    public void setYearCaducidad(int yearCaducidad) {
+        this.yearCaducidad = yearCaducidad;
+    }
 
-	public int getCvv() {
-		return cvv;
-	}
+    /**
+     * Obtiene el código de seguridad de la tarjeta (CVV).
+     *
+     * @return Código de seguridad de la tarjeta.
+     */
+    public int getCvv() {
+        return cvv;
+    }
 
-	public void setCvv(int cvv) {
-		this.cvv = cvv;
-	}
+    /**
+     * Establece el código de seguridad de la tarjeta (CVV).
+     *
+     * @param cvv Código de seguridad de la tarjeta.
+     */
+    public void setCvv(int cvv) {
+        this.cvv = cvv;
+    }
 
-	public String getEmisor() {
-		return emisor;
-	}
+    /**
+     * Obtiene el emisor de la tarjeta.
+     *
+     * @return Emisor de la tarjeta.
+     */
+    public String getEmisor() {
+        return emisor;
+    }
 
-	public void setEmisor(String emisor) {
-		this.emisor = emisor;
-	}
+    /**
+     * Establece el emisor de la tarjeta.
+     *
+     * @param emisor Emisor de la tarjeta.
+     */
+    public void setEmisor(String emisor) {
+        this.emisor = emisor;
+    }
 
-	public String getConcepto() {
-		return concepto;
-	}
+    /**
+     * Obtiene el concepto del pago.
+     *
+     * @return Concepto del pago.
+     */
+    public String getConcepto() {
+        return concepto;
+    }
 
-	public void setConcepto(String concepto) {
-		this.concepto = concepto;
-	}
+    /**
+     * Establece el concepto del pago.
+     *
+     * @param concepto Concepto del pago.
+     */
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
 
-	public double getCantidad() {
-		return cantidad;
-	}
+    /**
+     * Obtiene la cantidad del pago.
+     *
+     * @return Cantidad del pago.
+     */
+    public double getCantidad() {
+        return cantidad;
+    }
 
-	public void setCantidad(double cantidad) {
-		this.cantidad = cantidad;
-	}
-
+    /**
+     * Establece la cantidad del pago.
+     *
+     * @param cantidad Cantidad del pago.
+     */
+    public void setCantidad(double cantidad) {
+        this.cantidad = cantidad;
+    }
 }

@@ -1,20 +1,16 @@
 package com.ejemplos.spring;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
-
-import com.ejemplos.spring.controller.EventoController;
-import com.ejemplos.spring.service.EventoService;
-import com.ejemplos.spring.service.EventoServiceImpl;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.ejemplos.spring.controller.EventoController;
+import com.ejemplos.spring.service.EventoServiceImpl;
 
 @WebMvcTest(EventoController.class)
 public class EventoControllerTest {

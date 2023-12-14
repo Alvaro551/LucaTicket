@@ -1,8 +1,6 @@
 package com.ejemplos.spring.controller;
 
-import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +23,8 @@ import com.ejemplos.spring.response.EventoResponse;
 import com.ejemplos.spring.service.EventoService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * El controlador EventoController maneja las solicitudes relacionadas con los
@@ -70,20 +66,14 @@ public class EventoController {
 	 */
 
 	@PostMapping
-	@Operation(summary = "Crear un nuevo evento", description = "Añade un nuevo evento a la base de datos")
-	@ApiResponse(responseCode = "201", description = "Evento creado con éxito")
-	public ResponseEntity<CustomResponse<EventoResponse>> addEvento(@RequestBody EventosRequest nuevoEventoRequest) {
-		try {
-			Eventos nuevoEvento = nuevoEventoRequest.transformToEventos();
-			Eventos eventoGuardado = eventoService.addEvento(nuevoEvento);
-			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(CustomResponse.createSuccessResponse(EventoResponse.of(eventoGuardado)));
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(CustomResponse.createConflictResponse(e.getMessage(), null));
-			
-		}
-	}
+    @Operation(summary = "Crear un nuevo evento", description = "Añade un nuevo evento a la base de datos")
+    @ApiResponse(responseCode = "201", description = "Evento creado con éxito")
+    public ResponseEntity<CustomResponse<EventoResponse>> addEvento(@RequestBody EventosRequest nuevoEventoRequest) {
+        Eventos nuevoEvento = nuevoEventoRequest.transformToEventos();
+        Eventos eventoGuardado = eventoService.addEvento(nuevoEvento);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(CustomResponse.createSuccessResponse(EventoResponse.of(eventoGuardado)));
+    }
 
 	/**
 	 * Obtiene un evento por su ID.
@@ -104,17 +94,23 @@ public class EventoController {
 						.body(CustomResponse.createNotFoundResponse("Evento no encontrado")));
 	}
 
+	/**
+	 * Borra un evento por su ID.
+	 *
+	 * @param id El identificador único del evento a borrar.
+	 * @return ResponseEntity con el CustomResponse que contiene el evento antes de ser borrado y el código de estado correspondiente.
+	 */
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Borrar un evento por ID", description = "Elimina un evento de la base de datos basado en su ID")
 	@ApiResponse(responseCode = "200", description = "Evento eliminado con éxito")
-	public ResponseEntity<CustomResponse<Eventos>> borrarEventoPorId(@PathVariable Integer id) {
+	public ResponseEntity<CustomResponse<EventoResponse>> borrarEventoPorId(@PathVariable Integer id) {
 		try {
 			Eventos eventoAntes = eventoService.buscarEventoPorId(id).orElse(null);
 			boolean borradoExitoso = eventoService.borrarEventoPorId(id);
 			if (borradoExitoso) {
-				return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoAntes));
+				return ResponseEntity.status(HttpStatus.CREATED)
+		                .body(CustomResponse.createSuccessResponse(EventoResponse.of(eventoAntes)));
 			} else {
-				// Si el evento no existe o no pudo ser borrado
 				return ResponseEntity.status(HttpStatus.NOT_FOUND)
 						.body(CustomResponse.createNotFoundResponse("Evento no encontrado"));
 			}
@@ -143,6 +139,13 @@ public class EventoController {
 		return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventoResponses));
 	}
 
+	/**
+	 * Filtra eventos por género.
+	 *
+	 * @param genero El género por el cual filtrar eventos.
+	 * @return ResponseEntity con la lista de EventoResponse y el código de estado correspondiente.
+	 */
+	
 	@GetMapping("/genero/{genero}")
 	@Operation(summary = "Filtrar eventos por género", description = "Busca y devuelve eventos que coincidan con el género proporcionado")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Eventos encontrados con éxito"),
@@ -154,30 +157,39 @@ public class EventoController {
 		return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse));
 	}
 
-	/*
-	 * @PutMapping("/{id}") public ResponseEntity<CustomResponse<EventoResponse>>
-	 * editarEvento(@RequestBody Eventos evento, @PathVariable Integer id){
-	 * 
-	 * public ResponseEntity<CustomResponse<List<EventoResponse>>>
-	 * filtrarGenero(@PathVariable String genero){ List<Eventos> eventosGenero =
-	 * eventoService.filtrarGenero(genero); List<EventoResponse>
-	 * eventosGeneroResponse = eventosGenero.stream() .map(EventoResponse::of)
-	 * .collect(Collectors.toList()); return
-	 * ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosGeneroResponse)
-	 * ); }
+	/**
+	 * Edita un evento existente.
+	 *
+	 * @param eventoRequest El objeto EventosRequest con los detalles actualizados del evento.
+	 * @param id El identificador único del evento a editar.
+	 * @return ResponseEntity con el EventoResponse del evento editado y el código de estado correspondiente.
 	 */
-
 	@PutMapping("/{id}")
+	@Operation(summary = "Editar un evento por ID", description = "Actualiza un evento existente en la base de datos basado en su ID")
+	@ApiResponses(value = { 
+	    @ApiResponse(responseCode = "200", description = "Evento editado con éxito"),
+	    @ApiResponse(responseCode = "404", description = "Evento no encontrado con el ID proporcionado")
+	})
 	public ResponseEntity<CustomResponse<EventoResponse>> editarEvento(@RequestBody EventosRequest eventoRequest,
-			@PathVariable Integer id) {
-		Eventos evento = eventoRequest.transformToEventos();
-		Eventos editado = eventoService.editarEvento(id, evento);
-		if (editado != null) {
-			return ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(editado)));
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(CustomResponse.createNotFoundResponse("Evento no existente"));
-		}
+	        @PathVariable Integer id) {
+	    Eventos evento = eventoRequest.transformToEventos();
+	    Eventos editado = eventoService.editarEvento(id, evento);
+	    if (editado != null) {
+	        return ResponseEntity.ok(CustomResponse.createSuccessResponse(EventoResponse.of(editado)));
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                .body(CustomResponse.createNotFoundResponse("Evento no existente"));
+	    }
 	}
-
+	
+	 @GetMapping("/ciudad/{ciudad}")
+	    @Operation(summary = "Filtrar eventos por ciudad", description = "Busca y devuelve eventos que coincidan con la ciudad proporcionada")
+	    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Eventos encontrados con éxito"),
+	            @ApiResponse(responseCode = "204", description = "No se encontraron eventos para esa ciudad") })
+	    public ResponseEntity<CustomResponse<List<EventoResponse>>> filtrarCiudad(@PathVariable String ciudad) {
+	        List<Eventos> eventosCiudad = eventoService.filtrarCiudad(ciudad);
+	        List<EventoResponse> eventosCiudadResponse = eventosCiudad.stream().map(EventoResponse::of)
+	                .collect(Collectors.toList());
+	        return ResponseEntity.ok(CustomResponse.createSuccessResponse(eventosCiudadResponse));
+	    }
 }

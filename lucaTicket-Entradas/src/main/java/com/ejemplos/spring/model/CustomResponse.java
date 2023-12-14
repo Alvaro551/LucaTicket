@@ -1,6 +1,7 @@
 package com.ejemplos.spring.model;
 
-import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
 
 /**
  * La clase CustomResponse representa una respuesta personalizada que puede
@@ -70,6 +71,10 @@ public class CustomResponse<T> {
 		String message = getMessageForStatusCode(statusCode, customMessage);
 		return new CustomResponse<>(statusCode, message, info);
 	}
+	
+	public static <T> CustomResponse<T> createNotFoundResponse(String message) {
+        return new CustomResponse<>(HttpStatus.NOT_FOUND.value(), message, null);
+    }
 
 	private static String getMessageForStatusCode(int statusCode, String customMessage) {
 		if (customMessage != null && !customMessage.isEmpty()) {
@@ -80,7 +85,7 @@ public class CustomResponse<T> {
 		case 200:
 			return "Transacción correcta.";
 		case 400:
-			return determineBadRequestMessage();
+			return determineBadRequestMessage(customMessage);
 		case 404:
 			return "Recurso no encontrado.";
 		case 409:
@@ -94,11 +99,28 @@ public class CustomResponse<T> {
 		}
 	}
 
-	private static String determineBadRequestMessage() {
-		// Aquí puedes determinar un mensaje más específico basado en el código de error
-		// detallado, si está disponible
-		// Por ejemplo, si tienes un subcódigo o si puedes obtener más detalles del
-		// error, puedes implementar la lógica aquí.
-		return "Solicitud incorrecta.";
+	private static String determineBadRequestMessage(String errorCode) {
+		switch (errorCode) {
+		case "400.0001":
+			return "No hay fondos suficientes en la cuenta.";
+		case "400.0002":
+			return "No se encuentran los datos del cliente.";
+		case "400.0003":
+			return "El número de la tarjeta no es válido.";
+		case "400.0004":
+			return "El formato del cvv no es válido";
+		case "400.0005":
+			return "El mes (caducidad) no es correcto";
+		case "400.0006":
+			return "El año (caducidad) no es correcto";
+		case "400.0007":
+			return "La fecha de caducidad debe ser posterior al día actual\r\n" + "";
+		case "400.0008":
+			return "El formato del nombre no es correcto";
+
+		default:
+			return "Error en la solicitud: " + errorCode;
+		}
 	}
+
 }

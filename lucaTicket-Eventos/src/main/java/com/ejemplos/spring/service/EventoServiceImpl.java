@@ -2,6 +2,7 @@ package com.ejemplos.spring.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,12 +40,7 @@ public class EventoServiceImpl implements EventoService {
 	 * @throws IllegalArgumentException Si faltan datos obligatorios o son inválidos
 	 *                                  en el evento.
 	 */
-	@Override
-	public Eventos addEvento(Eventos evento) {
-		validarEvento(evento);
-		return eventoRepository.save(evento);
-
-	}
+	
 
 	/**
 	 * Busca un evento por su identificador.
@@ -65,81 +61,135 @@ public class EventoServiceImpl implements EventoService {
 		eventoRepository.deleteById(id);
 		return true;
 	}
-
-	private void validarEvento(Eventos evento) {
-		if (!esNombreValido(evento.getNombre())) {
-			throw new IllegalArgumentException("El nombre del evento es inválido o nulo");
-		}
 	
-		if (!esDescripcionCortaValida(evento.getDescripcioncorta())) {
-			throw new IllegalArgumentException("La descripción corta del evento es inválida o nula");
-		}
-		if (!esDescripcionExtendidaValida(evento.getDescripcionextendida())) {
-			throw new IllegalArgumentException("La descripción extendida del evento es inválida o nula");
-		}
+	public Eventos addEvento(Eventos evento) {
+	    List<String> errores = new ArrayList<>();
 
-		if (!esFotoValida(evento.getFoto())) {
-			throw new IllegalArgumentException("La foto del evento es inválida o nula");
-		}
-		if (!esFechaEventoValida(evento.getFechaevento())) {
-			throw new IllegalArgumentException("La fecha del evento es inválida o nula");
-		}
-		if (!esHoraEventoValida(evento.getHoraevento())) {
-			throw new IllegalArgumentException("La hora del evento es inválida o nula");
-		}
-		if (!esPrecioMinValido(evento.getPreciomin())) {
-			throw new IllegalArgumentException("El precio mínimo del evento es inválido");
-		}
-		if (!esPrecioMaxValido(evento.getPreciomax())) {
-			throw new IllegalArgumentException("El precio máximo del evento es inválido");
-		}
-		if (!esNormasValida(evento.getNormas())) {
-			throw new IllegalArgumentException("Las normas del evento son inválidas o nulas");
-		}
-		if (!esGeneroValido(evento.getGenero())) {
-			throw new IllegalArgumentException("El género es inválido o nulo");
-		}
+	    String errorNombre = validarNombre(evento.getNombre());
+	    if (errorNombre != null) {
+	        errores.add(errorNombre);
+	    }
 
+	    String errorDescripcionCorta = validarDescripcionCorta(evento.getDescripcioncorta());
+	    if (errorDescripcionCorta != null) {
+	        errores.add(errorDescripcionCorta);
+	    }
+
+	    String errorDescripcionExtendida = validarDescripcionExtendida(evento.getDescripcionextendida());
+	    if (errorDescripcionExtendida != null) {
+	        errores.add(errorDescripcionExtendida);
+	    }
+
+	    String errorFoto = validarFoto(evento.getFoto());
+	    if (errorFoto != null) {
+	        errores.add(errorFoto);
+	    }
+
+	    String errorFechaEvento = validarFechaEvento(evento.getFechaevento());
+	    if (errorFechaEvento != null) {
+	        errores.add(errorFechaEvento);
+	    }
+
+	    String errorHoraEvento = validarHoraEvento(evento.getHoraevento());
+	    if (errorHoraEvento != null) {
+	        errores.add(errorHoraEvento);
+	    }
+
+	    String errorPrecioMin = validarPrecioMin(evento.getPreciomin());
+	    if (errorPrecioMin != null) {
+	        errores.add(errorPrecioMin);
+	    }
+
+	    String errorPrecioMax = validarPrecioMax(evento.getPreciomax());
+	    if (errorPrecioMax != null) {
+	        errores.add(errorPrecioMax);
+	    }
+
+	    String errorNormas = validarNormas(evento.getNormas());
+	    if (errorNormas != null) {
+	        errores.add(errorNormas);
+	    }
+
+	    String errorGenero = validarGenero(evento.getGenero());
+	    if (errorGenero != null) {
+	        errores.add(errorGenero);
+	    }
+
+	    if (!errores.isEmpty()) {
+	        throw new IllegalArgumentException(String.join(", ", errores));
+	    }
+
+	    return eventoRepository.save(evento);
 	}
 
-	private boolean esNombreValido(String nombre) {
-		return nombre != null && !nombre.trim().isEmpty();
+	private String validarNombre(String nombre) {
+	    if (nombre == null || nombre.trim().isEmpty()) {
+	        return "El nombre del evento es inválido o nulo";
+	    }
+	    return null;
 	}
 
-	private boolean esDescripcionCortaValida(String descripcion) {
-		return descripcion != null && !descripcion.trim().isEmpty();
+	private String validarDescripcionCorta(String descripcion) {
+	    if (descripcion == null || descripcion.trim().isEmpty()) {
+	        return "La descripción corta del evento es inválida o nula";
+	    }
+	    return null;
 	}
 
-	private boolean esDescripcionExtendidaValida(String descripcion) {
-		return descripcion != null && !descripcion.trim().isEmpty();
+	private String validarDescripcionExtendida(String descripcion) {
+	    if (descripcion == null || descripcion.trim().isEmpty()) {
+	        return "La descripción extendida del evento es inválida o nula";
+	    }
+	    return null;
 	}
 
-	private boolean esPrecioMinValido(double precio) {
-		return precio >= 0;
+	private String validarFoto(String foto) {
+	    if (foto == null || !foto.toLowerCase().endsWith(".jpg")) {
+	        return "La foto del evento es inválida o nula";
+	    }
+	    return null;
 	}
 
-	private boolean esPrecioMaxValido(double precio) {
-		return precio >= 1;
+	private String validarFechaEvento(LocalDate fecha) {
+	    if (fecha == null) {
+	        return "La fecha del evento es inválida o nula";
+	    }
+	    return null;
 	}
 
-	private boolean esFechaEventoValida(LocalDate fecha) {
-		return fecha != null;
+	private String validarHoraEvento(LocalDateTime hora) {
+	    if (hora == null) {
+	        return "La hora del evento es inválida o nula";
+	    }
+	    return null;
 	}
 
-	private boolean esHoraEventoValida(LocalDateTime hora) {
-		return hora != null;
+	private String validarPrecioMin(double precio) {
+	    if (precio < 0) {
+	        return "El precio mínimo del evento es inválido";
+	    }
+	    return null;
 	}
 
-	private boolean esNormasValida(String normas) {
-		return normas != null && !normas.trim().isEmpty();
+	private String validarPrecioMax(double precio) {
+	    if (precio < 1) {
+	        return "El precio máximo del evento es inválido";
+	    }
+	    return null;
 	}
 
-	private boolean esFotoValida(String foto) {
-		return foto.toLowerCase().endsWith(".jpg") && foto != null;
+	private String validarNormas(String normas) {
+	    if (normas == null || normas.trim().isEmpty()) {
+	        return "Las normas del evento son inválidas o nulas";
+	    }
+	    return null;
 	}
 
-	private boolean esGeneroValido(String genero) {
-		return genero != null && !genero.trim().isEmpty();
+	private String validarGenero(String genero) {
+	    if (genero == null || genero.trim().isEmpty()) {
+	        return "El género del evento es inválido o nulo";
+	    }
+	    return null;
 	}
 
 	@Override
@@ -156,6 +206,7 @@ public class EventoServiceImpl implements EventoService {
 
 	@Override
 	public Eventos editarEvento(Integer idEvento, Eventos eventoNuevo) {
+		
 		Optional<Eventos> evento = eventoRepository.findById(idEvento);
 		if(evento.isPresent()) {
 			//Cambiando valores según los que le mandamos
@@ -178,5 +229,9 @@ public class EventoServiceImpl implements EventoService {
 			return null;
 		}
 	}
-}
 
+	@Override
+	public List<Eventos> filtrarCiudad(String ciudad) {
+		return eventoRepository.findByRecintoCiudad(ciudad);
+	}
+}

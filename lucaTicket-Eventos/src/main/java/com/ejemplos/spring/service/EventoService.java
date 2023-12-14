@@ -37,6 +37,9 @@ public interface EventoService {
 	boolean borrarEventoPorId(Integer id);
  
     List<Eventos> buscarEventosPorNombre(String nombre);
+    
     List<Eventos> filtrarGenero(String genero);
+    
+    List<Eventos> filtrarCiudad(String ciudad);
     Eventos editarEvento(Integer idEvento, Eventos eventoNuevo);
 }
